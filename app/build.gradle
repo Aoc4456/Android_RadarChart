@@ -1,9 +1,15 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    // ktLint
     id "org.jlleitschuh.gradle.ktlint" version "10.1.0"
+    // Firebase
     id 'com.google.gms.google-services'
     id 'com.google.firebase.appdistribution'
+    // kotlin-annotation-processing tools
+    id 'kotlin-kapt'
+    // DI (Dagger Hilt)
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -75,4 +81,8 @@ dependencies {
     // Firebase Android BoM を使用すると、アプリで常に互換性のある Firebase ライブラリ バージョンが使用されるようになります。
     implementation platform('com.google.firebase:firebase-bom:28.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // DI (Dagger Hilt)
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
