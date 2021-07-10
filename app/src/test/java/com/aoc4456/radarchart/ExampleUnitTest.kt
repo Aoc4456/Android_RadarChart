@@ -1,4 +1,4 @@
-package com.example.repositorytemplate
+package com.aoc4456.radarchart
 
 import org.junit.Assert.*
 import org.junit.Test
