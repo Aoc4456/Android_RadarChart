@@ -1,0 +1,5 @@
+# ここが最上位の設定ファイル
+root = true
+# ワイルドカードインポートを許可
+[*.{kt,kts}]
+disabled_rules=no-wildcard-imports
