@@ -1,4 +1,4 @@
-package com.example.repositorytemplate
+package com.aoc4456.radarchart
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
