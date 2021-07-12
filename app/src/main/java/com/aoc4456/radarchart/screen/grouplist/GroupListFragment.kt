@@ -26,5 +26,10 @@ class GroupListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(GroupListViewModel::class.java)
+
+        // TODO: RecyclerViewにAdapterを設定
+
+
+        // TODO: viewModelの
     }
 }
