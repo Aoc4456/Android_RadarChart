@@ -9,5 +9,14 @@
         android:id="@+id/groupListFragment"
         android:name="com.aoc4456.radarchart.screen.grouplist.GroupListFragment"
         android:label="group_list_fragment"
-        tools:layout="@layout/group_list_fragment" />
+        tools:layout="@layout/group_list_fragment" >
+        <action
+            android:id="@+id/action_groupListFragment_to_groupCreateFragment"
+            app:destination="@id/groupCreateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupCreateFragment"
+        android:name="com.aoc4456.radarchart.screen.groupcreate.GroupCreateFragment"
+        android:label="group_create_fragment"
+        tools:layout="@layout/group_create_fragment" />
 </navigation>
