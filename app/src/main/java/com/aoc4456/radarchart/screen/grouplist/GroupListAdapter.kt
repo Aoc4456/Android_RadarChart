@@ -21,7 +21,6 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
     class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
 
-
 class ChartGroupDiffCallBack : DiffUtil.ItemCallback<ChartGroup>() {
     override fun areItemsTheSame(oldItem: ChartGroup, newItem: ChartGroup): Boolean {
         return oldItem.id == newItem.id

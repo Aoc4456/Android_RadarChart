@@ -28,8 +28,6 @@ class GroupListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(GroupListViewModel::class.java)
 
         // TODO: RecyclerViewにAdapterを設定
-
-
         // TODO: viewModelの
     }
 }
