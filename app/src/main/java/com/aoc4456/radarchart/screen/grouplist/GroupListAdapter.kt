@@ -1,24 +1,34 @@
 package com.aoc4456.radarchart.screen.grouplist
 
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.aoc4456.radarchart.databinding.ChartGroupListItemBinding
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 
 class GroupListAdapter(private val viewModel: GroupListViewModel) :
     ListAdapter<ChartGroup, GroupListAdapter.ViewHolder>(ChartGroupDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        return ViewHolder.createViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
     }
 
-    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class ViewHolder private constructor(binding: ChartGroupListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        companion object {
+            fun createViewHolder(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ChartGroupListItemBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
+        }
+    }
 }
 
 class ChartGroupDiffCallBack : DiffUtil.ItemCallback<ChartGroup>() {
