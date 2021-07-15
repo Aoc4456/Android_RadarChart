@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.GroupListFragmentBinding
 
 class GroupListFragment : Fragment() {
@@ -26,6 +27,12 @@ class GroupListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(GroupListViewModel::class.java)
+
+        // setup FAB
+        binding.floatingActionButton.setOnClickListener {
+            val action = GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment()
+            findNavController().navigate(action)
+        }
 
         // TODO: RecyclerViewにAdapterを設定
         // TODO: viewModelの

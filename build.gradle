@@ -16,6 +16,9 @@ buildscript {
 
         // DI (Dagger Hilt)
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+
+        // Safe Args (Navigation)
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
     }
 }
 

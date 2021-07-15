@@ -10,6 +10,8 @@ plugins {
     id 'kotlin-kapt'
     // DI (Dagger Hilt)
     id 'dagger.hilt.android.plugin'
+    // Safe Args (Navigation)
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
