@@ -13,10 +13,10 @@
         <action
             android:id="@+id/action_groupListFragment_to_groupCreateFragment"
             app:destination="@id/groupCreateFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:enterAnim="@anim/nav_up_enter_anim"
+            app:exitAnim="@anim/nav_up_exit_anim"
+            app:popEnterAnim="@anim/nav_up_pop_enter_anim"
+            app:popExitAnim="@anim/nav_up_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/groupCreateFragment"
