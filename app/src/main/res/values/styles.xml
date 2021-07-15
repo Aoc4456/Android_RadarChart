@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="ToolBar">
         <item name="android:layout_height">@dimen/toolbar_height</item>
         <item name="android:layout_width">match_parent</item>
@@ -11,5 +12,11 @@
         <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+
+    <style name="ToolBarImageButton">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 </resources>
