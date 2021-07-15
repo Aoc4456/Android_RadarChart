@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="ToolBar">
         <item name="android:layout_height">@dimen/toolbar_height</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">horizontal</item>
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="ToolBarTitle">
+        <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
     </style>
 </resources>
