@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">レーダーチャート</string>
     <string name="group">グループ</string>
+    <string name="title">タイトル</string>
+    <string name="group_color">グループの色</string>
+    <string name="icon">アイコン</string>
+    <string name="number_of_items">項目数</string>
+    <string name="maximum_value_of_the_graph">グラフの最大値</string>
+    <string name="item_name">項目名</string>
+    <string name="save">保存</string>
 </resources>

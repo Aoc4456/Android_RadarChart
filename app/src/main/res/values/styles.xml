@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
+    <!-- App Bar系 -->
     <style name="ToolBar">
         <item name="android:layout_height">@dimen/toolbar_height</item>
         <item name="android:layout_width">match_parent</item>
@@ -18,5 +18,12 @@
         <item name="android:layout_width">30dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <!-- テキスト系 -->
+    <style name="LabelBlueText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/blue_300</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
