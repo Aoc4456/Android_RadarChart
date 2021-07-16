@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GroupCreateFragment : Fragment() {
 
     private lateinit var binding: GroupCreateFragmentBinding
-    private lateinit var viewModel: GroupCreateViewModel
+    private val viewModel by viewModels<GroupCreateViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +28,6 @@ class GroupCreateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(GroupCreateViewModel::class.java)
 
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()

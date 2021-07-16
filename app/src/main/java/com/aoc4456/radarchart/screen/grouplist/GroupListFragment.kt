@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.GroupListFragmentBinding
+import com.aoc4456.radarchart.screen.groupcreate.GroupCreateViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GroupListFragment : Fragment() {
 
-    private lateinit var viewModel: GroupListViewModel
+    private val viewModel by viewModels<GroupCreateViewModel>()
     private lateinit var binding: GroupListFragmentBinding
 
     override fun onCreateView(
@@ -26,7 +29,6 @@ class GroupListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(GroupListViewModel::class.java)
 
         // setup FAB
         binding.floatingActionButton.setOnClickListener {
