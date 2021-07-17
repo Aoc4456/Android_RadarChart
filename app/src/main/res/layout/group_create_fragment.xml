@@ -77,12 +77,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
 
-                <View
+                <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
-                    android:background="@color/blue_300"
+                    android:background="@{viewmodel.groupColor.intValue()}"
                     android:text="@string/group_color"
                     app:layout_constraintEnd_toEndOf="@id/groupColorLabel"
                     app:layout_constraintStart_toStartOf="@id/groupColorLabel"
