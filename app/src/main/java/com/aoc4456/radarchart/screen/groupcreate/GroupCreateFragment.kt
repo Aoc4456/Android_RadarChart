@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import petrov.kristiyan.colorpicker.ColorPicker
+import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupCreateFragment : Fragment() {
@@ -35,8 +35,8 @@ class GroupCreateFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.colorView.setOnClickListener {
-            ColorPicker(requireActivity()).show()
+        binding.colorView.setOnChooseColorListener(requireActivity()) { chooseColor ->
+            Timber.d("色が選択されました : $chooseColor")
         }
 
         binding.numberOfItemsSlider.addOnChangeListener { _, value, _ ->
