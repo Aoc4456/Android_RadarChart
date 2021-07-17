@@ -23,6 +23,7 @@ class GroupCreateFragment : Fragment() {
     ): View {
         binding = GroupCreateFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
+        binding.viewmodel = this.viewModel
         return binding.root
     }
 
@@ -31,6 +32,10 @@ class GroupCreateFragment : Fragment() {
 
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.numberOfItemsSlider.addOnChangeListener { _, value, _ ->
+            viewModel.onSliderValueChanged(value)
         }
     }
 }
