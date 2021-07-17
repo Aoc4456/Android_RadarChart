@@ -23,6 +23,7 @@ class GroupCreateFragment : Fragment() {
     ): View {
         binding = GroupCreateFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
+        binding.viewmodel = this.viewModel
         return binding.root
     }
 

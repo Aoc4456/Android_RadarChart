@@ -1,7 +1,11 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class GroupCreateViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
+    private val _numberOfItems = MutableLiveData(5)
+    val numberOfItems: LiveData<Int> = _numberOfItems
 }
