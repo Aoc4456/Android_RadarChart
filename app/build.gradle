@@ -109,4 +109,7 @@ dependencies {
 
     // Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // Color Picker (jcenter にしか存在しない)
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 }
