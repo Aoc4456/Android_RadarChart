@@ -36,6 +36,11 @@ class GroupListFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.testFloatingActionButton.setOnClickListener {
+            val action = GroupListFragmentDirections.actionGroupListFragmentToTestFragment()
+            findNavController().navigate(action)
+        }
+
         // TODO: RecyclerViewにAdapterを設定
         // TODO: viewModelの
     }
