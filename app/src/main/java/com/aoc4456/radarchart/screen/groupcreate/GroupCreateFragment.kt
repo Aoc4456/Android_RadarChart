@@ -33,5 +33,9 @@ class GroupCreateFragment : Fragment() {
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.numberOfItemsSlider.addOnChangeListener { _, value, _ ->
+            viewModel.onSliderValueChanged(value)
+        }
     }
 }
