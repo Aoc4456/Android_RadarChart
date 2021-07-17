@@ -2,10 +2,11 @@ package com.aoc4456.radarchart.component
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.View
+import com.aoc4456.radarchart.R
 import petrov.kristiyan.colorpicker.ColorPicker
-
 
 /**
  * タップするとカラーピッカーダイアログを表示するビュー
@@ -23,12 +24,12 @@ class ColorPickerView(context: Context, attrs: AttributeSet) :
         this.setOnClickListener {
             val colorPicker = ColorPicker(activity)
             colorPicker.disableDefaultButtons(true)
-            colorPicker.setTitle("色を選択") // TODO resourceから取得
+            colorPicker.setTitle(resources.getString(R.string.choose_a_color))
 
-            // TODO デフォルトカラーをbackgroundから取得してカラーピッカーに渡す
+            val currentColor = (background as ColorDrawable).color
+            colorPicker.setDefaultColorButton(currentColor)
 
-            colorPicker.setOnFastChooseColorListener(object :
-                ColorPicker.OnFastChooseColorListener {
+            colorPicker.setOnFastChooseColorListener(object : ColorPicker.OnFastChooseColorListener {
                 override fun setOnFastChooseColorListener(position: Int, color: Int) {
                     onChooseColor(color)
                 }

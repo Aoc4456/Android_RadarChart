@@ -37,6 +37,7 @@ class GroupCreateFragment : Fragment() {
 
         binding.colorView.setOnChooseColorListener(requireActivity()) { chooseColor ->
             Timber.d("色が選択されました : $chooseColor")
+            viewModel.onChooseColor(chooseColor)
         }
 
         binding.numberOfItemsSlider.addOnChangeListener { _, value, _ ->

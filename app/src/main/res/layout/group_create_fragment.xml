@@ -82,7 +82,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
-                    android:background="@color/blue_300"
+                    android:background="@{viewmodel.groupColor.intValue()}"
                     android:text="@string/group_color"
                     app:layout_constraintEnd_toEndOf="@id/groupColorLabel"
                     app:layout_constraintStart_toStartOf="@id/groupColorLabel"
