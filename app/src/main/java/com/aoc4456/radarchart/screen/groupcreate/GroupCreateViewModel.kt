@@ -3,6 +3,8 @@ package com.aoc4456.radarchart.screen.groupcreate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.aoc4456.radarchart.util.ChartDataUtil
+import com.github.mikephil.charting.data.RadarData
 
 class GroupCreateViewModel : ViewModel() {
 
@@ -17,9 +19,15 @@ class GroupCreateViewModel : ViewModel() {
     private val _exactlySizedTextList = MutableLiveData<List<String>>()
     val exactlySizedTextList: LiveData<List<String>> = _exactlySizedTextList
 
+    private val _chartData = MutableLiveData<Pair<RadarData, List<String>>>()
+    val chartData: LiveData<Pair<RadarData, List<String>>> = _chartData
+
     fun onViewCreated() {
         _exactlySizedTextList.value =
             GroupCreateUtil.getExactlySizedTextList(itemTextList, numberOfItems.value!!)
+
+        val radarData = ChartDataUtil.getChartData(groupColor.value!!, numberOfItems.value!!)
+        _chartData.value = Pair(radarData, exactlySizedTextList.value!!)
     }
 
     fun onSliderValueChanged(value: Float) {

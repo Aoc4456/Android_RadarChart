@@ -11,7 +11,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
  * 分割数 : 6
  * 最大値 : 100
  */
-class BaseRadarChart(context: Context, attrs: AttributeSet) :
+open class BaseRadarChart(context: Context, attrs: AttributeSet) :
     RadarChart(context, attrs),
     RadarChartInput {
 
@@ -30,7 +30,6 @@ class BaseRadarChart(context: Context, attrs: AttributeSet) :
 
     override fun changeLabel(labels: List<String>) {
         (xAxis.valueFormatter as IndexAxisValueFormatter).values = labels.toTypedArray()
-        notifyDataSetChanged()
     }
 }
 

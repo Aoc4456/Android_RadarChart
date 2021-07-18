@@ -51,5 +51,14 @@ class GroupCreateFragment : Fragment() {
                 }
             }
         )
+
+        // TODO あとでBindingAdapter化する
+        viewModel.chartData.observe(viewLifecycleOwner) { pair ->
+            binding.radarChart.let { chart ->
+                chart.data = pair.first
+                chart.changeLabel(pair.second)
+                chart.notifyDataSetChanged()
+            }
+        }
     }
 }

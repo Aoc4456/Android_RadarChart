@@ -11,7 +11,7 @@ class BaseRadarDataSet(entryList: List<RadarEntry>) : RadarDataSet(entryList, ""
         valueFormatter = IndexAxisValueFormatter()
     }
 
-    fun setColorAndFillColor(newColor:Int){
+    fun setColorAndFillColor(newColor: Int) {
         color = newColor
         fillColor = newColor
     }
