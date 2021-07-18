@@ -12,11 +12,27 @@ class GroupCreateViewModel : ViewModel() {
     private val _groupColor = MutableLiveData(-14654801)
     val groupColor: LiveData<Int> = _groupColor
 
+    private val itemTextList = mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8")
+
+    private val _exactlySizedTextList = MutableLiveData<List<String>>()
+    val exactlySizedTextList: LiveData<List<String>> = _exactlySizedTextList
+
+    fun onViewCreated() {
+        _exactlySizedTextList.value =
+            GroupCreateUtil.getExactlySizedTextList(itemTextList, numberOfItems.value!!)
+    }
+
     fun onSliderValueChanged(value: Float) {
         _numberOfItems.value = value.toInt()
+        _exactlySizedTextList.value =
+            GroupCreateUtil.getExactlySizedTextList(itemTextList, value.toInt())
     }
 
     fun onChooseColor(color: Int) {
         _groupColor.value = color
+    }
+
+    fun onEndEditingMultiEditText(index: Int, text: String) {
+        itemTextList[index] = text
     }
 }

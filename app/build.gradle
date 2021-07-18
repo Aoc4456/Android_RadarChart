@@ -112,4 +112,7 @@ dependencies {
 
     // Color Picker (jcenter にしか存在しない)
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+
+    // Local Unit Test
+    testImplementation "org.hamcrest:hamcrest-all:1.3"
 }

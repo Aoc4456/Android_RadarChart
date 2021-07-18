@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupCreateFragment : Fragment() {
@@ -30,18 +30,26 @@ class GroupCreateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.onViewCreated()
 
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
         }
 
         binding.colorView.setOnChooseColorListener(requireActivity()) { chooseColor ->
-            Timber.d("色が選択されました : $chooseColor")
             viewModel.onChooseColor(chooseColor)
         }
 
         binding.numberOfItemsSlider.addOnChangeListener { _, value, _ ->
             viewModel.onSliderValueChanged(value)
         }
+
+        binding.multiEditText.setTextChangeListener(
+            object : MultiEditTextOutput {
+                override fun onEndEditingMultiEditText(index: Int, text: String) {
+                    viewModel.onEndEditingMultiEditText(index, text)
+                }
+            }
+        )
     }
 }
