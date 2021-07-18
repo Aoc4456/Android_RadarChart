@@ -100,7 +100,7 @@ interface MultiEditTextOutput {
  * [BindingAdapter]s for the MultiEditText
  */
 
-@BindingAdapter("app:textList")
+@BindingAdapter("textList")
 fun changeNumberOfItems(multiEditText: MultiEditText, textList: List<String>) {
     multiEditText.changeNumberOfItems(textList)
 }
