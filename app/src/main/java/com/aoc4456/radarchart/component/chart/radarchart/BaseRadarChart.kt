@@ -2,7 +2,9 @@ package com.aoc4456.radarchart.component.chart.radarchart
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.databinding.BindingAdapter
 import com.github.mikephil.charting.charts.RadarChart
+import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
 /**
@@ -35,4 +37,16 @@ open class BaseRadarChart(context: Context, attrs: AttributeSet) :
 
 interface RadarChartInput {
     fun changeLabel(labels: List<String>)
+}
+
+/**
+ * [BindingAdapter]s for the RadarChart
+ */
+
+@BindingAdapter("radarDataAndLabels")
+fun setDataAndLabel(radarChart: BaseRadarChart, data: Pair<RadarData, List<String>>) {
+    radarChart.data = data.first
+    radarChart.changeLabel(data.second)
+    radarChart.notifyDataSetChanged()
+    radarChart.invalidate()
 }

@@ -5,10 +5,14 @@ import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarEntry
 
 object ChartDataUtil {
-    fun getChartData(color: Int, numberOfItems: Int): RadarData {
+    fun getRadarDataWithTheSameValue(
+        color: Int,
+        numberOfItems: Int,
+        value: Float = 60f
+    ): RadarData {
         val radarEntryList = mutableListOf<RadarEntry>()
         repeat(numberOfItems) {
-            radarEntryList.add(RadarEntry(60f))
+            radarEntryList.add(RadarEntry(value))
         }
 
         val radarDataSet = BaseRadarDataSet(radarEntryList)

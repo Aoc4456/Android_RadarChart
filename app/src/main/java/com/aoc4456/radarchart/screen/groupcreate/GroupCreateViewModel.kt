@@ -25,22 +25,29 @@ class GroupCreateViewModel : ViewModel() {
     fun onViewCreated() {
         _exactlySizedTextList.value =
             GroupCreateUtil.getExactlySizedTextList(itemTextList, numberOfItems.value!!)
-
-        val radarData = ChartDataUtil.getChartData(groupColor.value!!, numberOfItems.value!!)
-        _chartData.value = Pair(radarData, exactlySizedTextList.value!!)
+        updateChart()
     }
 
     fun onSliderValueChanged(value: Float) {
         _numberOfItems.value = value.toInt()
         _exactlySizedTextList.value =
             GroupCreateUtil.getExactlySizedTextList(itemTextList, value.toInt())
+        updateChart()
     }
 
     fun onChooseColor(color: Int) {
         _groupColor.value = color
+        updateChart()
     }
 
     fun onEndEditingMultiEditText(index: Int, text: String) {
         itemTextList[index] = text
+        updateChart()
+    }
+
+    private fun updateChart() {
+        val radarData =
+            ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
+        _chartData.value = Pair(radarData, exactlySizedTextList.value!!)
     }
 }
