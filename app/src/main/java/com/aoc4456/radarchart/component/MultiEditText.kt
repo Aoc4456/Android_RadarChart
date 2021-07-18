@@ -9,7 +9,9 @@ import androidx.databinding.BindingAdapter
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.util.setMargin
 
-class MultiEditText(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs),MultiEditTextInput {
+class MultiEditText(context: Context, attrs: AttributeSet) :
+    LinearLayout(context, attrs),
+    MultiEditTextInput {
 
     private val scale = resources.displayMetrics.density
 
@@ -25,7 +27,7 @@ class MultiEditText(context: Context, attrs: AttributeSet) : LinearLayout(contex
         }
     }
 
-    private fun createEditText(attrs: AttributeSet):EditText{
+    private fun createEditText(attrs: AttributeSet): EditText {
         val editText = BorderEditText(context, attrs)
         editText.inputType = InputType.TYPE_CLASS_TEXT
         editText.height = resources.getDimensionPixelSize(R.dimen.edit_text_height)
