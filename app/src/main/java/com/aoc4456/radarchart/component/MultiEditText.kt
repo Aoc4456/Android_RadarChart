@@ -5,6 +5,7 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.BindingAdapter
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.util.setMargin
@@ -15,13 +16,14 @@ import com.aoc4456.radarchart.util.setMargin
  *
  * 使い方
  * 1. xmlで app:textList="@{viewmodel.textList}"
- * 2. textListが更新されると、Viewの設置とテキストのセットが行われる
+ * 2. Fragmentから、setTextChangeListener() でリスナーをセットする
  */
 class MultiEditText(context: Context, private val attrs: AttributeSet) :
     LinearLayout(context, attrs),
     MultiEditTextInput {
 
     private val editTextList = mutableListOf<EditText>()
+    private var multiEditTextOutput: MultiEditTextOutput? = null
 
     init {
         orientation = VERTICAL
@@ -61,20 +63,32 @@ class MultiEditText(context: Context, private val attrs: AttributeSet) :
         text?.let {
             editText.setText(it)
         }
+        editText.doAfterTextChanged { editable ->
+            val editedText = editable.toString()
+            multiEditTextOutput?.let {
+                val index = editTextList.indexOf(editText)
+                it.onEndEditingMultiEditText(index, editedText)
+            }
+        }
+
+        editTextList.add(editText)
         return editText
     }
 
     private fun placeView(view: EditText) {
-        editTextList.add(view)
         addView(view)
-
         val scale = resources.displayMetrics.density
         val topMargin = (8 * scale + 0.5f).toInt()
         view.setMargin(top = topMargin)
     }
+
+    override fun setTextChangeListener(listener: MultiEditTextOutput) {
+        this.multiEditTextOutput = listener
+    }
 }
 
 interface MultiEditTextInput {
+    fun setTextChangeListener(listener: MultiEditTextOutput)
     fun changeNumberOfItems(textList: List<String>)
 }
 

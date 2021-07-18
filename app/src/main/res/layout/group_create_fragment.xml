@@ -192,15 +192,15 @@
                     app:layout_constraintTop_toBottomOf="@id/maximumValueField" />
 
                 <com.aoc4456.radarchart.component.MultiEditText
-                    android:id="@+id/itemNameField"
+                    android:id="@+id/multiEditText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    tools:layout_height="200dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/itemNameLabel"
-                    app:textList="@{viewmodel.exactlySizedTextList}"/>
+                    app:textList="@{viewmodel.exactlySizedTextList}"
+                    tools:layout_height="200dp" />
 
                 <Button
                     android:id="@+id/saveButton"
@@ -211,7 +211,7 @@
                     android:text="@string/save"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/itemNameField" />
+                    app:layout_constraintTop_toBottomOf="@id/multiEditText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
