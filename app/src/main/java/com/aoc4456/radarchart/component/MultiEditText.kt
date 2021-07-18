@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.databinding.BindingAdapter
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.util.setMargin
+import timber.log.Timber
 
 class MultiEditText(context: Context, attrs: AttributeSet) :
     LinearLayout(context, attrs),
@@ -35,7 +36,7 @@ class MultiEditText(context: Context, attrs: AttributeSet) :
     }
 
     override fun changeNumberOfItems(textList: List<String>) {
-        TODO("Not yet implemented")
+        Timber.d("テキストチェンジ : $textList")
     }
 }
 
