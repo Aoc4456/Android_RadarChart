@@ -67,7 +67,7 @@ class MultiEditText(context: Context, private val attrs: AttributeSet) :
             val editedText = editable.toString()
             multiEditTextOutput?.let {
                 val index = editTextList.indexOf(editText)
-                it.onEndEditingMultiEditText(index, editedText)
+                it.onMultiEditTextChanged(index, editedText)
             }
         }
 
@@ -93,14 +93,14 @@ interface MultiEditTextInput {
 }
 
 interface MultiEditTextOutput {
-    fun onEndEditingMultiEditText(index: Int, text: String)
+    fun onMultiEditTextChanged(index: Int, text: String)
 }
 
 /**
  * [BindingAdapter]s for the MultiEditText
  */
 
-@BindingAdapter("app:textList")
+@BindingAdapter("textList")
 fun changeNumberOfItems(multiEditText: MultiEditText, textList: List<String>) {
     multiEditText.changeNumberOfItems(textList)
 }
