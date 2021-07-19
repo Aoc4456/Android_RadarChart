@@ -46,8 +46,8 @@ class GroupCreateFragment : Fragment() {
 
         binding.multiEditText.setTextChangeListener(
             object : MultiEditTextOutput {
-                override fun onEndEditingMultiEditText(index: Int, text: String) {
-                    viewModel.onEndEditingMultiEditText(index, text)
+                override fun onMultiEditTextChanged(index: Int, text: String) {
+                    viewModel.onTextChangeMultiEditText(index, text)
                 }
             }
         )

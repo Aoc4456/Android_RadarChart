@@ -16,6 +16,7 @@ class GroupCreateViewModel : ViewModel() {
 
     private val itemTextList = mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8")
 
+    // TODO できればこんなフィールドは作らないでやる
     private val _exactlySizedTextList = MutableLiveData<List<String>>()
     val exactlySizedTextList: LiveData<List<String>> = _exactlySizedTextList
 
@@ -40,8 +41,10 @@ class GroupCreateViewModel : ViewModel() {
         updateChart()
     }
 
-    fun onEndEditingMultiEditText(index: Int, text: String) {
+    fun onTextChangeMultiEditText(index: Int, text: String) {
         itemTextList[index] = text
+        _exactlySizedTextList.value =
+            GroupCreateUtil.getExactlySizedTextList(itemTextList, numberOfItems.value!!)
         updateChart()
     }
 
