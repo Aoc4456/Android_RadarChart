@@ -1,2 +1,2 @@
 rootProject.name = "RadarChart"
-include ':app'
+include ':app', ':MPChartLib'
