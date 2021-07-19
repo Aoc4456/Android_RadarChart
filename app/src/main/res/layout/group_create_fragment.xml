@@ -55,7 +55,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.aoc4456.radarchart.component.BorderEditText
-                    android:id="@+id/editTextTextPersonName"
+                    android:id="@+id/titleEditText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -76,7 +76,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/iconLabel"
                     app:layout_constraintHorizontal_weight="0.4"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
+                    app:layout_constraintTop_toBottomOf="@id/titleEditText" />
 
                 <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"
@@ -99,7 +99,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="0.6"
                     app:layout_constraintStart_toEndOf="@+id/groupColorLabel"
-                    app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
+                    app:layout_constraintTop_toBottomOf="@id/titleEditText" />
 
                 <View
                     android:id="@+id/iconView"
@@ -136,6 +136,7 @@
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/numberOfItemsSlider"
+                    color="@{viewmodel.groupColor.intValue()}"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:stepSize="1"
@@ -144,7 +145,8 @@
                     android:valueTo="8"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/numberOfItemsLabel" />
+                    app:layout_constraintTop_toBottomOf="@id/numberOfItemsLabel"
+                    app:tickColor="@color/white"/>
 
                 <com.aoc4456.radarchart.component.chart.radarchart.BaseRadarChart
                     android:id="@+id/radarChart"
@@ -155,7 +157,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/numberOfItemsSlider"
-                    app:radarDataAndLabels="@{viewmodel.chartData}"/>
+                    app:radarDataAndLabels="@{viewmodel.chartData}" />
 
                 <TextView
                     android:id="@+id/maximumValueLabel"
@@ -175,10 +177,11 @@
                     android:layout_marginTop="8dp"
                     android:importantForAutofill="no"
                     android:inputType="number"
+                    android:text="100"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/maximumValueLabel"
-                    tools:ignore="LabelFor" />
+                    tools:ignore="HardcodedText,LabelFor" />
 
                 <TextView
                     android:id="@+id/itemNameLabel"
@@ -208,6 +211,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
+                    android:onClick="@{() -> viewmodel.onClickSaveButton()}"
                     android:text="@string/save"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

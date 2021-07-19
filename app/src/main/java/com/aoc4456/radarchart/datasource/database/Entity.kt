@@ -14,7 +14,7 @@ data class ChartGroup(
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),
     var title: String = "",
-    var colorString: String = "",
+    var color: Int,
     var iconFileName: String = "",
     var maximumValue: Double = 0.0,
     var createdAt: Long = System.currentTimeMillis(),
@@ -35,7 +35,7 @@ data class MyChart(
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),
     var title: String = "",
-    var colorString: String = "",
+    var color: Int,
     var comment: String = "",
     var createdAt: Long = System.currentTimeMillis(),
     var updatedAt: Long = System.currentTimeMillis()

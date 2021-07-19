@@ -8,6 +8,8 @@ import com.github.mikephil.charting.data.RadarData
 
 class GroupCreateViewModel : ViewModel() {
 
+    private var title = ""
+
     private val _numberOfItems = MutableLiveData(5)
     val numberOfItems: LiveData<Int> = _numberOfItems
 
@@ -22,6 +24,8 @@ class GroupCreateViewModel : ViewModel() {
 
     private val _chartData = MutableLiveData<Pair<RadarData, List<String>>>()
     val chartData: LiveData<Pair<RadarData, List<String>>> = _chartData
+
+    private var maximum = 100
 
     fun onViewCreated() {
         _exactlySizedTextList.value =
@@ -41,6 +45,14 @@ class GroupCreateViewModel : ViewModel() {
         updateChart()
     }
 
+    fun onChangeTitleText(text: String) {
+        title = text
+    }
+
+    fun onChangeMaximumText(text: String) {
+        maximum = text.toInt()
+    }
+
     fun onTextChangeMultiEditText(index: Int, text: String) {
         itemTextList[index] = text
         _exactlySizedTextList.value =
@@ -52,5 +64,11 @@ class GroupCreateViewModel : ViewModel() {
         val radarData =
             ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
         _chartData.value = Pair(radarData, exactlySizedTextList.value!!)
+    }
+
+    fun onClickSaveButton() {
+        // 値のvalidate -> 処理を別のクラスに委譲する
+
+        // 保存
     }
 }
