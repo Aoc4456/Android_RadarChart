@@ -19,6 +19,8 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.List;
 
+import static com.github.mikephil.charting.charts.RadarChart.fixedLongestLabel;
+
 public class XAxisRenderer extends AxisRenderer {
 
     protected XAxis mXAxis;
@@ -75,7 +77,7 @@ public class XAxisRenderer extends AxisRenderer {
 
     protected void computeSize() {
 
-        String longest = mXAxis.getLongestLabel();
+        String longest = fixedLongestLabel;
 
         mAxisLabelPaint.setTypeface(mXAxis.getTypeface());
         mAxisLabelPaint.setTextSize(mXAxis.getTextSize());

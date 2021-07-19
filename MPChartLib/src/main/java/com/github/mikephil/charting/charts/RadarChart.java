@@ -64,6 +64,11 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
      */
     private YAxis mYAxis;
 
+    /**
+     * チャートのX軸のラベルの横幅を固定する
+     */
+    public static String fixedLongestLabel = "12345";
+
     protected YAxisRendererRadarChart mYAxisRenderer;
     protected XAxisRendererRadarChart mXAxisRenderer;
 
