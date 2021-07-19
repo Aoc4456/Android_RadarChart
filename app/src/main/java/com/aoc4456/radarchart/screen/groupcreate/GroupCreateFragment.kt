@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -36,12 +37,20 @@ class GroupCreateFragment : Fragment() {
             findNavController().popBackStack()
         }
 
+        binding.titleEditText.doAfterTextChanged { editable ->
+            viewModel.onChangeTitleText(editable.toString())
+        }
+
         binding.colorView.setOnChooseColorListener(requireActivity()) { chooseColor ->
             viewModel.onChooseColor(chooseColor)
         }
 
         binding.numberOfItemsSlider.addOnChangeListener { _, value, _ ->
             viewModel.onSliderValueChanged(value)
+        }
+
+        binding.maximumValueField.doAfterTextChanged { editable ->
+            viewModel.onChangeMaximumText(editable.toString())
         }
 
         binding.multiEditText.setTextChangeListener(

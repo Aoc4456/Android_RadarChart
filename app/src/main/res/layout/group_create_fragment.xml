@@ -55,7 +55,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.aoc4456.radarchart.component.BorderEditText
-                    android:id="@+id/editTextTextPersonName"
+                    android:id="@+id/titleEditText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -76,7 +76,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/iconLabel"
                     app:layout_constraintHorizontal_weight="0.4"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
+                    app:layout_constraintTop_toBottomOf="@id/titleEditText" />
 
                 <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"
@@ -99,7 +99,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_weight="0.6"
                     app:layout_constraintStart_toEndOf="@+id/groupColorLabel"
-                    app:layout_constraintTop_toBottomOf="@id/editTextTextPersonName" />
+                    app:layout_constraintTop_toBottomOf="@id/titleEditText" />
 
                 <View
                     android:id="@+id/iconView"
@@ -155,7 +155,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/numberOfItemsSlider"
-                    app:radarDataAndLabels="@{viewmodel.chartData}"/>
+                    app:radarDataAndLabels="@{viewmodel.chartData}" />
 
                 <TextView
                     android:id="@+id/maximumValueLabel"
@@ -208,6 +208,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
+                    android:onClick="@{() -> viewmodel.onClickSaveButton()}"
                     android:text="@string/save"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
