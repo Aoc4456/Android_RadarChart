@@ -30,13 +30,13 @@ open class BaseRadarChart(context: Context, attrs: AttributeSet) :
         yAxis.axisMaximum = 100f
     }
 
-    override fun changeLabel(labels: List<String>) {
+    override fun setChartItemLabel(labels: List<String>) {
         (xAxis.valueFormatter as IndexAxisValueFormatter).values = labels.toTypedArray()
     }
 }
 
 interface RadarChartInput {
-    fun changeLabel(labels: List<String>)
+    fun setChartItemLabel(labels: List<String>)
 }
 
 /**
@@ -46,7 +46,25 @@ interface RadarChartInput {
 @BindingAdapter("radarDataAndLabels")
 fun setDataAndLabel(radarChart: BaseRadarChart, data: Pair<RadarData, List<String>>) {
     radarChart.data = data.first
-    radarChart.changeLabel(data.second)
+    radarChart.setChartItemLabel(data.second)
     radarChart.notifyDataSetChanged()
     radarChart.invalidate()
+}
+
+@BindingAdapter("radarData")
+fun setRadarData(radarChart: BaseRadarChart, radarData: RadarData) {
+    radarChart.data = radarData
+}
+
+@BindingAdapter("labels")
+fun setRadarChartLabel(radarChart: BaseRadarChart, labels: List<String>) {
+    radarChart.setChartItemLabel(labels)
+}
+
+@BindingAdapter("notifyDataSetChanged")
+fun notifyDataSetChanged(radarChart: BaseRadarChart, update: Boolean) {
+    if (update) {
+        radarChart.notifyDataSetChanged()
+        radarChart.invalidate()
+    }
 }
