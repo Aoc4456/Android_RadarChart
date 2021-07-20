@@ -1,8 +1,6 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.github.mikephil.charting.data.RadarData
 
@@ -16,27 +14,32 @@ class GroupCreateViewModel : ViewModel() {
     private val _groupColor = MutableLiveData(-14654801)
     val groupColor: LiveData<Int> = _groupColor
 
-    private val itemTextList = mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8")
-
-    // TODO できればこんなフィールドは作らないでやる
-    private val _exactlySizedTextList = MutableLiveData<List<String>>()
-    val exactlySizedTextList: LiveData<List<String>> = _exactlySizedTextList
-
-    private val _chartData = MutableLiveData<Pair<RadarData, List<String>>>()
-    val chartData: LiveData<Pair<RadarData, List<String>>> = _chartData
-
     private var maximum = 100
 
+    private val itemTextList =
+        MutableLiveData(mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8"))
+
+    val exactlySizedTextList = MediatorLiveData<List<String>>().apply {
+        addSource(numberOfItems) {
+            value = GroupCreateUtil.getExactlySizedTextList(itemTextList.value!!, it)
+        }
+        addSource(itemTextList) {
+            value = GroupCreateUtil.getExactlySizedTextList(it, numberOfItems.value!!)
+        }
+    }
+
+    private val _chartData = MutableLiveData<RadarData>()
+    val chartData: LiveData<RadarData> = _chartData
+
+    private val _chartUpdate = MutableLiveData<Boolean>()
+    val chartUpdate: LiveData<Boolean> = _chartUpdate
+
     fun onViewCreated() {
-        _exactlySizedTextList.value =
-            GroupCreateUtil.getExactlySizedTextList(itemTextList, numberOfItems.value!!)
         updateChart()
     }
 
     fun onSliderValueChanged(value: Float) {
         _numberOfItems.value = value.toInt()
-        _exactlySizedTextList.value =
-            GroupCreateUtil.getExactlySizedTextList(itemTextList, value.toInt())
         updateChart()
     }
 
@@ -54,16 +57,16 @@ class GroupCreateViewModel : ViewModel() {
     }
 
     fun onTextChangeMultiEditText(index: Int, text: String) {
-        itemTextList[index] = text
-        _exactlySizedTextList.value =
-            GroupCreateUtil.getExactlySizedTextList(itemTextList, numberOfItems.value!!)
+        val newList = itemTextList.value!!
+        newList[index] = text
+        itemTextList.value = newList
         updateChart()
     }
 
     private fun updateChart() {
-        val radarData =
+        _chartData.value =
             ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
-        _chartData.value = Pair(radarData, exactlySizedTextList.value!!)
+        _chartUpdate.value = true
     }
 
     fun onClickSaveButton() {

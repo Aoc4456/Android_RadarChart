@@ -157,7 +157,9 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/numberOfItemsSlider"
-                    app:radarDataAndLabels="@{viewmodel.chartData}" />
+                    app:radarData="@{viewmodel.chartData}"
+                    app:labels="@{viewmodel.exactlySizedTextList}"
+                    app:notifyDataSetChanged="@{viewmodel.chartUpdate}"/>
 
                 <TextView
                     android:id="@+id/maximumValueLabel"
