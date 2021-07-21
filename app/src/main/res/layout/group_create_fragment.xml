@@ -179,7 +179,7 @@
                     android:layout_marginTop="8dp"
                     android:importantForAutofill="no"
                     android:inputType="number"
-                    android:text="100"
+                    android:text="@{viewmodel.maximum.toString()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/maximumValueLabel"

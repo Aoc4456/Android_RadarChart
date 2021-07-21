@@ -53,6 +53,7 @@ class GroupCreateFragment : Fragment() {
         }
 
         binding.maximumValueField.doAfterTextChanged { editable ->
+            Timber.d("最大値フィールド : editable = $editable")
             viewModel.onChangeMaximumText(editable.toString())
         }
 
