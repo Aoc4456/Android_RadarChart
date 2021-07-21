@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupCreateFragment : Fragment() {
@@ -53,7 +52,6 @@ class GroupCreateFragment : Fragment() {
         }
 
         binding.maximumValueField.doAfterTextChanged { editable ->
-            Timber.d("最大値フィールド : editable = $editable")
             viewModel.onChangeMaximumText(editable.toString())
         }
 
