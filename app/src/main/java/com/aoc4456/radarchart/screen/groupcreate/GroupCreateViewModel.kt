@@ -18,8 +18,8 @@ class GroupCreateViewModel : ViewModel() {
     private val _groupColor = MutableLiveData(-14654801)
     val groupColor: LiveData<Int> = _groupColor
 
-    private val _maximum = MutableLiveData(100)
-    val maximum: LiveData<Int> = _maximum
+    private val _maximum = MutableLiveData("100")
+    val maximum: LiveData<String> = _maximum
 
     private val itemTextList =
         MutableLiveData(mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8"))
@@ -62,8 +62,8 @@ class GroupCreateViewModel : ViewModel() {
     }
 
     fun onChangeMaximumText(newMaximum: String) {
-        if (newMaximum.toInt() == _maximum.value) return
-        _maximum.value = newMaximum.toInt()
+        if (newMaximum == _maximum.value) return
+        _maximum.value = newMaximum
     }
 
     fun onTextChangeMultiEditText(index: Int, newText: String) {
