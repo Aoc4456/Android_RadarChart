@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupCreateFragment : Fragment() {
@@ -45,8 +46,10 @@ class GroupCreateFragment : Fragment() {
             viewModel.onChooseColor(chooseColor)
         }
 
-        binding.numberOfItemsSlider.addOnChangeListener { _, value, _ ->
-            viewModel.onSliderValueChanged(value)
+        binding.numberOfItemsSlider.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                viewModel.onSliderValueChanged(value)
+            }
         }
 
         binding.maximumValueField.doAfterTextChanged { editable ->

@@ -140,7 +140,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:stepSize="1"
-                    android:value="5"
+                    android:value="@{viewmodel.numberOfItems}"
                     android:valueFrom="3"
                     android:valueTo="8"
                     app:layout_constraintEnd_toEndOf="parent"

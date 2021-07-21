@@ -63,15 +63,15 @@ class GroupCreateViewModel : ViewModel() {
         updateChart()
     }
 
-    private fun updateChart() {
-        _chartData.value =
-            ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
-        _chartUpdate.value = true
-    }
-
     fun onClickSaveButton() {
         // 値のvalidate -> 処理を別のクラスに委譲する
 
         // 保存
+    }
+
+    private fun updateChart() {
+        _chartData.value =
+            ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
+        _chartUpdate.value = true
     }
 }
