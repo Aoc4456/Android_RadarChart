@@ -61,6 +61,7 @@
                     android:layout_marginTop="8dp"
                     android:importantForAutofill="no"
                     android:inputType="text"
+                    android:text="@{viewmodel.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/titleLabel"

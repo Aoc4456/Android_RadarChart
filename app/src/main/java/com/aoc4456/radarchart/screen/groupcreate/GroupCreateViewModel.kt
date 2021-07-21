@@ -9,7 +9,8 @@ import com.github.mikephil.charting.data.RadarData
 
 class GroupCreateViewModel : ViewModel() {
 
-    private var title = ""
+    private val _title = MutableLiveData("")
+    val title: LiveData<String> = _title
 
     private val _numberOfItems = MutableLiveData(5)
     val numberOfItems: LiveData<Int> = _numberOfItems
@@ -39,43 +40,34 @@ class GroupCreateViewModel : ViewModel() {
     val chartUpdate: LiveData<Boolean> = _chartUpdate
 
     fun onViewCreated() {
+        _title.value = "aaa" // TODO ここで編集画面の初期値とかを入力
         updateChart()
     }
 
     fun onSliderValueChanged(newValue: Float) {
-        if (_numberOfItems.value == newValue.toInt()) {
-            return
-        }
+        if (_numberOfItems.value == newValue.toInt()) return
         _numberOfItems.value = newValue.toInt()
         updateChart()
     }
 
     fun onChooseColor(newColor: Int) {
-        if (newColor == _groupColor.value) {
-            return
-        }
+        if (newColor == _groupColor.value) return
         _groupColor.value = newColor
         updateChart()
     }
 
     fun onChangeTitleText(newText: String) {
-        if (newText == title) {
-            return
-        }
-        title = newText
+        if (newText == title.value) return
+        _title.value = newText
     }
 
     fun onChangeMaximumText(newMaximum: String) {
-        if (newMaximum.toInt() == _maximum.value) {
-            return
-        }
+        if (newMaximum.toInt() == _maximum.value) return
         _maximum.value = newMaximum.toInt()
     }
 
     fun onTextChangeMultiEditText(index: Int, newText: String) {
-        if (newText == itemTextList.value?.getOrNull(index)) {
-            return
-        }
+        if (newText == itemTextList.value?.getOrNull(index)) return
         val newList = itemTextList.value!!
         newList[index] = newText
         itemTextList.value = newList
