@@ -43,14 +43,6 @@ interface RadarChartInput {
  * [BindingAdapter]s for the RadarChart
  */
 
-@BindingAdapter("radarDataAndLabels")
-fun setDataAndLabel(radarChart: BaseRadarChart, data: Pair<RadarData, List<String>>) {
-    radarChart.data = data.first
-    radarChart.setChartItemLabel(data.second)
-    radarChart.notifyDataSetChanged()
-    radarChart.invalidate()
-}
-
 @BindingAdapter("radarData")
 fun setRadarData(radarChart: BaseRadarChart, radarData: RadarData) {
     radarChart.data = radarData

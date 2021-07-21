@@ -1,12 +1,16 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.github.mikephil.charting.data.RadarData
 
 class GroupCreateViewModel : ViewModel() {
 
-    private var title = ""
+    private val _title = MutableLiveData("")
+    val title: LiveData<String> = _title
 
     private val _numberOfItems = MutableLiveData(5)
     val numberOfItems: LiveData<Int> = _numberOfItems
@@ -14,7 +18,8 @@ class GroupCreateViewModel : ViewModel() {
     private val _groupColor = MutableLiveData(-14654801)
     val groupColor: LiveData<Int> = _groupColor
 
-    private var maximum = 100
+    private val _maximum = MutableLiveData(100)
+    val maximum: LiveData<Int> = _maximum
 
     private val itemTextList =
         MutableLiveData(mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8"))
@@ -35,43 +40,49 @@ class GroupCreateViewModel : ViewModel() {
     val chartUpdate: LiveData<Boolean> = _chartUpdate
 
     fun onViewCreated() {
+        _title.value = "aaa" // TODO ここで編集画面の初期値とかを入力
         updateChart()
     }
 
-    fun onSliderValueChanged(value: Float) {
-        _numberOfItems.value = value.toInt()
+    fun onSliderValueChanged(newValue: Float) {
+        if (_numberOfItems.value == newValue.toInt()) return
+        _numberOfItems.value = newValue.toInt()
         updateChart()
     }
 
-    fun onChooseColor(color: Int) {
-        _groupColor.value = color
+    fun onChooseColor(newColor: Int) {
+        if (newColor == _groupColor.value) return
+        _groupColor.value = newColor
         updateChart()
     }
 
-    fun onChangeTitleText(text: String) {
-        title = text
+    fun onChangeTitleText(newText: String) {
+        if (newText == title.value) return
+        _title.value = newText
     }
 
-    fun onChangeMaximumText(text: String) {
-        maximum = text.toInt()
+    fun onChangeMaximumText(newMaximum: String) {
+        if (newMaximum.toInt() == _maximum.value) return
+        _maximum.value = newMaximum.toInt()
     }
 
-    fun onTextChangeMultiEditText(index: Int, text: String) {
+    fun onTextChangeMultiEditText(index: Int, newText: String) {
+        if (newText == itemTextList.value?.getOrNull(index)) return
         val newList = itemTextList.value!!
-        newList[index] = text
+        newList[index] = newText
         itemTextList.value = newList
         updateChart()
-    }
-
-    private fun updateChart() {
-        _chartData.value =
-            ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
-        _chartUpdate.value = true
     }
 
     fun onClickSaveButton() {
         // 値のvalidate -> 処理を別のクラスに委譲する
 
         // 保存
+    }
+
+    private fun updateChart() {
+        _chartData.value =
+            ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
+        _chartUpdate.value = true
     }
 }
