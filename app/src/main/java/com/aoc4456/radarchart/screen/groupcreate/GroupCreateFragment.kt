@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupCreateFragment : Fragment() {
@@ -53,7 +53,6 @@ class GroupCreateFragment : Fragment() {
         }
 
         binding.maximumValueField.doAfterTextChanged { editable ->
-            Timber.d("最大値フィールド : editable = $editable")
             viewModel.onChangeMaximumText(editable.toString())
         }
 
@@ -64,5 +63,9 @@ class GroupCreateFragment : Fragment() {
                 }
             }
         )
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
     }
 }

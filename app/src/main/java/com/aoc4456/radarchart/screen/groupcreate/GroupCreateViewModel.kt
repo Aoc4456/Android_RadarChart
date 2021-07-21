@@ -5,6 +5,9 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ValidateInputFieldUtil.maximumValidate
+import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
+import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
 
 class GroupCreateViewModel : ViewModel() {
@@ -18,8 +21,8 @@ class GroupCreateViewModel : ViewModel() {
     private val _groupColor = MutableLiveData(-14654801)
     val groupColor: LiveData<Int> = _groupColor
 
-    private val _maximum = MutableLiveData(100)
-    val maximum: LiveData<Int> = _maximum
+    private val _maximum = MutableLiveData("100")
+    val maximum: LiveData<String> = _maximum
 
     private val itemTextList =
         MutableLiveData(mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8"))
@@ -38,6 +41,9 @@ class GroupCreateViewModel : ViewModel() {
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
+
+    private val _errorMessage = MutableLiveData<Int>()
+    val errorMessage: LiveData<Int> = _errorMessage
 
     fun onViewCreated() {
         _title.value = "aaa" // TODO ここで編集画面の初期値とかを入力
@@ -62,8 +68,8 @@ class GroupCreateViewModel : ViewModel() {
     }
 
     fun onChangeMaximumText(newMaximum: String) {
-        if (newMaximum.toInt() == _maximum.value) return
-        _maximum.value = newMaximum.toInt()
+        if (newMaximum == _maximum.value) return
+        _maximum.value = newMaximum
     }
 
     fun onTextChangeMultiEditText(index: Int, newText: String) {
@@ -75,7 +81,12 @@ class GroupCreateViewModel : ViewModel() {
     }
 
     fun onClickSaveButton() {
-        // 値のvalidate -> 処理を別のクラスに委譲する
+        val validateResult = validateInputField()
+        val validateFail = !validateResult.first
+        if (validateFail) {
+            _errorMessage.value = validateResult.second!!
+            return
+        }
 
         // 保存
     }
@@ -84,5 +95,19 @@ class GroupCreateViewModel : ViewModel() {
         _chartData.value =
             ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
         _chartUpdate.value = true
+    }
+
+    private fun validateInputField(): Pair<Boolean, Int?> {
+        val titleValidateResult = titleValidate(title.value!!)
+        if (titleValidateResult != ValidateResult.SUCCESS) {
+            return Pair(false, titleValidateResult.stringResId)
+        }
+
+        val maximumValidateResult = maximumValidate(maximum.value!!)
+        if (maximumValidateResult != ValidateResult.SUCCESS) {
+            return Pair(false, maximumValidateResult.stringResId)
+        }
+
+        return Pair(true, null)
     }
 }
