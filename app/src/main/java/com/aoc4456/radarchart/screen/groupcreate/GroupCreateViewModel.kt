@@ -4,13 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.maximumValidate
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class GroupCreateViewModel : ViewModel() {
+@HiltViewModel
+class GroupCreateViewModel @Inject constructor(
+    private val repository: RadarChartRepository
+) : ViewModel() {
 
     private val _title = MutableLiveData("")
     val title: LiveData<String> = _title
