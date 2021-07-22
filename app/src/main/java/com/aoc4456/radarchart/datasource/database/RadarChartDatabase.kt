@@ -5,7 +5,8 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [ChartGroup::class, ChartGroupLabel::class, MyChart::class, ChartValue::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class RadarChartDatabase : RoomDatabase() {
     abstract fun radarChartDao(): RadarChartDao
