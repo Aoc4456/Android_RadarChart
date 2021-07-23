@@ -16,7 +16,7 @@ data class ChartGroup(
     var title: String = "",
     var color: Int,
     var iconFileName: String = "",
-    var maximumValue: Double = 0.0,
+    var maximumValue: Int = 0,
     var createdAt: Long = System.currentTimeMillis(),
     var updatedAt: Long = System.currentTimeMillis(),
     var sortIndex: Int = SortIndex.CREATED_AT,

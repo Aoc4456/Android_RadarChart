@@ -4,5 +4,5 @@ import com.aoc4456.radarchart.datasource.database.ChartGroup
 
 interface RadarChartRepository {
 
-    suspend fun saveGroup(group: ChartGroup)
+    suspend fun saveGroup(group: ChartGroup, labels: List<String>)
 }
