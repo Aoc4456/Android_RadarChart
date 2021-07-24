@@ -1,16 +1,15 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.aoc4456.radarchart.datasource.RadarChartRepository
+import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.maximumValidate
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -95,6 +94,10 @@ class GroupCreateViewModel @Inject constructor(
         }
 
         // 保存
+        val entity = createEntity()
+        viewModelScope.launch {
+            repository.saveGroup(entity.first, entity.second)
+        }
     }
 
     private fun updateChart() {
@@ -115,5 +118,15 @@ class GroupCreateViewModel @Inject constructor(
         }
 
         return Pair(true, null)
+    }
+
+    private fun createEntity(): Pair<ChartGroup, List<String>> {
+        val group = ChartGroup(
+            title = title.value!!,
+            color = groupColor.value!!,
+            maximumValue = maximum.value!!.toInt(),
+        )
+        val labels = exactlySizedTextList.value!!
+        return Pair(group, labels)
     }
 }
