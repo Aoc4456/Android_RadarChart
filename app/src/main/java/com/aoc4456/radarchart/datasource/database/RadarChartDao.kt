@@ -1,5 +1,6 @@
 package com.aoc4456.radarchart.datasource.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -31,4 +32,8 @@ interface RadarChartDao {
             insertChartGroupLabel(groupLabel)
         }
     }
+
+    @Transaction
+    @Query("SELECT * FROM ChartGroup")
+    fun observeChartGroupForGroupList(): LiveData<List<GroupWithLabelAndCharts>>
 }

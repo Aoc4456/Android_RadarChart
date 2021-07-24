@@ -57,6 +57,10 @@ data class GroupWithLabelAndCharts(
         entityColumn = "chartGroupId"
     )
     val labelList: List<ChartGroupLabel>,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "chartGroupId"
+    )
     val chartList: List<MyChart>
 )
 
