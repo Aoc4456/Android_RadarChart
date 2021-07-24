@@ -50,6 +50,9 @@ class GroupCreateViewModel @Inject constructor(
     private val _errorMessage = MutableLiveData<Int>()
     val errorMessage: LiveData<Int> = _errorMessage
 
+    private val _dismiss = MutableLiveData<Boolean>()
+    val dismiss: LiveData<Boolean> = _dismiss
+
     fun onViewCreated() {
         _title.value = "aaa" // TODO ここで編集画面の初期値とかを入力
         updateChart()
@@ -86,6 +89,7 @@ class GroupCreateViewModel @Inject constructor(
     }
 
     fun onClickSaveButton() {
+        // バリデーション
         val validateResult = validateInputField()
         val validateFail = !validateResult.first
         if (validateFail) {
@@ -98,6 +102,8 @@ class GroupCreateViewModel @Inject constructor(
         viewModelScope.launch {
             repository.saveGroup(entity.first, entity.second)
         }
+
+        _dismiss.value = true
     }
 
     private fun updateChart() {

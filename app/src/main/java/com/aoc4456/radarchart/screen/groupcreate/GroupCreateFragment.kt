@@ -67,5 +67,9 @@ class GroupCreateFragment : Fragment() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
+
+        viewModel.dismiss.observe(viewLifecycleOwner) {
+            findNavController().popBackStack()
+        }
     }
 }
