@@ -8,13 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.GroupListFragmentBinding
-import com.aoc4456.radarchart.screen.groupcreate.GroupCreateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GroupListFragment : Fragment() {
 
-    private val viewModel by viewModels<GroupCreateViewModel>()
+    private val viewModel by viewModels<GroupListViewModel>()
     private lateinit var binding: GroupListFragmentBinding
 
     override fun onCreateView(
@@ -41,7 +40,10 @@ class GroupListFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        // TODO: RecyclerViewにAdapterを設定
+        binding.recyclerView.adapter = GroupListAdapter(viewModel)
         // TODO: viewModelの
+        viewModel.groupList.observe(viewLifecycleOwner) {
+            (binding.recyclerView.adapter as GroupListAdapter).submitList(it)
+        }
     }
 }

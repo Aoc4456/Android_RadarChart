@@ -1,8 +1,6 @@
 package com.aoc4456.radarchart.datasource.database
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
+import androidx.room.*
 import java.util.*
 
 /**
@@ -34,6 +32,7 @@ data class ChartGroupLabel(
 data class MyChart(
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),
+    var chartGroupId: String = "",
     var title: String = "",
     var color: Int,
     var comment: String = "",
@@ -46,6 +45,23 @@ data class ChartValue(
     var myChartId: String = "",
     var index: Int = 0,
     var value: Double = 0.0
+)
+
+/**
+ * １対多のリレーション
+ */
+data class GroupWithLabelAndCharts(
+    @Embedded val group: ChartGroup,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "chartGroupId"
+    )
+    val labelList: List<ChartGroupLabel>,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "chartGroupId"
+    )
+    val chartList: List<MyChart>
 )
 
 class Converters {

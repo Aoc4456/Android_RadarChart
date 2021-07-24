@@ -21,6 +21,7 @@ open class BaseRadarChart(context: Context, attrs: AttributeSet) :
         isRotationEnabled = false
         legend.isEnabled = false
         isHighlightPerTapEnabled = false
+        description.isEnabled = false
 
         xAxis.valueFormatter = IndexAxisValueFormatter()
 

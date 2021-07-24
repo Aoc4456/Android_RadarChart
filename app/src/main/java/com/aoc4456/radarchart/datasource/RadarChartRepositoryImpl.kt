@@ -1,6 +1,8 @@
 package com.aoc4456.radarchart.datasource
 
+import androidx.lifecycle.LiveData
 import com.aoc4456.radarchart.datasource.database.ChartGroup
+import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.RadarChartDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -15,5 +17,9 @@ class RadarChartRepositoryImpl(
         withContext(ioDispatcher) {
             radarChartDao.saveChartGroupAndLabel(group, labels)
         }
+    }
+
+    override fun observeChartGroupList(): LiveData<List<GroupWithLabelAndCharts>> {
+        return radarChartDao.observeChartGroupForGroupList()
     }
 }
