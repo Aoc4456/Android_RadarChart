@@ -20,10 +20,10 @@
             android:orientation="horizontal">
 
             <!-- チャート or アイコン-->
-            <View
+            <com.aoc4456.radarchart.component.chart.radarchart.BaseRadarChart
+                android:id="@+id/radarChart"
                 android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:background="@color/dark_gray" />
+                android:layout_height="match_parent" />
 
             <!-- タイトル -->
             <TextView
