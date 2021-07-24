@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.GroupListFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupListFragment : Fragment() {
@@ -40,10 +39,11 @@ class GroupListFragment : Fragment() {
             val action = GroupListFragmentDirections.actionGroupListFragmentToTestFragment()
             findNavController().navigate(action)
         }
-        // TODO: RecyclerViewにAdapterを設定
+
+        binding.recyclerView.adapter = GroupListAdapter(viewModel)
         // TODO: viewModelの
         viewModel.groupList.observe(viewLifecycleOwner) {
-            Timber.d("グループリスト $it")
+            (binding.recyclerView.adapter as GroupListAdapter).submitList(it)
         }
     }
 }

@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.databinding.ChartGroupListItemBinding
-import com.aoc4456.radarchart.datasource.database.ChartGroup
+import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 
 class GroupListAdapter(private val viewModel: GroupListViewModel) :
-    ListAdapter<ChartGroup, GroupListAdapter.ViewHolder>(ChartGroupDiffCallBack()) {
+    ListAdapter<GroupWithLabelAndCharts, GroupListAdapter.ViewHolder>(ChartGroupDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.createViewHolder(parent)
@@ -17,10 +17,16 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+        holder.bind(item)
     }
 
-    class ViewHolder private constructor(binding: ChartGroupListItemBinding) :
+    class ViewHolder private constructor(val binding: ChartGroupListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: GroupWithLabelAndCharts) {
+            binding.chartGroup = item
+            binding.executePendingBindings()
+        }
 
         companion object {
             fun createViewHolder(parent: ViewGroup): ViewHolder {
@@ -32,12 +38,18 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
     }
 }
 
-class ChartGroupDiffCallBack : DiffUtil.ItemCallback<ChartGroup>() {
-    override fun areItemsTheSame(oldItem: ChartGroup, newItem: ChartGroup): Boolean {
-        return oldItem.id == newItem.id
+class ChartGroupDiffCallBack : DiffUtil.ItemCallback<GroupWithLabelAndCharts>() {
+    override fun areItemsTheSame(
+        oldItem: GroupWithLabelAndCharts,
+        newItem: GroupWithLabelAndCharts
+    ): Boolean {
+        return oldItem.group.id == newItem.group.id
     }
 
-    override fun areContentsTheSame(oldItem: ChartGroup, newItem: ChartGroup): Boolean {
+    override fun areContentsTheSame(
+        oldItem: GroupWithLabelAndCharts,
+        newItem: GroupWithLabelAndCharts
+    ): Boolean {
         return oldItem == newItem
     }
 }
