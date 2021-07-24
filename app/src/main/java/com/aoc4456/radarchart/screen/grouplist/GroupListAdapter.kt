@@ -16,6 +16,7 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = getItem(position)
     }
 
     class ViewHolder private constructor(binding: ChartGroupListItemBinding) :

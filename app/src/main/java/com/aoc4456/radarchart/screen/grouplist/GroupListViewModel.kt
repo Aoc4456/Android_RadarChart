@@ -5,4 +5,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class GroupListViewModel @Inject constructor() : ViewModel()
+class GroupListViewModel @Inject constructor() : ViewModel(){
+
+    fun onViewCreated(){
+
+    }
+}
