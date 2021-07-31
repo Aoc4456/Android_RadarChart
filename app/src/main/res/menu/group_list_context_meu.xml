@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/group_edit"
+        android:title="@string/group_edit" />
+    <item
+        android:id="@+id/sorting_items"
+        android:title="@string/sorting_items" />
+</menu>
