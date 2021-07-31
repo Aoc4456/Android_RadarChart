@@ -2,6 +2,7 @@ package com.aoc4456.radarchart.screen.grouplist
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -45,5 +46,13 @@ class GroupListFragment : Fragment() {
         viewModel.groupList.observe(viewLifecycleOwner) {
             (binding.recyclerView.adapter as GroupListAdapter).submitList(it)
         }
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val position = (binding.recyclerView.adapter as GroupListAdapter).longTappedPosition
+        if (position != null) {
+            viewModel.onSelectedContextMenu(position, item.itemId)
+        }
+        return super.onContextItemSelected(item)
     }
 }

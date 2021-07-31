@@ -1,23 +1,35 @@
 package com.aoc4456.radarchart.screen.grouplist
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.databinding.ChartGroupListItemBinding
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
 
 class GroupListAdapter(private val viewModel: GroupListViewModel) :
-    ListAdapter<GroupWithLabelAndCharts, GroupListAdapter.ViewHolder>(ChartGroupDiffCallBack()) {
+    ListAdapter<GroupWithLabelAndCharts, GroupListAdapter.ViewHolder>(ChartGroupDiffCallBack()),
+    View.OnCreateContextMenuListener {
+
+    var longTappedPosition: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.createViewHolder(parent)
+        val viewHolder = ViewHolder.createViewHolder(parent)
+        viewHolder.itemView.setOnCreateContextMenuListener(this)
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+        holder.itemView.setOnLongClickListener {
+            longTappedPosition = position
+            false
+        }
+        holder.itemView.setOnClickListener {
+            viewModel.onClickListItem(position)
+        }
         holder.bind(item)
     }
 
@@ -44,6 +56,17 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
                 return ViewHolder(binding)
             }
         }
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        if (menu == null || v == null) return
+        menu.setHeaderTitle(R.string.edit)
+        val inflater = MenuInflater(v.context)
+        inflater.inflate(R.menu.group_list_context_meu, menu)
     }
 }
 
