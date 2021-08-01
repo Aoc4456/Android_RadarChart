@@ -28,10 +28,12 @@
                 android:src="@drawable/ic_baseline_close_24" />
 
             <TextView
+                android:id="@+id/toolBarTitle"
                 style="@style/ToolBarTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:text="@{viewmodel.screenTitle}"
                 tools:text="グループ新規作成" />
         </FrameLayout>
 

@@ -13,6 +13,7 @@
     <string name="maximum_is_empty">グラフの最大値が空です</string>
     <string name="maximum_is_illegal">グラフの最大値が不正です</string>
     <string name="edit">編集</string>
+    <string name="create_new_group">グループ新規作成</string>
     <string name="group_edit">グループ編集</string>
     <string name="sorting_items">項目の並び替え</string>
 </resources>

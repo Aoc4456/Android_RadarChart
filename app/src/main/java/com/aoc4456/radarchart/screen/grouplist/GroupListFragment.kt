@@ -32,7 +32,8 @@ class GroupListFragment : Fragment() {
 
         // setup FAB
         binding.floatingActionButton.setOnClickListener {
-            val action = GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment()
+            val action =
+                GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment(null)
             findNavController().navigate(action)
         }
 
@@ -42,9 +43,15 @@ class GroupListFragment : Fragment() {
         }
 
         binding.recyclerView.adapter = GroupListAdapter(viewModel)
-        // TODO: viewModelの
+        // TODO: 自作BindingAdapterを作成してバインドする
         viewModel.groupList.observe(viewLifecycleOwner) {
             (binding.recyclerView.adapter as GroupListAdapter).submitList(it)
+        }
+
+        viewModel.navigateToGroupEdit.observe(viewLifecycleOwner) {
+            val action =
+                GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment(it)
+            findNavController().navigate(action)
         }
     }
 

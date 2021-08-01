@@ -9,6 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +19,8 @@ class GroupCreateFragment : Fragment() {
 
     private lateinit var binding: GroupCreateFragmentBinding
     private val viewModel by viewModels<GroupCreateViewModel>()
+
+    private val navArgs: GroupCreateFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +35,7 @@ class GroupCreateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.onViewCreated()
+        viewModel.onViewCreated(navArgs.groupWithLabelAndCharts)
 
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()

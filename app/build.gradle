@@ -12,6 +12,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
     // Safe Args (Navigation)
     id 'androidx.navigation.safeargs.kotlin'
+    // Parcelable
+    id 'kotlin-parcelize'
 }
 
 android {
