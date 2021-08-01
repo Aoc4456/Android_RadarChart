@@ -42,9 +42,12 @@ class GroupListFragment : Fragment() {
         }
 
         binding.recyclerView.adapter = GroupListAdapter(viewModel)
-        // TODO: viewModelの
+        // TODO: 自作BindingAdapterを作成してバインドする
         viewModel.groupList.observe(viewLifecycleOwner) {
             (binding.recyclerView.adapter as GroupListAdapter).submitList(it)
+        }
+
+        viewModel.navigateToGroupEdit.observe(viewLifecycleOwner) {
         }
     }
 

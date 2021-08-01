@@ -1,12 +1,15 @@
 package com.aoc4456.radarchart.datasource.database
 
+import android.os.Parcelable
 import androidx.room.*
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
 /**
  * Roomのテーブルを表すクラスたち
  */
 
+@Parcelize
 @Entity
 data class ChartGroup(
     @PrimaryKey
@@ -19,15 +22,17 @@ data class ChartGroup(
     var updatedAt: Long = System.currentTimeMillis(),
     var sortIndex: Int = SortIndex.CREATED_AT,
     var orderBy: OrderBy = OrderBy.ASC
-)
+) : Parcelable
 
+@Parcelize
 @Entity(primaryKeys = ["chartGroupId", "index"])
 data class ChartGroupLabel(
     var chartGroupId: String = "",
     var index: Int = 0,
     var text: String = ""
-)
+) : Parcelable
 
+@Parcelize
 @Entity
 data class MyChart(
     @PrimaryKey
@@ -38,7 +43,7 @@ data class MyChart(
     var comment: String = "",
     var createdAt: Long = System.currentTimeMillis(),
     var updatedAt: Long = System.currentTimeMillis()
-)
+) : Parcelable
 
 @Entity(primaryKeys = ["myChartId", "index"])
 data class ChartValue(
@@ -50,6 +55,7 @@ data class ChartValue(
 /**
  * １対多のリレーション
  */
+@Parcelize
 data class GroupWithLabelAndCharts(
     @Embedded val group: ChartGroup,
     @Relation(
@@ -62,7 +68,7 @@ data class GroupWithLabelAndCharts(
         entityColumn = "chartGroupId"
     )
     val chartList: List<MyChart>
-)
+) : Parcelable
 
 class Converters {
     @TypeConverter
