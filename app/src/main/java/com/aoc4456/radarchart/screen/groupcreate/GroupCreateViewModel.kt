@@ -19,10 +19,16 @@ class GroupCreateViewModel @Inject constructor(
     private val repository: RadarChartRepository
 ) : ViewModel() {
 
-    private var groupArgs: GroupWithLabelAndCharts? = null
+    private val _groupArgs = MutableLiveData<GroupWithLabelAndCharts?>()
+    val groupArgs: LiveData<GroupWithLabelAndCharts?> = _groupArgs
 
-    private val _screenTitle = MutableLiveData<Int>()
-    val screenTitle: LiveData<Int> = _screenTitle
+    val screenTitle: LiveData<Int> = groupArgs.map {
+        if (it == null) {
+            R.string.create_new_group
+        } else {
+            R.string.group_edit
+        }
+    }
 
     private val _title = MutableLiveData("")
     val title: LiveData<String> = _title
@@ -61,11 +67,8 @@ class GroupCreateViewModel @Inject constructor(
     val dismiss: LiveData<Boolean> = _dismiss
 
     fun onViewCreated(groupArgs: GroupWithLabelAndCharts?) {
-        if (groupArgs == null) {
-            _screenTitle.value = R.string.create_new_group
-        } else {
-            this.groupArgs = groupArgs
-            _screenTitle.value = R.string.group_edit
+        _groupArgs.value = groupArgs
+        if (groupArgs != null) {
             _title.value = groupArgs.group.title
             _groupColor.value = groupArgs.group.color
             _maximum.value = groupArgs.group.maximumValue.toString()
