@@ -25,7 +25,12 @@
         android:id="@+id/groupCreateFragment"
         android:name="com.aoc4456.radarchart.screen.groupcreate.GroupCreateFragment"
         android:label="group_create_fragment"
-        tools:layout="@layout/group_create_fragment" />
+        tools:layout="@layout/group_create_fragment" >
+        <argument
+            android:name="groupWithLabelAndCharts"
+            app:argType="com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/testFragment"
         android:name="com.aoc4456.radarchart.screen.testscreen.TestFragment"

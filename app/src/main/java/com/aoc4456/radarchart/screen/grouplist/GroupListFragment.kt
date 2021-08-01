@@ -32,7 +32,8 @@ class GroupListFragment : Fragment() {
 
         // setup FAB
         binding.floatingActionButton.setOnClickListener {
-            val action = GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment()
+            val action =
+                GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment(null)
             findNavController().navigate(action)
         }
 
@@ -48,6 +49,9 @@ class GroupListFragment : Fragment() {
         }
 
         viewModel.navigateToGroupEdit.observe(viewLifecycleOwner) {
+            val action =
+                GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment(it)
+            findNavController().navigate(action)
         }
     }
 

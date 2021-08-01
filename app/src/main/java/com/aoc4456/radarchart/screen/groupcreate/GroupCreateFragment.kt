@@ -9,15 +9,19 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupCreateFragment : Fragment() {
 
     private lateinit var binding: GroupCreateFragmentBinding
     private val viewModel by viewModels<GroupCreateViewModel>()
+
+    val navArgs: GroupCreateFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +36,7 @@ class GroupCreateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.d("引数を確認 ${navArgs.groupWithLabelAndCharts}")
         viewModel.onViewCreated()
 
         binding.toolbarCloseButton.setOnClickListener {
