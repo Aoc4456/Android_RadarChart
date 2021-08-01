@@ -3,6 +3,7 @@ package com.aoc4456.radarchart.screen.groupcreate
 import androidx.lifecycle.*
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.ChartGroup
+import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.maximumValidate
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
@@ -17,6 +18,8 @@ class GroupCreateViewModel @Inject constructor(
     private val repository: RadarChartRepository
 ) : ViewModel() {
 
+    private var groupArgs: GroupWithLabelAndCharts? = null
+
     private val _title = MutableLiveData("")
     val title: LiveData<String> = _title
 
@@ -29,7 +32,7 @@ class GroupCreateViewModel @Inject constructor(
     private val _maximum = MutableLiveData("100")
     val maximum: LiveData<String> = _maximum
 
-    private val itemTextList =
+    private var itemTextList =
         MutableLiveData(mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8"))
 
     val exactlySizedTextList = MediatorLiveData<List<String>>().apply {
@@ -53,8 +56,15 @@ class GroupCreateViewModel @Inject constructor(
     private val _dismiss = MutableLiveData<Boolean>()
     val dismiss: LiveData<Boolean> = _dismiss
 
-    fun onViewCreated() {
-        _title.value = "aaa" // TODO ここで編集画面の初期値とかを入力
+    fun onViewCreated(groupArgs: GroupWithLabelAndCharts?) {
+        if (groupArgs != null) {
+            this.groupArgs = groupArgs
+            _title.value = groupArgs.group.title
+            _groupColor.value = groupArgs.group.color
+            _maximum.value = groupArgs.group.maximumValue.toString()
+            itemTextList.value = groupArgs.labelList.map { it.text }.toMutableList()
+            _numberOfItems.value = groupArgs.labelList.size
+        }
         updateChart()
     }
 
