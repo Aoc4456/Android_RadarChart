@@ -117,6 +117,13 @@ class GroupCreateViewModel @Inject constructor(
         _dismiss.value = true
     }
 
+    fun onClickTrashButton() {
+        if (groupArgs.value == null) return
+        // TODO 削除処理
+
+        // 画面を閉じる
+    }
+
     private fun updateChart() {
         _chartData.value =
             ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
