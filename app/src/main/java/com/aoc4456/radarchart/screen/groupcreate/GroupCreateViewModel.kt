@@ -1,6 +1,7 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
 import androidx.lifecycle.*
+import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
@@ -19,6 +20,9 @@ class GroupCreateViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var groupArgs: GroupWithLabelAndCharts? = null
+
+    private val _screenTitle = MutableLiveData<Int>()
+    val screenTitle: LiveData<Int> = _screenTitle
 
     private val _title = MutableLiveData("")
     val title: LiveData<String> = _title
@@ -57,8 +61,11 @@ class GroupCreateViewModel @Inject constructor(
     val dismiss: LiveData<Boolean> = _dismiss
 
     fun onViewCreated(groupArgs: GroupWithLabelAndCharts?) {
-        if (groupArgs != null) {
+        if (groupArgs == null) {
+            _screenTitle.value = R.string.create_new_group
+        } else {
             this.groupArgs = groupArgs
+            _screenTitle.value = R.string.group_edit
             _title.value = groupArgs.group.title
             _groupColor.value = groupArgs.group.color
             _maximum.value = groupArgs.group.maximumValue.toString()
