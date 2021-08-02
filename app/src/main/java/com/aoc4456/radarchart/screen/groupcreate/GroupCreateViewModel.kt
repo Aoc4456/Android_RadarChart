@@ -119,9 +119,11 @@ class GroupCreateViewModel @Inject constructor(
 
     fun onClickTrashButton() {
         if (groupArgs.value == null) return
-        // TODO 削除処理
+        viewModelScope.launch {
+            repository.deleteGroup(groupArgs.value!!.group.id)
+        }
 
-        // 画面を閉じる
+        _dismiss.value = true
     }
 
     private fun updateChart() {

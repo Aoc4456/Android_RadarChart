@@ -56,9 +56,9 @@ class GroupListFragment : Fragment() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val position = (binding.recyclerView.adapter as GroupListAdapter).longTappedPosition
-        if (position != null) {
-            viewModel.onSelectedContextMenu(position, item.itemId)
+        val groupItem = (binding.recyclerView.adapter as GroupListAdapter).longTappedItem
+        if (groupItem != null) {
+            viewModel.onSelectedContextMenu(groupItem, item.itemId)
         }
         return super.onContextItemSelected(item)
     }

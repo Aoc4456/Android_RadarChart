@@ -13,7 +13,7 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
     ListAdapter<GroupWithLabelAndCharts, GroupListAdapter.ViewHolder>(ChartGroupDiffCallBack()),
     View.OnCreateContextMenuListener {
 
-    var longTappedPosition: Int? = null
+    var longTappedItem: GroupWithLabelAndCharts? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewHolder = ViewHolder.createViewHolder(parent)
@@ -24,11 +24,11 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.itemView.setOnLongClickListener {
-            longTappedPosition = position
+            longTappedItem = item
             false
         }
         holder.itemView.setOnClickListener {
-            viewModel.onClickListItem(position)
+            viewModel.onClickListItem(item)
         }
         holder.bind(item)
     }
