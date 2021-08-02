@@ -7,10 +7,9 @@ import androidx.room.*
 interface RadarChartDao {
 
     /**
-     * Insert a ChartGroup in the database. If the task already exists, replace it.
-     *
-     * @param task the task to be inserted.
+     * Create
      */
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChartGroup(group: ChartGroup)
 
@@ -33,7 +32,18 @@ interface RadarChartDao {
         }
     }
 
+    /**
+     * Read
+     */
+
     @Transaction
     @Query("SELECT * FROM ChartGroup")
     fun observeChartGroupForGroupList(): LiveData<List<GroupWithLabelAndCharts>>
+
+    /**
+     * Delete
+     */
+
+    @Query("DELETE FROM ChartGroup WHERE id = :id")
+    fun deleteChartGroup(id: String)
 }
