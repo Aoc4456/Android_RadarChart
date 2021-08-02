@@ -25,7 +25,17 @@ data class ChartGroup(
 ) : Parcelable
 
 @Parcelize
-@Entity(primaryKeys = ["chartGroupId", "index"])
+@Entity(
+    primaryKeys = ["chartGroupId", "index"],
+    foreignKeys = [
+        ForeignKey(
+            entity = ChartGroup::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("chartGroupId"),
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class ChartGroupLabel(
     var chartGroupId: String = "",
     var index: Int = 0,
@@ -33,7 +43,16 @@ data class ChartGroupLabel(
 ) : Parcelable
 
 @Parcelize
-@Entity
+@Entity(
+    foreignKeys = [
+        ForeignKey(
+            entity = ChartGroup::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("chartGroupId"),
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class MyChart(
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),
@@ -45,7 +64,17 @@ data class MyChart(
     var updatedAt: Long = System.currentTimeMillis()
 ) : Parcelable
 
-@Entity(primaryKeys = ["myChartId", "index"])
+@Entity(
+    primaryKeys = ["myChartId", "index"],
+    foreignKeys = [
+        ForeignKey(
+            entity = MyChart::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("myChartId"),
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 data class ChartValue(
     var myChartId: String = "",
     var index: Int = 0,

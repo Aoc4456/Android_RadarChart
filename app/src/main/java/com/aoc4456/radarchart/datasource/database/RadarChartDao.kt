@@ -16,9 +16,6 @@ interface RadarChartDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChartGroupLabel(label: ChartGroupLabel)
 
-    @Query("SELECT * FROM ChartGroup")
-    fun getAllChartGroup(): List<ChartGroup>
-
     @Transaction
     suspend fun saveChartGroupAndLabel(group: ChartGroup, labels: List<String>) {
         insertChartGroup(group)
@@ -36,6 +33,9 @@ interface RadarChartDao {
      * Read
      */
 
+    @Query("SELECT * FROM ChartGroup")
+    fun getAllChartGroup(): List<ChartGroup>
+
     @Transaction
     @Query("SELECT * FROM ChartGroup")
     fun observeChartGroupForGroupList(): LiveData<List<GroupWithLabelAndCharts>>
@@ -44,6 +44,6 @@ interface RadarChartDao {
      * Delete
      */
 
-    @Query("DELETE FROM ChartGroup WHERE id = :id")
-    fun deleteChartGroup(id: String)
+    @Query("DELETE FROM ChartGroup WHERE id = :groupId")
+    suspend fun deleteChartGroup(groupId: String)
 }
