@@ -13,13 +13,31 @@ class RadarChartRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RadarChartRepository {
 
+    /**
+     * Create
+     */
+
     override suspend fun saveGroup(group: ChartGroup, labels: List<String>) {
         withContext(ioDispatcher) {
             radarChartDao.saveChartGroupAndLabel(group, labels)
         }
     }
 
+    /**
+     * Read
+     */
+
     override fun observeChartGroupList(): LiveData<List<GroupWithLabelAndCharts>> {
         return radarChartDao.observeChartGroupForGroupList()
+    }
+
+    /**
+     * Delete
+     */
+
+    override suspend fun deleteGroup(groupId: String) {
+        withContext(ioDispatcher) {
+            radarChartDao.deleteChartGroup(groupId)
+        }
     }
 }

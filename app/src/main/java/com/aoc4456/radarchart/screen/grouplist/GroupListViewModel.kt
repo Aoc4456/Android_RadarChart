@@ -21,15 +21,15 @@ class GroupListViewModel @Inject constructor(
     private val _navigateToGroupEdit = PublishLiveData<GroupWithLabelAndCharts?>()
     val navigateToGroupEdit: PublishLiveData<GroupWithLabelAndCharts?> = _navigateToGroupEdit
 
-    fun onClickListItem(position: Int) {
-        Timber.d("クリックポジション = $position")
+    fun onClickListItem(groupItem: GroupWithLabelAndCharts) {
+        Timber.d("クリックアイテム = ${groupItem.group.title}")
     }
 
-    fun onSelectedContextMenu(position: Int, itemId: Int) {
-        Timber.d("長押しポジション = $position  itemId = $itemId")
+    fun onSelectedContextMenu(groupItem: GroupWithLabelAndCharts, itemId: Int) {
+        Timber.d("長押しアイテム = ${groupItem.group.title}  itemId = $itemId")
         when (itemId) {
             R.id.group_edit -> {
-                _navigateToGroupEdit.value = groupList.value!![position]
+                _navigateToGroupEdit.value = groupItem
             }
             R.id.sorting_items -> {
             }

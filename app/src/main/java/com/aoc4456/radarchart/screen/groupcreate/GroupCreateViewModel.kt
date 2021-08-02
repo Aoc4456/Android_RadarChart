@@ -1,7 +1,6 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
 import androidx.lifecycle.*
-import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
@@ -19,10 +18,8 @@ class GroupCreateViewModel @Inject constructor(
     private val repository: RadarChartRepository
 ) : ViewModel() {
 
-    private var groupArgs: GroupWithLabelAndCharts? = null
-
-    private val _screenTitle = MutableLiveData<Int>()
-    val screenTitle: LiveData<Int> = _screenTitle
+    private val _groupArgs = MutableLiveData<GroupWithLabelAndCharts?>()
+    val groupArgs: LiveData<GroupWithLabelAndCharts?> = _groupArgs
 
     private val _title = MutableLiveData("")
     val title: LiveData<String> = _title
@@ -61,11 +58,8 @@ class GroupCreateViewModel @Inject constructor(
     val dismiss: LiveData<Boolean> = _dismiss
 
     fun onViewCreated(groupArgs: GroupWithLabelAndCharts?) {
-        if (groupArgs == null) {
-            _screenTitle.value = R.string.create_new_group
-        } else {
-            this.groupArgs = groupArgs
-            _screenTitle.value = R.string.group_edit
+        if (groupArgs != null) {
+            _groupArgs.value = groupArgs
             _title.value = groupArgs.group.title
             _groupColor.value = groupArgs.group.color
             _maximum.value = groupArgs.group.maximumValue.toString()
@@ -118,6 +112,15 @@ class GroupCreateViewModel @Inject constructor(
         val entity = createEntity()
         viewModelScope.launch {
             repository.saveGroup(entity.first, entity.second)
+        }
+
+        _dismiss.value = true
+    }
+
+    fun onClickTrashButton() {
+        if (groupArgs.value == null) return
+        viewModelScope.launch {
+            repository.deleteGroup(groupArgs.value!!.group.id)
         }
 
         _dismiss.value = true
