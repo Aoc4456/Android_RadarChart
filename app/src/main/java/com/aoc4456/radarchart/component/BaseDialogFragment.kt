@@ -3,7 +3,15 @@ package com.aoc4456.radarchart.component
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 
-open class BaseDialogFragment private constructor() : DialogFragment() {
+/**
+ * DialogFragmentを使用する場合は、このクラスを継承してください
+ *
+ * 使い方
+ * 1. このクラスを継承したクラスは、コンストラクタを private に変更する
+ * 2. コールバック用のインターフェースを作成し、プロパティで保持する。onAttach で リスナーを復元する
+ * 3. 呼び出し側のFragment では、コールバック用のインターフェースを実装する
+ */
+open class BaseDialogFragment : DialogFragment() {
 
     private val title = arguments?.getString(TITLE)
     private val message = arguments?.getString(MESSAGE)
