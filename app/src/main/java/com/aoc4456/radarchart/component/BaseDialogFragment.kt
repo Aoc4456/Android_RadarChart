@@ -1,22 +1,59 @@
 package com.aoc4456.radarchart.component
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 
 /**
- * DialogFragmentを使用する場合は、このクラスを継承してください
+ * Common Dialog Fragment to retain content even if life cycle changes
  *
  * 使い方
- * 1. このクラスを継承したクラスは、コンストラクタを private に変更する
- * 2. コールバック用のインターフェースを作成し、プロパティで保持する。onAttach で リスナーを復元する
- * 3. 呼び出し側のFragment では、コールバック用のインターフェースを実装する
+ * 1. 呼び出し側のFragment で、DialogListener を実装する
+ * 2. BaseDialogFragment.newInstance() でオブジェクトを生成する
+ * 3. dialogFragment.show()
  */
-open class BaseDialogFragment : DialogFragment() {
+class BaseDialogFragment private constructor() : DialogFragment() {
 
     private val title = arguments?.getString(TITLE)
     private val message = arguments?.getString(MESSAGE)
     private val positiveText = arguments?.getString(POSITIVE_TEXT)
     private val negativeText = arguments?.getString(NEGATIVE_TEXT)
+
+    lateinit var dialogListener: DialogListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            dialogListener = context as DialogListener
+        } catch (e: ClassCastException) {
+            throw ClassCastException(
+                ("$context must implement DialogListener")
+            )
+        }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return activity?.let { it ->
+            val builder = AlertDialog.Builder(it)
+            builder.run {
+                title?.let { setTitle(title) }
+                message?.let { setMessage(message) }
+                positiveText?.let {
+                    setPositiveButton(positiveText) { _, _ ->
+                        dialogListener.onDialogPositiveClick(this@BaseDialogFragment)
+                    }
+                }
+                negativeText?.let {
+                    setNegativeButton(negativeText) { _, _ ->
+                        dialogListener.onDialogNegativeClick(this@BaseDialogFragment)
+                    }
+                }
+            }
+            builder.create()
+        } ?: throw IllegalStateException("Activity cannot be null")
+    }
 
     companion object {
         fun newInstance(
@@ -42,4 +79,9 @@ open class BaseDialogFragment : DialogFragment() {
         private const val POSITIVE_TEXT = "positiveText"
         private const val NEGATIVE_TEXT = "negativeText"
     }
+}
+
+interface DialogListener {
+    fun onDialogPositiveClick(dialog: DialogFragment)
+    fun onDialogNegativeClick(dialog: DialogFragment)
 }
