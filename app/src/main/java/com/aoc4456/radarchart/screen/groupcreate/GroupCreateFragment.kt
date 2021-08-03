@@ -6,16 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.aoc4456.radarchart.R
+import com.aoc4456.radarchart.component.BaseDialogFragment
+import com.aoc4456.radarchart.component.DialogListener
 import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GroupCreateFragment : Fragment() {
+class GroupCreateFragment : Fragment(), DialogListener {
 
     private lateinit var binding: GroupCreateFragmentBinding
     private val viewModel by viewModels<GroupCreateViewModel>()
@@ -67,6 +71,16 @@ class GroupCreateFragment : Fragment() {
             }
         )
 
+        binding.toolbarTrashButton.setOnClickListener {
+            val dialogFragment = BaseDialogFragment.newInstance(
+                title = getString(R.string.delete_group_title),
+                message = getString(R.string.delete_group_message),
+                positiveText = getString(R.string.delete),
+                negativeText = getString(R.string.cancel)
+            )
+            dialogFragment.show(childFragmentManager, TRASH_DIALOG_TAG)
+        }
+
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
@@ -74,5 +88,16 @@ class GroupCreateFragment : Fragment() {
         viewModel.dismiss.observe(viewLifecycleOwner) {
             findNavController().popBackStack()
         }
+    }
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        viewModel.onClickTrashDialogPositive()
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+    }
+
+    companion object {
+        const val TRASH_DIALOG_TAG = "trash_dialog"
     }
 }

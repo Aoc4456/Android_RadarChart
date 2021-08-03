@@ -16,4 +16,8 @@
     <string name="create_new_group">グループ新規作成</string>
     <string name="group_edit">グループ編集</string>
     <string name="sorting_items">項目の並び替え</string>
+    <string name="delete">削除</string>
+    <string name="cancel">キャンセル</string>
+    <string name="delete_group_title">このグループを削除しますか？</string>
+    <string name="delete_group_message">このグループと、グループ内の全てのチャートが削除されます。この操作は取り消せません。</string>
 </resources>

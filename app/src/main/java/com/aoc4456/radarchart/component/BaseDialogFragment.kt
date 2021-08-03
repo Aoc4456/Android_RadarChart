@@ -4,7 +4,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import com.aoc4456.radarchart.R
+import com.aoc4456.radarchart.screen.groupcreate.GroupCreateFragment
 
 /**
  * Common Dialog Fragment to retain content even if life cycle changes
@@ -16,17 +20,17 @@ import androidx.fragment.app.DialogFragment
  */
 class BaseDialogFragment private constructor() : DialogFragment() {
 
-    private val title = arguments?.getString(TITLE)
-    private val message = arguments?.getString(MESSAGE)
-    private val positiveText = arguments?.getString(POSITIVE_TEXT)
-    private val negativeText = arguments?.getString(NEGATIVE_TEXT)
+    private val title get() = arguments?.getString(TITLE)
+    private val message get() = arguments?.getString(MESSAGE)
+    private val positiveText get() = arguments?.getString(POSITIVE_TEXT)
+    private val negativeText get() = arguments?.getString(NEGATIVE_TEXT)
 
     lateinit var dialogListener: DialogListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            dialogListener = context as DialogListener
+            dialogListener = parentFragment as DialogListener
         } catch (e: ClassCastException) {
             throw ClassCastException(
                 ("$context must implement DialogListener")
@@ -53,6 +57,14 @@ class BaseDialogFragment private constructor() : DialogFragment() {
             }
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        super.show(manager, tag)
+        if (tag == GroupCreateFragment.TRASH_DIALOG_TAG) {
+            (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.red_700))
+        }
     }
 
     companion object {
