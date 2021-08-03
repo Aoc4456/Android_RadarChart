@@ -48,6 +48,12 @@ class GroupListFragment : Fragment() {
             (binding.recyclerView.adapter as GroupListAdapter).submitList(it)
         }
 
+        viewModel.navigateToChartCollection.observe(viewLifecycleOwner) {
+            val action =
+                GroupListFragmentDirections.actionGroupListFragmentToChartCollectionFragment(it)
+            findNavController().navigate(action)
+        }
+
         viewModel.navigateToGroupEdit.observe(viewLifecycleOwner) {
             val action =
                 GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment(it)

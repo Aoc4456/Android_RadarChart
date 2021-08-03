@@ -56,6 +56,7 @@ data class ChartGroupLabel(
 data class MyChart(
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),
+    @ColumnInfo(index = true)
     var chartGroupId: String = "",
     var title: String = "",
     var color: Int,

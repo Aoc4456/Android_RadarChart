@@ -7,7 +7,6 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.PublishLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,12 +20,15 @@ class GroupListViewModel @Inject constructor(
     private val _navigateToGroupEdit = PublishLiveData<GroupWithLabelAndCharts?>()
     val navigateToGroupEdit: PublishLiveData<GroupWithLabelAndCharts?> = _navigateToGroupEdit
 
+    private val _navigateToChartCollection = PublishLiveData<GroupWithLabelAndCharts?>()
+    val navigateToChartCollection: PublishLiveData<GroupWithLabelAndCharts?> =
+        _navigateToChartCollection
+
     fun onClickListItem(groupItem: GroupWithLabelAndCharts) {
-        Timber.d("クリックアイテム = ${groupItem.group.title}")
+        _navigateToChartCollection.value = groupItem
     }
 
     fun onSelectedContextMenu(groupItem: GroupWithLabelAndCharts, itemId: Int) {
-        Timber.d("長押しアイテム = ${groupItem.group.title}  itemId = $itemId")
         when (itemId) {
             R.id.group_edit -> {
                 _navigateToGroupEdit.value = groupItem
