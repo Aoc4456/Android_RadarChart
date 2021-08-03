@@ -147,12 +147,28 @@ class GroupCreateViewModel @Inject constructor(
     }
 
     private fun createEntity(): Pair<ChartGroup, List<String>> {
-        val group = ChartGroup(
-            title = title.value!!,
-            color = groupColor.value!!,
-            maximumValue = maximum.value!!.toInt(),
-        )
+        val group = createChartGroup()
         val labels = exactlySizedTextList.value!!
         return Pair(group, labels)
+    }
+
+    private fun createChartGroup(): ChartGroup {
+        val isNew = groupArgs.value == null
+
+        if (isNew) {
+            return ChartGroup(
+                title = title.value!!,
+                color = groupColor.value!!,
+                maximumValue = maximum.value!!.toInt(),
+            )
+        }
+
+        val oldGroup = groupArgs.value!!.group
+        return oldGroup.also {
+            it.title = title.value!!
+            it.color = groupColor.value!!
+            it.maximumValue = maximum.value!!.toInt()
+            it.updatedAt = System.currentTimeMillis()
+        }
     }
 }
