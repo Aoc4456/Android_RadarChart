@@ -117,7 +117,7 @@ class GroupCreateViewModel @Inject constructor(
         _dismiss.value = true
     }
 
-    fun onClickTrashButton() {
+    fun onClickTrashDialogPositive() {
         if (groupArgs.value == null) return
         viewModelScope.launch {
             repository.deleteGroup(groupArgs.value!!.group.id)
