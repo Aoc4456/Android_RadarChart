@@ -32,7 +32,7 @@ class ChartCollectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.navArgsText.text = navArgs.groupWithLabelAndCharts!!.group.title
+        binding.toolBarTitle.text = navArgs.groupWithLabelAndCharts!!.group.title
 
         binding.toolbarBackButton.setOnClickListener {
             findNavController().popBackStack()
