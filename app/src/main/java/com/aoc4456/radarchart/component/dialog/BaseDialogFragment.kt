@@ -15,7 +15,7 @@ import androidx.fragment.app.DialogFragment
  * 2. BaseDialogFragment.newInstance() でオブジェクトを生成する
  * 3. dialogFragment.show()
  */
-class BaseDialogFragment private constructor() : DialogFragment() {
+class BaseDialogFragment : DialogFragment() {
 
     private val dialogType get() = arguments?.getParcelable<DialogType>(DIALOG_TYPE)
     private val title get() = arguments?.getString(TITLE)
