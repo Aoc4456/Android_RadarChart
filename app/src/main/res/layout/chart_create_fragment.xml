@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -48,7 +49,125 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/titleLabel"
+                    style="@style/LabelBlueText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.aoc4456.radarchart.component.BorderEditText
+                    android:id="@+id/titleEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleLabel"
+                    tools:ignore="LabelFor" />
+
+                <com.aoc4456.radarchart.component.chart.radarchart.BaseRadarChart
+                    android:id="@+id/radarChart"
+                    android:layout_width="0dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+
+                <com.aoc4456.radarchart.component.ColorPickerView
+                    android:id="@+id/colorView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/blue_300"
+                    app:layout_constraintBottom_toBottomOf="@id/radarChart"
+                    app:layout_constraintEnd_toEndOf="@id/radarChart"
+                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintStart_toStartOf="@id/radarChart"
+                    app:layout_constraintTop_toTopOf="@id/radarChart"
+                    app:layout_constraintVertical_bias="0.05" />
+
+                <TextView
+                    android:id="@+id/chartMaximum"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical|end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radarChart"
+                    tools:text="グラフの最大値：10058" />
+
+                <TextView
+                    android:id="@+id/totalAverageView"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/border_radius"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chartMaximum"
+                    tools:text="合計：30174 平均：60345" />
+
+                <View
+                    android:id="@+id/multiInputView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/blue_300"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/totalAverageView"
+                    tools:layout_height="200dp" />
+
+                <TextView
+                    android:id="@+id/noteLabel"
+                    style="@style/LabelBlueText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/multiInputView" />
+
+                <EditText
+                    android:id="@+id/noteEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/border_radius"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/noteLabel"
+                    tools:ignore="LabelFor" />
+
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/save"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/noteEditText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </ScrollView>
 
     </LinearLayout>

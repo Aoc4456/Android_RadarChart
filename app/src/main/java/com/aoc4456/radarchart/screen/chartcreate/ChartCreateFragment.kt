@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.ChartCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChartCreateFragment : Fragment() {
@@ -32,6 +33,10 @@ class ChartCreateFragment : Fragment() {
 
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.colorView.setOnChooseColorListener(requireActivity()) { chooseColor ->
+            Timber.d("選択カラー $chooseColor")
         }
     }
 }

@@ -100,7 +100,6 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
                     android:background="@{viewmodel.groupColor.intValue()}"
-                    android:text="@string/group_color"
                     app:layout_constraintEnd_toEndOf="@id/groupColorLabel"
                     app:layout_constraintStart_toStartOf="@id/groupColorLabel"
                     app:layout_constraintTop_toBottomOf="@id/groupColorLabel" />
