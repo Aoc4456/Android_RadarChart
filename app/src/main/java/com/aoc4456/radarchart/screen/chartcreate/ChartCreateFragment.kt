@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.aoc4456.radarchart.databinding.ChartCreateFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChartCreateFragment : Fragment() {
 
     private lateinit var binding: ChartCreateFragmentBinding
