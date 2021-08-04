@@ -3,21 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.aoc4456.radarchart.screen.chartcreate.ChartCreateViewModel" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screen.chartcreate.ChartCreateFragment">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="ChartCreate" />
+        <FrameLayout
+            android:id="@+id/toolbar"
+            style="@style/ToolBar">
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/toolbar_close_button"
+                style="@style/ToolBarImageButton"
+                android:layout_marginStart="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_baseline_close_24" />
+
+            <TextView
+                android:id="@+id/toolBarTitle"
+                style="@style/ToolBarTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                tools:text="チャート新規作成" />
+
+            <ImageView
+                android:id="@+id/toolbar_trash_button"
+                style="@style/ToolBarImageButton"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_baseline_delete_forever_24" />
+        </FrameLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            
+        </ScrollView>
+
+    </LinearLayout>
 </layout>
