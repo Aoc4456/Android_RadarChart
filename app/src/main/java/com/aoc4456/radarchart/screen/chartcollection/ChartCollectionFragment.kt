@@ -37,5 +37,14 @@ class ChartCollectionFragment : Fragment() {
         binding.toolbarBackButton.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.floatingActionButton.setOnClickListener {
+            val action =
+                ChartCollectionFragmentDirections.actionChartCollectionFragmentToChartCreateFragment(
+                    navArgs.groupWithLabelAndCharts!!,
+                    null
+                )
+            findNavController().navigate(action)
+        }
     }
 }
