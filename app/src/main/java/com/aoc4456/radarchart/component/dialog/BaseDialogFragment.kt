@@ -3,12 +3,12 @@ package com.aoc4456.radarchart.component
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
-import com.aoc4456.radarchart.R
-import com.aoc4456.radarchart.screen.groupcreate.GroupCreateFragment
+import com.aoc4456.radarchart.component.dialog.DialogButtonType
+import com.aoc4456.radarchart.component.dialog.DialogListener
+import com.aoc4456.radarchart.component.dialog.DialogType
 
 /**
  * Common Dialog Fragment to retain content even if life cycle changes
@@ -20,12 +20,13 @@ import com.aoc4456.radarchart.screen.groupcreate.GroupCreateFragment
  */
 class BaseDialogFragment private constructor() : DialogFragment() {
 
+    private val dialogType get() = arguments?.getParcelable<DialogType>(DIALOG_TYPE)
     private val title get() = arguments?.getString(TITLE)
     private val message get() = arguments?.getString(MESSAGE)
     private val positiveText get() = arguments?.getString(POSITIVE_TEXT)
     private val negativeText get() = arguments?.getString(NEGATIVE_TEXT)
 
-    lateinit var dialogListener: DialogListener
+    private lateinit var dialogListener: DialogListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -46,12 +47,12 @@ class BaseDialogFragment private constructor() : DialogFragment() {
                 message?.let { setMessage(message) }
                 positiveText?.let {
                     setPositiveButton(positiveText) { _, _ ->
-                        dialogListener.onDialogPositiveClick(this@BaseDialogFragment)
+                        dialogListener.onDialogButtonClick(dialogType!!, DialogButtonType.POSITIVE)
                     }
                 }
                 negativeText?.let {
                     setNegativeButton(negativeText) { _, _ ->
-                        dialogListener.onDialogNegativeClick(this@BaseDialogFragment)
+                        dialogListener.onDialogButtonClick(dialogType!!, DialogButtonType.NEGATIVE)
                     }
                 }
             }
@@ -59,16 +60,20 @@ class BaseDialogFragment private constructor() : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    override fun show(manager: FragmentManager, tag: String?) {
-        super.show(manager, tag)
-        if (tag == GroupCreateFragment.TRASH_DIALOG_TAG) {
-            (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE)
-                .setTextColor(ContextCompat.getColor(requireContext(), R.color.red_700))
+    override fun onStart() {
+        super.onStart()
+        dialog?.let { setButtonTextColor(it as AlertDialog) }
+    }
+
+    private fun setButtonTextColor(dialog: AlertDialog) {
+        if (dialogType in listOf(DialogType.GROUP_DELETE, DialogType.CHART_DELETE)) {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
         }
     }
 
     companion object {
         fun newInstance(
+            type: DialogType,
             title: String,
             message: String?,
             positiveText: String,
@@ -77,6 +82,8 @@ class BaseDialogFragment private constructor() : DialogFragment() {
             val dialogFragment = BaseDialogFragment()
 
             val bundle = Bundle()
+
+            bundle.putParcelable(DIALOG_TYPE, type)
             bundle.putString(TITLE, title)
             bundle.putString(MESSAGE, message)
             bundle.putString(POSITIVE_TEXT, positiveText)
@@ -86,14 +93,10 @@ class BaseDialogFragment private constructor() : DialogFragment() {
             return dialogFragment
         }
 
+        private const val DIALOG_TYPE = "dialogType"
         private const val TITLE = "title"
         private const val MESSAGE = "message"
         private const val POSITIVE_TEXT = "positiveText"
         private const val NEGATIVE_TEXT = "negativeText"
     }
-}
-
-interface DialogListener {
-    fun onDialogPositiveClick(dialog: DialogFragment)
-    fun onDialogNegativeClick(dialog: DialogFragment)
 }

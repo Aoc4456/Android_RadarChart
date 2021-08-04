@@ -6,15 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.component.BaseDialogFragment
-import com.aoc4456.radarchart.component.DialogListener
 import com.aoc4456.radarchart.component.MultiEditTextOutput
+import com.aoc4456.radarchart.component.dialog.DialogButtonType
+import com.aoc4456.radarchart.component.dialog.DialogListener
+import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,6 +74,7 @@ class GroupCreateFragment : Fragment(), DialogListener {
 
         binding.toolbarTrashButton.setOnClickListener {
             val dialogFragment = BaseDialogFragment.newInstance(
+                type = DialogType.GROUP_DELETE,
                 title = getString(R.string.delete_group_title),
                 message = getString(R.string.delete_group_message),
                 positiveText = getString(R.string.delete),
@@ -90,14 +92,17 @@ class GroupCreateFragment : Fragment(), DialogListener {
         }
     }
 
-    override fun onDialogPositiveClick(dialog: DialogFragment) {
-        viewModel.onClickTrashDialogPositive()
-    }
-
-    override fun onDialogNegativeClick(dialog: DialogFragment) {
-    }
-
     companion object {
         const val TRASH_DIALOG_TAG = "trash_dialog"
+    }
+
+    override fun onDialogButtonClick(dialogType: DialogType, buttonType: DialogButtonType) {
+        when (buttonType) {
+            DialogButtonType.POSITIVE -> {
+                viewModel.onClickTrashDialogPositive()
+            }
+            DialogButtonType.NEGATIVE -> {
+            }
+        }
     }
 }
