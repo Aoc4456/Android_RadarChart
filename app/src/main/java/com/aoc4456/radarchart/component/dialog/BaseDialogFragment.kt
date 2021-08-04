@@ -1,4 +1,4 @@
-package com.aoc4456.radarchart.component
+package com.aoc4456.radarchart.component.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -6,9 +6,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import com.aoc4456.radarchart.component.dialog.DialogButtonType
-import com.aoc4456.radarchart.component.dialog.DialogListener
-import com.aoc4456.radarchart.component.dialog.DialogType
 
 /**
  * Common Dialog Fragment to retain content even if life cycle changes

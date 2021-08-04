@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.aoc4456.radarchart.R
-import com.aoc4456.radarchart.component.BaseDialogFragment
+import com.aoc4456.radarchart.component.dialog.BaseDialogFragment
 import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogListener
