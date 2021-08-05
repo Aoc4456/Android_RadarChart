@@ -76,7 +76,7 @@
                     app:layout_constraintTop_toBottomOf="@id/titleLabel"
                     tools:ignore="LabelFor" />
 
-                <com.aoc4456.radarchart.component.chart.radarchart.BaseRadarChart
+                <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
                     android:id="@+id/radarChart"
                     android:layout_width="0dp"
                     android:layout_height="300dp"

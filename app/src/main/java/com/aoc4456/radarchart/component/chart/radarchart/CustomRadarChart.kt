@@ -9,13 +9,13 @@ import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
 /**
- * RadarChartのBaseクラス
+ * カスタムRadarChartクラス
  *
  * 使い方
  * 1. xml で app:chartTypeを設定
  * 2. 動的にチャートの状態を変更させる場合は、各BindingAdapterを設定する
  */
-open class BaseRadarChart(context: Context, attrs: AttributeSet) :
+class CustomRadarChart(context: Context, attrs: AttributeSet) :
     RadarChart(context, attrs),
     RadarChartInput {
 
@@ -52,7 +52,7 @@ open class BaseRadarChart(context: Context, attrs: AttributeSet) :
         applyChartType(chartType)
     }
 
-    fun applyChartType(type: ChartType) {
+    override fun applyChartType(type: ChartType) {
         this.chartType = type
         when (type) {
             ChartType.GROUP_LIST -> {
@@ -81,6 +81,7 @@ enum class ChartType(val value: Int) {
 
 interface RadarChartInput {
     fun setChartItemLabel(labels: List<String>)
+    fun applyChartType(type: ChartType)
 }
 
 /**
@@ -88,17 +89,17 @@ interface RadarChartInput {
  */
 
 @BindingAdapter("radarData")
-fun setRadarData(radarChart: BaseRadarChart, radarData: RadarData) {
+fun setRadarData(radarChart: CustomRadarChart, radarData: RadarData) {
     radarChart.data = radarData
 }
 
 @BindingAdapter("labels")
-fun setRadarChartLabel(radarChart: BaseRadarChart, labels: List<String>) {
+fun setRadarChartLabel(radarChart: CustomRadarChart, labels: List<String>) {
     radarChart.setChartItemLabel(labels)
 }
 
 @BindingAdapter("notifyDataSetChanged")
-fun notifyDataSetChanged(radarChart: BaseRadarChart, update: Boolean) {
+fun notifyDataSetChanged(radarChart: CustomRadarChart, update: Boolean) {
     if (update) {
         radarChart.notifyDataSetChanged()
         radarChart.invalidate()

@@ -25,7 +25,7 @@
                 android:orientation="horizontal">
 
                 <!-- チャート or アイコン-->
-                <com.aoc4456.radarchart.component.chart.radarchart.BaseRadarChart
+                <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
                     android:id="@+id/radarChart"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
