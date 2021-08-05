@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BaseRadarChart">
+        <attr name="chartType" format="enum">
+            <enum name="group_list" value="0"/>
+            <enum name="group_create" value="1"/>
+            <enum name="chart_create" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>
