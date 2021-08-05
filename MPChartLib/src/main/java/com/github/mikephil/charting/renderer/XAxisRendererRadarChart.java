@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.utils.FSize;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
@@ -16,6 +17,33 @@ public class XAxisRendererRadarChart extends XAxisRenderer {
         super(viewPortHandler, xAxis, null);
 
         mChart = chart;
+    }
+
+    @Override
+    protected void computeSize() {
+        String longest = mChart.fixedLongestLabel;
+
+        mAxisLabelPaint.setTypeface(mXAxis.getTypeface());
+        mAxisLabelPaint.setTextSize(mXAxis.getTextSize());
+
+        final FSize labelSize = Utils.calcTextSize(mAxisLabelPaint, longest);
+
+        final float labelWidth = labelSize.width;
+        final float labelHeight = Utils.calcTextHeight(mAxisLabelPaint, "Q");
+
+        final FSize labelRotatedSize = Utils.getSizeOfRotatedRectangleByDegrees(
+                labelWidth,
+                labelHeight,
+                mXAxis.getLabelRotationAngle());
+
+
+        mXAxis.mLabelWidth = Math.round(labelWidth);
+        mXAxis.mLabelHeight = Math.round(labelHeight);
+        mXAxis.mLabelRotatedWidth = Math.round(labelRotatedSize.width);
+        mXAxis.mLabelRotatedHeight = Math.round(labelRotatedSize.height);
+
+        FSize.recycleInstance(labelRotatedSize);
+        FSize.recycleInstance(labelSize);
     }
 
     @Override
@@ -38,7 +66,7 @@ public class XAxisRendererRadarChart extends XAxisRenderer {
         float factor = mChart.getFactor();
 
         MPPointF center = mChart.getCenterOffsets();
-        MPPointF pOut = MPPointF.getInstance(0,0);
+        MPPointF pOut = MPPointF.getInstance(0, 0);
         for (int i = 0; i < mChart.getData().getMaxEntryCountSet().getEntryCount(); i++) {
 
             String label = mXAxis.getValueFormatter().getAxisLabel(i, mXAxis);
@@ -57,13 +85,13 @@ public class XAxisRendererRadarChart extends XAxisRenderer {
         MPPointF.recycleInstance(drawLabelAnchor);
     }
 
-	/**
-	 * XAxis LimitLines on RadarChart not yet supported.
-	 *
-	 * @param c
-	 */
-	@Override
-	public void renderLimitLines(Canvas c) {
-		// this space intentionally left blank
-	}
+    /**
+     * XAxis LimitLines on RadarChart not yet supported.
+     *
+     * @param c
+     */
+    @Override
+    public void renderLimitLines(Canvas c) {
+        // this space intentionally left blank
+    }
 }

@@ -173,7 +173,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/numberOfItemsSlider"
                     app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
-                    app:radarData="@{viewmodel.chartData}" />
+                    app:radarData="@{viewmodel.chartData}"
+                    app:chartType="group_create"/>
 
                 <TextView
                     android:id="@+id/maximumValueLabel"
