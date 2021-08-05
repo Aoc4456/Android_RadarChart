@@ -23,17 +23,20 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.itemView.setOnLongClickListener {
-            longTappedItem = item
-            false
-        }
-        holder.itemView.setOnClickListener {
-            viewModel.onClickListItem(item)
+
+        holder.binding.frameForClick.let {
+            it.setOnClickListener {
+                viewModel.onClickListItem(item)
+            }
+            it.setOnLongClickListener {
+                longTappedItem = item
+                false
+            }
         }
         holder.bind(item)
     }
 
-    class ViewHolder private constructor(private val binding: ChartGroupListItemBinding) :
+    class ViewHolder private constructor(val binding: ChartGroupListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: GroupWithLabelAndCharts) {
