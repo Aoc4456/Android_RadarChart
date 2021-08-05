@@ -58,7 +58,7 @@ open class BaseRadarChart(context: Context, attrs: AttributeSet) :
             ChartType.GROUP_LIST -> {
                 yAxis.setLabelCount(4, true)
                 yAxis.axisMaximum = 90f
-                fixedLongestLabel = "12345"
+                fixedLongestLabel = "123"
             }
         }
     }
