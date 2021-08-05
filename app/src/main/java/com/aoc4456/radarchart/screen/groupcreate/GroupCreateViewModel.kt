@@ -34,7 +34,7 @@ class GroupCreateViewModel @Inject constructor(
     val maximum: LiveData<String> = _maximum
 
     private var itemTextList =
-        MutableLiveData(mutableListOf("項目1", "項目2", "項目3", "項目4", "項目5", "項目6", "項目7", "項目8"))
+        MutableLiveData(GroupCreateUtil.defaultTextList.toMutableList())
 
     val exactlySizedTextList = MediatorLiveData<List<String>>().apply {
         addSource(numberOfItems) {
@@ -63,7 +63,7 @@ class GroupCreateViewModel @Inject constructor(
             _title.value = groupArgs.group.title
             _groupColor.value = groupArgs.group.color
             _maximum.value = groupArgs.group.maximumValue.toString()
-            itemTextList.value = groupArgs.labelList.map { it.text }.toMutableList()
+            itemTextList.value = GroupCreateUtil.getMaximumSizeTextList(groupArgs.labelList)
             _numberOfItems.value = groupArgs.labelList.size
         }
         updateChart()
