@@ -170,7 +170,6 @@
                     android:layout_marginTop="8dp"
                     app:labels="@{viewmodel.exactlySizedTextList}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/numberOfItemsSlider"
                     app:notifyDataSetChanged="@{viewmodel.chartUpdate}"

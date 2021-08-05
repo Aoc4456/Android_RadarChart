@@ -80,7 +80,7 @@ class GroupCreateFragment : Fragment(), DialogListener {
                 positiveText = getString(R.string.delete),
                 negativeText = getString(R.string.cancel)
             )
-            dialogFragment.show(childFragmentManager, TRASH_DIALOG_TAG)
+            dialogFragment.show(childFragmentManager, "TRASH_DIALOG_TAG")
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
@@ -90,10 +90,6 @@ class GroupCreateFragment : Fragment(), DialogListener {
         viewModel.dismiss.observe(viewLifecycleOwner) {
             findNavController().popBackStack()
         }
-    }
-
-    companion object {
-        const val TRASH_DIALOG_TAG = "trash_dialog"
     }
 
     override fun onDialogButtonClick(dialogType: DialogType, buttonType: DialogButtonType) {
