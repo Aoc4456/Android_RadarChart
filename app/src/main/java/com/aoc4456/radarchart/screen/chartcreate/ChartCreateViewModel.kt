@@ -38,6 +38,7 @@ class ChartCreateViewModel @Inject constructor(
     val chartUpdate: LiveData<Boolean> = _chartUpdate
 
     fun onViewCreated(args: ChartCreateFragmentArgs) {
+        if (groupData.value != null) return
         groupData.value = args.groupWithLabelAndCharts
         if (args.chart == null) {
             _chartColor.value = groupData.value!!.group.color
@@ -52,6 +53,22 @@ class ChartCreateViewModel @Inject constructor(
                 _chartColor.value = it.color
             }
         }
+        _chartUpdate.value = true
+    }
+
+    fun onChooseColor(newColor: Int) {
+        if (newColor == chartColor.value) return
+        _chartColor.value = newColor
+        updateChart()
+    }
+
+    private fun updateChart() {
+        _chartData.value =
+            ChartDataUtil.getRadarDataWithTheSameValue(
+                color = chartColor.value!!,
+                numberOfItems = groupData.value!!.labelList.size,
+                value = (groupData.value!!.group.maximumValue * 0.6).toFloat()
+            )
         _chartUpdate.value = true
     }
 }
