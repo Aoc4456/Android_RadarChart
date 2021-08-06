@@ -58,6 +58,7 @@ class GroupCreateViewModel @Inject constructor(
     val dismiss: LiveData<Boolean> = _dismiss
 
     fun onViewCreated(groupArgs: GroupWithLabelAndCharts?) {
+        if (chartUpdate.value != null) return
         if (groupArgs != null) {
             _groupArgs.value = groupArgs
             _title.value = groupArgs.group.title

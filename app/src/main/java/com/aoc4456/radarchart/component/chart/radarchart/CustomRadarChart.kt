@@ -98,6 +98,11 @@ fun setRadarChartLabel(radarChart: CustomRadarChart, labels: List<String>) {
     radarChart.setChartItemLabel(labels)
 }
 
+@BindingAdapter("maximum")
+fun setRadarChartMaximum(radarChart: CustomRadarChart, maximum: Int) {
+    radarChart.yAxis.axisMaximum = maximum.toFloat()
+}
+
 @BindingAdapter("notifyDataSetChanged")
 fun notifyDataSetChanged(radarChart: CustomRadarChart, update: Boolean) {
     if (update) {

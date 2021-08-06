@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="com.aoc4456.radarchart.screen.chartcreate.ChartCreateViewModel" />
@@ -25,7 +27,8 @@
                 android:layout_marginStart="16dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_baseline_close_24" />
+                android:src="@{viewmodel.chartArgs == null ? @drawable/ic_baseline_close_24 : @drawable/ic_baseline_arrow_back_24}"
+                tools:src="@drawable/ic_baseline_close_24" />
 
             <TextView
                 android:id="@+id/toolBarTitle"
@@ -33,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:text="@{viewmodel.chartArgs == null ? @string/create_new_chart : @string/chart_edit}"
                 tools:text="チャート新規作成" />
 
             <ImageView
@@ -42,7 +46,8 @@
                 android:layout_marginEnd="16dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_baseline_delete_forever_24" />
+                android:src="@drawable/ic_baseline_delete_forever_24"
+                android:visibility="@{viewmodel.chartArgs == null ? View.INVISIBLE : View.VISIBLE}" />
         </FrameLayout>
 
         <ScrollView
@@ -81,16 +86,20 @@
                     android:layout_width="0dp"
                     android:layout_height="300dp"
                     android:layout_marginTop="8dp"
+                    app:labels="@{viewmodel.chartLabels}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+                    app:layout_constraintTop_toBottomOf="@id/titleEditText"
+                    app:maximum="@{viewmodel.chartMaximum}"
+                    app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
+                    app:radarData="@{viewmodel.chartData}" />
 
                 <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
-                    android:background="@color/blue_300"
+                    android:background="@{viewmodel.chartColor.intValue()}"
                     app:layout_constraintBottom_toBottomOf="@id/radarChart"
                     app:layout_constraintEnd_toEndOf="@id/radarChart"
                     app:layout_constraintHorizontal_bias="0.95"
@@ -103,6 +112,7 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:gravity="center_vertical|end"
+                    android:text="@{@string/maximum_value_of_graph(viewmodel.chartMaximum)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/radarChart"
