@@ -83,14 +83,16 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+                    app:layout_constraintTop_toBottomOf="@id/titleEditText"
+                    app:labels="@{viewmodel.chartLabels}"
+                    app:notifyDataSetChanged="@{viewmodel.chartUpdate}"/>
 
                 <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
-                    android:background="@color/blue_300"
+                    android:background="@{viewmodel.chartColor.intValue()}"
                     app:layout_constraintBottom_toBottomOf="@id/radarChart"
                     app:layout_constraintEnd_toEndOf="@id/radarChart"
                     app:layout_constraintHorizontal_bias="0.95"
