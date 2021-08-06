@@ -90,7 +90,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/titleEditText"
-                    app:notifyDataSetChanged="@{viewmodel.chartUpdate}" />
+                    app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
+                    app:radarData="@{viewmodel.chartData}" />
 
                 <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"
@@ -110,10 +111,10 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:gravity="center_vertical|end"
+                    android:text="@{@string/maximum_value_of_graph(viewmodel.chartMaximum)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/radarChart"
-                    android:text="@{@string/maximum_value_of_graph(viewmodel.chartMaximum)}"
                     tools:text="グラフの最大値：10058" />
 
                 <TextView

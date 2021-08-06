@@ -7,6 +7,7 @@ import androidx.lifecycle.map
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
+import com.aoc4456.radarchart.util.ChartDataUtil
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -40,11 +41,17 @@ class ChartCreateViewModel @Inject constructor(
         groupData.value = args.groupWithLabelAndCharts
         if (args.chart == null) {
             _chartColor.value = groupData.value!!.group.color
-            return
+            _chartData.value = ChartDataUtil.getRadarDataWithTheSameValue(
+                color = chartColor.value!!,
+                numberOfItems = groupData.value!!.labelList.size,
+                value = (groupData.value!!.group.maximumValue * 0.6).toFloat()
+            )
+        } else {
+            _chartArgs.value = args.chart
+            chartArgs.value?.let {
+                _chartColor.value = it.color
+            }
         }
-        _chartArgs.value = args.chart
-        chartArgs.value?.let {
-            _chartColor.value = it.color
-        }
+        _chartUpdate.value = true
     }
 }
