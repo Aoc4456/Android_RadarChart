@@ -113,6 +113,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/radarChart"
+                    android:text="@{@string/maximum_value_of_graph(viewmodel.chartMaximum)}"
                     tools:text="グラフの最大値：10058" />
 
                 <TextView

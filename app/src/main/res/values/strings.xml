@@ -22,4 +22,5 @@
     <string name="delete_group_message">このグループと、グループ内の全てのチャートが削除されます。この操作は取り消せません。</string>
     <string name="create_new_chart">チャート新規作成</string>
     <string name="chart_edit">チャート編集</string>
+    <string name="maximum_value_of_graph">グラフの最大値 : %s</string>
 </resources>
