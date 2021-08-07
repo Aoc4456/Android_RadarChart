@@ -35,24 +35,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <com.github.mikephil.charting.charts.RadarChart
                 android:id="@+id/radarChart"
                 android:layout_width="match_parent"
-                android:layout_height="400dp" />
+                android:layout_height="200dp" />
 
             <TextView
                 android:id="@+id/stepperText"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:gravity="center"/>
+                android:gravity="center" />
 
             <com.aoc4456.radarchart.component.Stepper
                 android:id="@+id/stepper"
                 android:layout_width="100dp"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp" />
+
+            <com.aoc4456.radarchart.component.multiinputrowview.InputRowView
+                android:layout_width="match_parent"
+                android:layout_height="36dp" />
         </LinearLayout>
 
     </LinearLayout>

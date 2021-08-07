@@ -71,6 +71,8 @@ class TestFragment : Fragment() {
         binding.radarChart.data.notifyDataChanged()
         binding.radarChart.notifyDataSetChanged()
 
+        binding.stepperText.text = binding.stepper.value.toString()
+
         binding.stepper.setStepperListener(
             object : StepperOutput {
                 override fun onTapStepperButton(value: Double) {
