@@ -14,7 +14,6 @@ class BorderEditText(context: Context, attrs: AttributeSet) : AppCompatEditText(
     init {
         imeOptions = EditorInfo.IME_ACTION_DONE
         setEms(10)
-        height = resources.getDimensionPixelSize(R.dimen.edit_text_height)
         background = ResourcesCompat.getDrawable(resources, R.drawable.border_radius, null)
 
         val padding = (8 * scale + 0.5f).toInt()

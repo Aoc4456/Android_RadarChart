@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.aoc4456.radarchart.component.StepperOutput
 import com.aoc4456.radarchart.databinding.FragmentTestBinding
 import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
@@ -71,13 +70,11 @@ class TestFragment : Fragment() {
         binding.radarChart.data.notifyDataChanged()
         binding.radarChart.notifyDataSetChanged()
 
-        binding.stepper.setStepperListener(
-            object : StepperOutput {
-                override fun onTapStepperButton(value: Double) {
-                    binding.stepperText.text = value.toString()
-                }
-            }
-        )
+        binding.stepperText.text = binding.stepper.value.toString()
+
+        binding.stepper.setOnStepperClickListener { _, newValue ->
+            binding.stepperText.text = newValue.toString()
+        }
     }
 }
 
