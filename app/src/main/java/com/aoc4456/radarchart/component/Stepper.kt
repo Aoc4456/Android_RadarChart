@@ -73,7 +73,3 @@ class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(
         this.callback = callback
     }
 }
-
-interface StepperOutput {
-    fun onTapStepperButton(value: Double)
-}

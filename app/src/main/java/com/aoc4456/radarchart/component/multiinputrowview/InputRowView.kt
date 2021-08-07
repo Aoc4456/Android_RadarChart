@@ -1,6 +1,7 @@
 package com.aoc4456.radarchart.component.multiinputrowview
 
 import android.content.Context
+import android.text.Editable
 import android.util.AttributeSet
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -40,22 +41,17 @@ class InputRowView(
         editText = findViewById(R.id.editText)
         stepper = findViewById(R.id.stepper)
 
+        // HACK: 入力中にガチャガチャ補正されて見づらい
         editText.doAfterTextChanged { editable ->
-            var newValue = 0
-            try {
-                if (editable.toString() == "") {
-                    newValue = 0
-                }
-            } catch (e: Exception) {
-                editText.setText(value.toString())
-                return@doAfterTextChanged
+            val convertResult = convertEditableToInt(editable, maximum)
+            val convertIsFail = !convertResult.first
+
+            if (convertIsFail) {
+                editText.setText(convertResult.second.toString())
             }
 
-            if (newValue > maximum) {
-                newValue = maximum
-                editText.setText(newValue.toString())
-            }
-            stepper.value = newValue.toDouble()
+            this.value = convertResult.second
+            stepper.value = value.toDouble()
             callback?.invoke(this, value)
         }
 
@@ -76,6 +72,32 @@ class InputRowView(
         this.maximum = maximum
         this.value = initialValue
         this.callback = onChangeValueCallback
+    }
+
+    /**
+     * editableをIntに変換する
+     *
+     * 正常に変換できなかった場合、Pair.first で false を返す
+     */
+    private fun convertEditableToInt(editable: Editable?, maximum: Int): Pair<Boolean, Int> {
+        if (editable == null) return Pair(false, 0)
+
+        val text = editable.toString()
+        if (text.isEmpty()) {
+            return Pair(false, 0)
+        }
+
+        var intValue = 0
+        try {
+            intValue = text.toInt()
+        } catch (e: ClassCastException) {
+            return Pair(false, 0)
+        }
+
+        if (intValue > maximum) {
+            return Pair(false, maximum)
+        }
+        return Pair(true, intValue)
     }
 }
 
