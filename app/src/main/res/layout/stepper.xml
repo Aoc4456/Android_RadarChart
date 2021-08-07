@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_height="100dp"
+    tools:layout_width="200dp"
+    android:orientation="horizontal"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/minusButton"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="ー"
+        android:gravity="center"
+        android:layout_marginEnd="-3dp"
+        android:autoSizeTextType="uniform"
+        tools:ignore="HardcodedText" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/plusButton"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="＋"
+        android:autoSizeTextType="uniform"
+        android:layout_marginStart="-3dp"
+        tools:ignore="HardcodedText" />
+
+</merge>
