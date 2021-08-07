@@ -8,6 +8,7 @@
     tools:parentTag="android.widget.LinearLayout">
 
     <TextView
+        android:id="@+id/labelText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
@@ -16,6 +17,7 @@
         tools:text="項目１" />
 
     <com.aoc4456.radarchart.component.BorderEditText
+        android:id="@+id/editText"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginVertical="4dp"
@@ -23,6 +25,7 @@
         android:inputType="number" />
 
     <com.aoc4456.radarchart.component.Stepper
+        android:id="@+id/stepper"
         android:layout_width="80dp"
         android:layout_height="match_parent" />
 
