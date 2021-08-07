@@ -45,8 +45,14 @@ class GroupCreateViewModel @Inject constructor(
         }
     }
 
-    private val _chartData = MutableLiveData<RadarData>()
-    val chartData: LiveData<RadarData> = _chartData
+    val chartData = MediatorLiveData<RadarData>().apply {
+        addSource(groupColor) {
+            value = ChartDataUtil.getRadarDataWithTheSameValue(it, numberOfItems.value!!)
+        }
+        addSource(numberOfItems) {
+            value = ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, it)
+        }
+    }
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
@@ -128,8 +134,6 @@ class GroupCreateViewModel @Inject constructor(
     }
 
     private fun updateChart() {
-        _chartData.value =
-            ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, numberOfItems.value!!)
         _chartUpdate.value = true
     }
 

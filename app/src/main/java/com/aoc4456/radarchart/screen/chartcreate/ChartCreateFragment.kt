@@ -45,7 +45,7 @@ class ChartCreateFragment : Fragment() {
 
         binding.multiInputView.setup(
             labels = listOf("1", "2", "3", "8"),
-            values = listOf(50, 120, 80, 40),
+            initialValues = listOf(50, 120, 80, 40),
             maximum = 200,
             onChangeValueCallback = { index, newValue ->
             }
