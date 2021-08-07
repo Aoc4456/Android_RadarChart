@@ -71,6 +71,7 @@ class InputRowView(
         labelTextView.text = labelName
         this.maximum = maximum
         this.value = initialValue
+        editText.setText(initialValue.toString())
         this.callback = onChangeValueCallback
     }
 
