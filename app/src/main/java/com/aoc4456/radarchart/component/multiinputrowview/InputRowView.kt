@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.component.Stepper
-import com.aoc4456.radarchart.component.StepperOutput
 
 /**
  * 項目名ラベル、EditText、Stepperを１行にまとめたView
@@ -20,15 +19,19 @@ class InputRowView(
     private val attrs: AttributeSet
 ) : LinearLayout(context, attrs), InputRowViewInput {
 
-    private var listener: InputRowViewOutput? = null
-
-    private var label = ""
-    private var value = 0
-    private var maximum = 100
-
     private val labelTextView: TextView
     private val editText: EditText
     private val stepper: Stepper
+
+    private var value = 0
+
+    private var maximum = 100
+        set(newValue) {
+            field = newValue
+            stepper.maximumValue = newValue.toDouble()
+        }
+
+    private var callback: ((InputRowView, Int) -> Unit)? = null
 
     init {
         inflate(context, R.layout.input_row_view, this)
@@ -39,10 +42,13 @@ class InputRowView(
 
         editText.doAfterTextChanged { editable ->
             var newValue = 0
-            newValue = try {
-                editable.toString().toInt()
-            } catch (e: ClassCastException) {
-                stepper.value.toInt()
+            try {
+                if (editable.toString() == "") {
+                    newValue = 0
+                }
+            } catch (e: Exception) {
+                editText.setText(value.toString())
+                return@doAfterTextChanged
             }
 
             if (newValue > maximum) {
@@ -50,45 +56,34 @@ class InputRowView(
                 editText.setText(newValue.toString())
             }
             stepper.value = newValue.toDouble()
-            listener?.onChangeValue(this, newValue)
+            callback?.invoke(this, value)
         }
 
-        stepper.setStepperListener(object : StepperOutput {
-            override fun onTapStepperButton(value: Double) {
-                editText.setText(value.toInt().toString())
-                listener?.onChangeValue(this@InputRowView, value.toInt())
-            }
-        })
+        stepper.setOnStepperClickListener { _, newValue ->
+            this.value = newValue.toInt()
+            editText.setText(value.toString())
+            callback?.invoke(this, value)
+        }
     }
 
-    override fun setValueChangeListener(listener: InputRowViewOutput) {
-        this.listener = listener
-    }
-
-    override fun setLabel(label: String) {
-        this.label = label
-        labelTextView.text = label
-    }
-
-    override fun setValue(value: Int) {
-        this.value = value
-        editText.setText(value.toString())
-        stepper.value = value.toDouble()
-    }
-
-    override fun setMaximum(maximum: Int) {
+    override fun setup(
+        labelName: String,
+        initialValue: Int,
+        maximum: Int,
+        onChangeValueCallback: (view: InputRowView, newValue: Int) -> Unit
+    ) {
+        labelTextView.text = labelName
         this.maximum = maximum
-        stepper.maximumValue = maximum.toDouble()
+        this.value = initialValue
+        this.callback = onChangeValueCallback
     }
 }
 
 interface InputRowViewInput {
-    fun setValueChangeListener(listener: InputRowViewOutput)
-    fun setLabel(label: String)
-    fun setValue(value: Int)
-    fun setMaximum(maximum: Int)
-}
-
-interface InputRowViewOutput {
-    fun onChangeValue(view: InputRowView, value: Int)
+    fun setup(
+        labelName: String,
+        initialValue: Int,
+        maximum: Int,
+        onChangeValueCallback: (view: InputRowView, newValue: Int) -> Unit
+    )
 }

@@ -8,7 +8,7 @@ import com.aoc4456.radarchart.R
 
 class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(context, attrs) {
 
-    private var listener: StepperOutput? = null
+    private var callback: ((Stepper, Double) -> Unit)? = null
 
     private val plusButton: Button
     private val minusButton: Button
@@ -56,11 +56,11 @@ class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(
 
         plusButton.setOnClickListener {
             value += stepValue
-            listener?.onTapStepperButton(value)
+            callback?.invoke(this, value)
         }
         minusButton.setOnClickListener {
             value -= stepValue
-            listener?.onTapStepperButton(value)
+            callback?.invoke(this, value)
         }
     }
 
@@ -69,8 +69,8 @@ class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(
         minusButton.isEnabled = value > minimumValue
     }
 
-    fun setStepperListener(listener: StepperOutput) {
-        this.listener = listener
+    fun setOnStepperClickListener(callback: (view: Stepper, newValue: Double) -> Unit) {
+        this.callback = callback
     }
 }
 
