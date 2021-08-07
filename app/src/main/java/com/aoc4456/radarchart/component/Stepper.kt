@@ -14,10 +14,38 @@ class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(
     private val minusButton: Button
 
     var minimumValue: Double = 0.0
+        set(newValue) {
+            field = newValue
+            if (value < minimumValue) {
+                value = minimumValue
+            }
+        }
+
     var maximumValue: Double = 100.0
+        set(newValue) {
+            field = newValue
+            if (maximumValue < newValue) {
+                value = maximumValue
+            }
+        }
+
     var stepValue: Double = 1.0
 
-    var value: Double = 99.5
+    var value: Double = 0.0
+        set(newValue) {
+            field = when {
+                newValue < minimumValue -> {
+                    minimumValue
+                }
+                maximumValue < newValue -> {
+                    maximumValue
+                }
+                else -> {
+                    newValue
+                }
+            }
+            setButtonEnable()
+        }
 
     init {
         inflate(context, R.layout.stepper, this)
@@ -27,13 +55,11 @@ class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(
         setButtonEnable()
 
         plusButton.setOnClickListener {
-            plusStep()
-            setButtonEnable()
+            value += stepValue
             listener?.onTapStepperButton(value)
         }
         minusButton.setOnClickListener {
-            minusStep()
-            setButtonEnable()
+            value -= stepValue
             listener?.onTapStepperButton(value)
         }
     }
@@ -41,22 +67,6 @@ class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(
     private fun setButtonEnable() {
         plusButton.isEnabled = value < maximumValue
         minusButton.isEnabled = value > minimumValue
-    }
-
-    private fun plusStep() {
-        if (value + stepValue < maximumValue) {
-            value += stepValue
-        } else {
-            value = maximumValue
-        }
-    }
-
-    private fun minusStep() {
-        if (minimumValue < value - stepValue) {
-            value -= stepValue
-        } else {
-            value = minimumValue
-        }
     }
 
     fun setStepperListener(listener: StepperOutput) {
