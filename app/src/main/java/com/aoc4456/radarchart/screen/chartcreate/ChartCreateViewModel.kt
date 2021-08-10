@@ -1,9 +1,6 @@
 package com.aoc4456.radarchart.screen.chartcreate
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
@@ -11,6 +8,7 @@ import com.aoc4456.radarchart.util.ChartDataUtil
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @HiltViewModel
 class ChartCreateViewModel @Inject constructor(
@@ -42,6 +40,9 @@ class ChartCreateViewModel @Inject constructor(
             chartColor.value?.let { value = ChartDataUtil.getRadarDataFromValues(it, values) }
         }
     }
+
+    val total = chartIntValues.map { it.sum() }
+    val average = chartIntValues.map { (it.average() * 10.0).roundToInt() / 10.0 }
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
