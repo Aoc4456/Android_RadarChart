@@ -73,4 +73,12 @@ class ChartCreateViewModel @Inject constructor(
         _chartColor.value = newColor
         _chartUpdate.value = true
     }
+
+    fun onChangeChartIntValue(index: Int, newValue: Int) {
+        if (newValue == chartIntValues.value?.getOrNull(index)) return
+        val tempList = chartIntValues.value!!.toMutableList()
+        tempList[index] = newValue
+        _chartIntValues.value = tempList
+        _chartUpdate.value = true
+    }
 }

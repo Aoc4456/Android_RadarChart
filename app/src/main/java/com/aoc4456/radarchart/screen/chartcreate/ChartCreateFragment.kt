@@ -48,6 +48,7 @@ class ChartCreateFragment : Fragment() {
             initialValues = viewModel.chartIntValues.value!!,
             maximum = viewModel.chartMaximum.value!! * 2,
             onChangeValueCallback = { index, newValue ->
+                viewModel.onChangeChartIntValue(index, newValue)
             }
         )
     }
