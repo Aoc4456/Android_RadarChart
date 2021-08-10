@@ -3,7 +3,6 @@ package com.aoc4456.radarchart.screen.chartcreate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
@@ -22,11 +21,11 @@ class ChartCreateViewModel @Inject constructor(
     private val _chartArgs = MutableLiveData<MyChart>()
     val chartArgs: LiveData<MyChart> = _chartArgs
 
-    val chartLabels: LiveData<List<String>> = groupData.map { group ->
-        group.labelList.map { it.text }
-    }
+    private val _chartLabels = MutableLiveData<List<String>>()
+    val chartLabels: LiveData<List<String>> = _chartLabels
 
-    val chartMaximum: LiveData<Int> = groupData.map { it.group.maximumValue }
+    private val _chartMaximum = MutableLiveData<Int>()
+    val chartMaximum: LiveData<Int> = _chartMaximum
 
     private val _chartColor = MutableLiveData<Int>()
     val chartColor: LiveData<Int> = _chartColor
@@ -40,17 +39,24 @@ class ChartCreateViewModel @Inject constructor(
     fun onViewCreated(args: ChartCreateFragmentArgs) {
         if (groupData.value != null) return
         groupData.value = args.groupWithLabelAndCharts
+        groupData.value?.let { groupData ->
+            _chartLabels.value = groupData.labelList.map { it.text }
+            _chartMaximum.value = groupData.group.maximumValue
+        }
+
         if (args.chart == null) {
             _chartColor.value = groupData.value!!.group.color
+            // TODO chartValuesを作成
             _chartData.value = ChartDataUtil.getRadarDataWithTheSameValue(
                 color = chartColor.value!!,
-                numberOfItems = groupData.value!!.labelList.size,
-                value = (groupData.value!!.group.maximumValue * 0.6).toFloat()
+                numberOfItems = chartLabels.value!!.size,
+                value = (chartMaximum.value!! * 0.6).toFloat()
             )
         } else {
             _chartArgs.value = args.chart
             chartArgs.value?.let {
                 _chartColor.value = it.color
+                // TODO chartValuesを代入
             }
         }
         _chartUpdate.value = true
@@ -66,8 +72,8 @@ class ChartCreateViewModel @Inject constructor(
         _chartData.value =
             ChartDataUtil.getRadarDataWithTheSameValue(
                 color = chartColor.value!!,
-                numberOfItems = groupData.value!!.labelList.size,
-                value = (groupData.value!!.group.maximumValue * 0.6).toFloat()
+                numberOfItems = chartLabels.value!!.size,
+                value = (chartMaximum.value!! * 0.6).toFloat()
             )
         _chartUpdate.value = true
     }
