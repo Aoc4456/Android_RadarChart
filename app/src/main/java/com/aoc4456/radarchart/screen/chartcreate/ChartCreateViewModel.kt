@@ -20,6 +20,9 @@ class ChartCreateViewModel @Inject constructor(
     private val _chartArgs = MutableLiveData<MyChart>()
     val chartArgs: LiveData<MyChart> = _chartArgs
 
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
+
     private val _chartLabels = MutableLiveData<List<String>>()
     val chartLabels: LiveData<List<String>> = _chartLabels
 
@@ -43,6 +46,9 @@ class ChartCreateViewModel @Inject constructor(
 
     val total = chartIntValues.map { it.sum() }
     val average = chartIntValues.map { (it.average() * 10.0).roundToInt() / 10.0 }
+
+    private val _comment = MutableLiveData<String>()
+    val comment: LiveData<String> = _comment
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
@@ -69,6 +75,11 @@ class ChartCreateViewModel @Inject constructor(
         _chartUpdate.value = true
     }
 
+    fun onChangeTitleText(newText: String) {
+        if (newText == title.value) return
+        _title.value = newText
+    }
+
     fun onChooseColor(newColor: Int) {
         if (newColor == chartColor.value) return
         _chartColor.value = newColor
@@ -81,5 +92,10 @@ class ChartCreateViewModel @Inject constructor(
         tempList[index] = newValue
         _chartIntValues.value = tempList
         _chartUpdate.value = true
+    }
+
+    fun onChangeComment(newText: String) {
+        if (newText == comment.value) return
+        _comment.value = newText
     }
 }
