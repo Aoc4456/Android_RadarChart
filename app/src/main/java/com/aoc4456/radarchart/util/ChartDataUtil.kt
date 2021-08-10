@@ -19,4 +19,13 @@ object ChartDataUtil {
         radarDataSet.setColorAndFillColor(color)
         return RadarData(radarDataSet)
     }
+
+    fun getNPercentValues(value: Int, percent: Int, size: Int): List<Int> {
+        val list = mutableListOf<Int>()
+        val percentValue = value * percent / 100
+        repeat(size) {
+            list.add(percentValue)
+        }
+        return list
+    }
 }

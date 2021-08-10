@@ -45,7 +45,7 @@ class ChartCreateFragment : Fragment() {
 
         binding.multiInputView.setup(
             labels = viewModel.chartLabels.value!!,
-            initialValues = listOf(50, 120, 80, 40),
+            initialValues = viewModel.chartIntValue.value!!,
             maximum = viewModel.chartMaximum.value!! * 2,
             onChangeValueCallback = { index, newValue ->
             }

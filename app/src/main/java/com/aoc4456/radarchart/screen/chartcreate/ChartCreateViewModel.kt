@@ -30,6 +30,10 @@ class ChartCreateViewModel @Inject constructor(
     private val _chartColor = MutableLiveData<Int>()
     val chartColor: LiveData<Int> = _chartColor
 
+    private val _chartIntValue = MutableLiveData<List<Int>>()
+    val chartIntValue: LiveData<List<Int>> = _chartIntValue
+
+    // TODO MediatorLiveDataにする color と values のみ
     private val _chartData = MutableLiveData<RadarData>()
     val chartData: LiveData<RadarData> = _chartData
 
@@ -46,7 +50,8 @@ class ChartCreateViewModel @Inject constructor(
 
         if (args.chart == null) {
             _chartColor.value = groupData.value!!.group.color
-            // TODO chartValuesを作成
+            _chartIntValue.value =
+                ChartDataUtil.getNPercentValues(chartMaximum.value!!, 60, chartLabels.value!!.size)
             _chartData.value = ChartDataUtil.getRadarDataWithTheSameValue(
                 color = chartColor.value!!,
                 numberOfItems = chartLabels.value!!.size,
