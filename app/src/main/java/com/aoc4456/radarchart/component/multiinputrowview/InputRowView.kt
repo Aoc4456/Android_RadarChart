@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.component.Stepper
+import kotlin.math.pow
 
 /**
  * 項目名ラベル、EditText、Stepperを１行にまとめたView
@@ -30,6 +31,7 @@ class InputRowView(
         set(newValue) {
             field = newValue
             stepper.maximumValue = newValue.toDouble()
+            stepper.stepValue = calcStep(newValue)
         }
 
     private var callback: ((InputRowView, Int) -> Unit)? = null
@@ -76,6 +78,7 @@ class InputRowView(
     }
 
     /**
+     * TODO テスト
      * editableをIntに変換する
      *
      * 正常に変換できなかった場合、Pair.first で false を返す
@@ -99,6 +102,19 @@ class InputRowView(
             return Pair(false, maximum)
         }
         return Pair(true, intValue)
+    }
+
+    /**
+     * 最大値から桁数を決める
+     * TODO テスト
+     */
+    private fun calcStep(maximum: Int): Double {
+        val numberOfDigits = maximum.toString().length
+        if (numberOfDigits <= 2) {
+            return 1.0
+        } else {
+            return 10.0.pow((numberOfDigits - 2).toDouble())
+        }
     }
 }
 

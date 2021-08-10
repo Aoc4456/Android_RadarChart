@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -39,6 +40,10 @@ class ChartCreateFragment : Fragment() {
             findNavController().popBackStack()
         }
 
+        binding.titleEditText.doAfterTextChanged { editable ->
+            viewModel.onChangeTitleText(editable.toString())
+        }
+
         binding.colorView.setOnChooseColorListener(requireActivity()) { chooseColor ->
             viewModel.onChooseColor(chooseColor)
         }
@@ -51,5 +56,9 @@ class ChartCreateFragment : Fragment() {
                 viewModel.onChangeChartIntValue(index, newValue)
             }
         )
+
+        binding.noteEditText.doAfterTextChanged { editable ->
+            viewModel.onChangeComment(editable.toString())
+        }
     }
 }

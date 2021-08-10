@@ -82,6 +82,7 @@ class MultiEditText(context: Context, private val attrs: AttributeSet) :
         view.setMargin(top = topMargin)
     }
 
+    // TODO インターフェースコールバックをやめる
     override fun setTextChangeListener(listener: MultiEditTextOutput) {
         this.multiEditTextOutput = listener
     }
