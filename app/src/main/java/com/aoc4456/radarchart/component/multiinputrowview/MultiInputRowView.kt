@@ -48,14 +48,14 @@ class MultiInputRowView(
 
     override fun setup(
         labels: List<String>,
-        values: List<Int>?,
+        initialValues: List<Int>?,
         maximum: Int,
         onChangeValueCallback: (index: Int, newValue: Int) -> Unit
     ) {
         this.maximum = maximum
         this.onChangeValueCallback = onChangeValueCallback
         for (i in labels.indices) {
-            val rowView = createRowView(labels[i], values?.getOrNull(i))
+            val rowView = createRowView(labels[i], initialValues?.getOrNull(i))
             placeView(rowView)
             rowViewList.add(rowView)
         }
@@ -65,7 +65,7 @@ class MultiInputRowView(
 interface MultiInputViewInput {
     fun setup(
         labels: List<String>,
-        values: List<Int>?,
+        initialValues: List<Int>?,
         maximum: Int,
         onChangeValueCallback: (index: Int, newValue: Int) -> Unit
     )
