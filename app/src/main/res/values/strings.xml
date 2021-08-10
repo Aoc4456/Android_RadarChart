@@ -2,6 +2,7 @@
     <string name="app_name">レーダーチャート</string>
     <string name="group">グループ</string>
     <string name="title">タイトル</string>
+    <string name="input_the_title">タイトルを入力</string>
     <string name="group_color">グループの色</string>
     <string name="icon">アイコン</string>
     <string name="number_of_items">項目数</string>
