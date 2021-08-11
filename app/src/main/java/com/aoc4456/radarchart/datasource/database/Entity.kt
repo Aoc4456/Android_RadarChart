@@ -65,6 +65,7 @@ data class MyChart(
     var updatedAt: Long = System.currentTimeMillis()
 ) : Parcelable
 
+@Parcelize
 @Entity(
     primaryKeys = ["myChartId", "index"],
     foreignKeys = [
@@ -80,7 +81,7 @@ data class ChartValue(
     var myChartId: String = "",
     var index: Int = 0,
     var value: Double = 0.0
-)
+) : Parcelable
 
 /**
  * １対多のリレーション
@@ -95,9 +96,20 @@ data class GroupWithLabelAndCharts(
     val labelList: List<ChartGroupLabel>,
     @Relation(
         parentColumn = "id",
-        entityColumn = "chartGroupId"
+        entityColumn = "chartGroupId",
+        entity = MyChart::class
     )
-    val chartList: List<MyChart>
+    val chartList: List<MyChartWithValue>
+) : Parcelable
+
+@Parcelize
+data class MyChartWithValue(
+    @Embedded val myChart: MyChart,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "myChartId"
+    )
+    val values: List<ChartValue>
 ) : Parcelable
 
 class Converters {
