@@ -9,6 +9,7 @@ import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -49,7 +50,7 @@ class ChartCreateViewModel @Inject constructor(
     val total = chartIntValues.map { it.sum() }
     val average = chartIntValues.map { (it.average() * 10.0).roundToInt() / 10.0 }
 
-    private val _comment = MutableLiveData<String>()
+    private val _comment = MutableLiveData("")
     val comment: LiveData<String> = _comment
 
     private val _chartUpdate = MutableLiveData<Boolean>()
@@ -115,9 +116,12 @@ class ChartCreateViewModel @Inject constructor(
             _errorMessage.value = validateResult.second!!
             return
         }
-        // Entity を作成
 
         // 保存
+        val saveData = createEntity()
+        viewModelScope.launch {
+            repository.saveChart(saveData.first, saveData.second)
+        }
 
         _dismiss.value = true
     }
@@ -128,5 +132,20 @@ class ChartCreateViewModel @Inject constructor(
             return Pair(false, titleValidateResult.stringResId)
         }
         return Pair(true, null)
+    }
+
+    private fun createEntity(): Pair<MyChart, List<Int>> {
+        val myChart = createMyChart()
+        val values = chartIntValues.value!!
+        return Pair(myChart, values)
+    }
+
+    private fun createMyChart(): MyChart {
+        return MyChart(
+            chartGroupId = groupData.value!!.group.id,
+            title = title.value!!,
+            color = chartColor.value!!,
+            comment = comment.value!!
+        )
     }
 }
