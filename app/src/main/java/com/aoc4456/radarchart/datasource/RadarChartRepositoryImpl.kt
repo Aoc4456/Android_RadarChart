@@ -3,6 +3,7 @@ package com.aoc4456.radarchart.datasource
 import androidx.lifecycle.LiveData
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
+import com.aoc4456.radarchart.datasource.database.MyChart
 import com.aoc4456.radarchart.datasource.database.RadarChartDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,12 @@ class RadarChartRepositoryImpl(
     override suspend fun saveGroup(group: ChartGroup, labels: List<String>) {
         withContext(ioDispatcher) {
             radarChartDao.saveChartGroupAndLabel(group, labels)
+        }
+    }
+
+    override suspend fun saveChart(chart: MyChart, values: List<Int>) {
+        withContext(ioDispatcher) {
+            radarChartDao.saveChartAndValues(chart, values)
         }
     }
 

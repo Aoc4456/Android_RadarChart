@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -59,6 +60,14 @@ class ChartCreateFragment : Fragment() {
 
         binding.noteEditText.doAfterTextChanged { editable ->
             viewModel.onChangeComment(editable.toString())
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.dismiss.observe(viewLifecycleOwner) {
+            findNavController().popBackStack()
         }
     }
 }

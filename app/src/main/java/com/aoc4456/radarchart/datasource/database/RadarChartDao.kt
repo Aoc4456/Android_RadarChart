@@ -7,7 +7,7 @@ import androidx.room.*
 interface RadarChartDao {
 
     /**
-     * Create
+     * Create Group
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -21,11 +21,34 @@ interface RadarChartDao {
         insertChartGroup(group)
         for (i in labels.indices) {
             val groupLabel = ChartGroupLabel(
-                group.id,
-                i,
-                labels[i]
+                chartGroupId = group.id,
+                index = i,
+                text = labels[i]
             )
             insertChartGroupLabel(groupLabel)
+        }
+    }
+
+    /**
+     * Create Chart
+     */
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertChart(chart: MyChart)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertChartValue(chartValue: ChartValue)
+
+    @Transaction
+    suspend fun saveChartAndValues(chart: MyChart, values: List<Int>) {
+        insertChart(chart)
+        for (i in values.indices) {
+            val chartValues = ChartValue(
+                myChartId = chart.id,
+                index = i,
+                value = values[i].toDouble()
+            )
+            insertChartValue(chartValues)
         }
     }
 
