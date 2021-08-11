@@ -5,6 +5,8 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
+import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,7 +22,7 @@ class ChartCreateViewModel @Inject constructor(
     private val _chartArgs = MutableLiveData<MyChart>()
     val chartArgs: LiveData<MyChart> = _chartArgs
 
-    private val _title = MutableLiveData<String>()
+    private val _title = MutableLiveData("")
     val title: LiveData<String> = _title
 
     private val _chartLabels = MutableLiveData<List<String>>()
@@ -52,6 +54,12 @@ class ChartCreateViewModel @Inject constructor(
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
+
+    private val _errorMessage = MutableLiveData<Int>()
+    val errorMessage: LiveData<Int> = _errorMessage
+
+    private val _dismiss = MutableLiveData<Boolean>()
+    val dismiss: LiveData<Boolean> = _dismiss
 
     fun onViewCreated(args: ChartCreateFragmentArgs) {
         if (groupData.value != null) return
@@ -97,5 +105,23 @@ class ChartCreateViewModel @Inject constructor(
     fun onChangeComment(newText: String) {
         if (newText == comment.value) return
         _comment.value = newText
+    }
+
+    fun onClickSaveButton() {
+        // バリデーション
+        val validateResult = validateInputField()
+        val validateFail = !validateResult.first
+        if (validateFail) {
+            _errorMessage.value = validateResult.second!!
+            return
+        }
+    }
+
+    private fun validateInputField(): Pair<Boolean, Int?> {
+        val titleValidateResult = titleValidate(title.value!!)
+        if (titleValidateResult != ValidateResult.SUCCESS) {
+            return Pair(false, titleValidateResult.stringResId)
+        }
+        return Pair(true, null)
     }
 }
