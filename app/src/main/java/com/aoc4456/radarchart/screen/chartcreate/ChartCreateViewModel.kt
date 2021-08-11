@@ -115,6 +115,11 @@ class ChartCreateViewModel @Inject constructor(
             _errorMessage.value = validateResult.second!!
             return
         }
+        // Entity を作成
+
+        // 保存
+
+        _dismiss.value = true
     }
 
     private fun validateInputField(): Pair<Boolean, Int?> {
