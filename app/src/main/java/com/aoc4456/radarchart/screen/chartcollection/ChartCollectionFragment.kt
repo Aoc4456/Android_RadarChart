@@ -34,6 +34,8 @@ class ChartCollectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.onViewCreated(navArgs)
+
         binding.toolBarTitle.text = navArgs.groupWithLabelAndCharts!!.group.title
 
         binding.toolbarBackButton.setOnClickListener {

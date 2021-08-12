@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
+import com.aoc4456.radarchart.util.ChartDataUtil
 
 class ChartCollectionAdapter(private val viewModel: ChartCollectionViewModel) :
     ListAdapter<MyChartWithValue, ChartCollectionAdapter.ViewHolder>(ChartCollectionDiffCallBack()) {
@@ -29,7 +30,19 @@ class ChartCollectionAdapter(private val viewModel: ChartCollectionViewModel) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+        val radarData = ChartDataUtil.getRadarDataFromValues(
+            item.myChart.color,
+            item.values.map { it.value.toInt() }
+        )
+
         holder.let {
+            it.radarChart.let { chart ->
+                chart.data = radarData
+                // TODO 正しい値をセット
+                chart.yAxis.axisMaximum = viewModel.maximum.toFloat()
+                // TODO ラベルをセット
+                chart.notifyDataSetChanged()
+            }
             it.titleView.text = item.myChart.title
             it.commentView.text = item.myChart.comment
         }

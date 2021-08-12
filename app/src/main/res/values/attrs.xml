@@ -5,6 +5,8 @@
             <enum name="group_list" value="0"/>
             <enum name="group_create" value="1"/>
             <enum name="chart_create" value="2"/>
+            <enum name="chart_collection_list" value="3"/>
+            <enum name="chart_collection_grid" value="4"/>
         </attr>
     </declare-styleable>
 </resources>
