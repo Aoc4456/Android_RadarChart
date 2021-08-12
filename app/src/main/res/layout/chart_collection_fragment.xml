@@ -43,13 +43,35 @@
             android:id="@+id/button_container"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:background="@color/dark_gray"
             android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:checkedButton="@id/toggleButtonList">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/toggleButtonList"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="日" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/toggleButtonGrid"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="月" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
