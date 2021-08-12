@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.R
-import com.aoc4456.radarchart.databinding.ChartGroupListItemBinding
+import com.aoc4456.radarchart.databinding.GroupListItemBinding
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
 
@@ -36,7 +36,7 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
         holder.bind(item)
     }
 
-    class ViewHolder private constructor(val binding: ChartGroupListItemBinding) :
+    class ViewHolder private constructor(val binding: GroupListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: GroupWithLabelAndCharts) {
@@ -55,7 +55,7 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
         companion object {
             fun createViewHolder(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ChartGroupListItemBinding.inflate(layoutInflater, parent, false)
+                val binding = GroupListItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
