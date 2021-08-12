@@ -51,8 +51,8 @@
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/toggleGroup"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 app:singleSelection="true"
                 app:selectionRequired="true"
                 app:checkedButton="@id/toggleButtonList">
@@ -75,6 +75,13 @@
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>
 
+        <View
+            android:id="@+id/minus_margin"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_container" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
@@ -82,7 +89,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_container"
+            app:layout_constraintTop_toBottomOf="@id/minus_margin"
             app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
