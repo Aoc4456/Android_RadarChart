@@ -11,4 +11,6 @@ class ChartCollectionViewModel @Inject constructor(
 ) : ViewModel() {
 
     val viewType: ChartCollectionType = ChartCollectionType.LIST
+
+    val maximum = 100
 }
