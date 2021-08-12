@@ -49,6 +49,7 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroup"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -78,7 +79,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

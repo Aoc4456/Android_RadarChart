@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.databinding.ChartCollectionFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,7 +49,21 @@ class ChartCollectionFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
         binding.recyclerView.adapter = ChartCollectionAdapter(viewModel)
         (binding.recyclerView.adapter as ChartCollectionAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
+
+        binding.toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.toggleButtonList -> {
+                        (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 1
+                    }
+                    R.id.toggleButtonGrid -> {
+                        (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 3
+                    }
+                }
+            }
+        }
     }
 }
