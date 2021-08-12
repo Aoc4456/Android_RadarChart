@@ -62,7 +62,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:text="日" />
+                    app:icon="@drawable/ic_baseline_format_list_bulleted_24"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/toggleButtonGrid"
@@ -70,7 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:text="月" />
+                    app:icon="@drawable/ic_baseline_grid_24" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>
 
