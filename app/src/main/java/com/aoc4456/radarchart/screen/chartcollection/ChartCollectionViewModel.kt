@@ -8,4 +8,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChartCollectionViewModel @Inject constructor(
     private val repository: RadarChartRepository
-) : ViewModel()
+) : ViewModel() {
+
+    val viewType: ChartCollectionType = ChartCollectionType.LIST
+}

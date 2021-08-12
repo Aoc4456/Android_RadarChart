@@ -46,5 +46,8 @@ class ChartCollectionFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
+        
+        binding.recyclerView.adapter = ChartCollectionAdapter(viewModel)
+        (binding.recyclerView.adapter as ChartCollectionAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
     }
 }
