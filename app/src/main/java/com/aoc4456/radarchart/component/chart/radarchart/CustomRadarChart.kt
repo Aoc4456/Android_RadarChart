@@ -60,6 +60,10 @@ class CustomRadarChart(context: Context, attrs: AttributeSet) :
                 yAxis.axisMaximum = 90f
                 fixedLongestLabel = "123"
             }
+            ChartType.CHART_COLLECTION_LIST -> {
+                fixedLongestLabel = "123"
+            }
+            else -> {}
         }
     }
 
@@ -72,7 +76,9 @@ enum class ChartType(val value: Int) {
     DEFAULT(-1),
     GROUP_LIST(0),
     GROUP_CREATE(1),
-    CHART_CREATE(2);
+    CHART_CREATE(2),
+    CHART_COLLECTION_LIST(3),
+    CHART_COLLECTION_GRID(4);
 
     companion object {
         fun fromInt(value: Int) = values().first { it.value == value }
