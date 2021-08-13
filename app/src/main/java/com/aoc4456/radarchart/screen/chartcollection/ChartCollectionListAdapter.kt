@@ -31,8 +31,8 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
             )
             binding.radarChart.let {
                 it.data = radarData
-                it.yAxis.axisMaximum = viewModel.maximum.toFloat()
-                // TODO ラベルをセット
+                it.yAxis.axisMaximum = viewModel.groupData.value!!.group.maximumValue.toFloat()
+                it.setChartItemLabel(viewModel.groupData.value!!.labelList.map { it.text })
                 it.notifyDataSetChanged()
             }
             binding.title.text = item.myChart.title

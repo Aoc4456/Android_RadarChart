@@ -51,7 +51,6 @@ class ChartCollectionFragment : Fragment() {
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
         binding.recyclerView.adapter = ChartCollectionListAdapter(viewModel)
-        (binding.recyclerView.adapter as ChartCollectionListAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
 
         binding.toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
@@ -59,15 +58,18 @@ class ChartCollectionFragment : Fragment() {
                     R.id.toggleButtonList -> {
                         (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 1
                         binding.recyclerView.adapter = ChartCollectionListAdapter(viewModel)
-                        (binding.recyclerView.adapter as ChartCollectionListAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
                     }
                     R.id.toggleButtonGrid -> {
                         (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 3
                         binding.recyclerView.adapter = ChartCollectionGridAdapter(viewModel)
-                        (binding.recyclerView.adapter as ChartCollectionGridAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
                     }
                 }
             }
+        }
+
+        viewModel.chartList.observe(viewLifecycleOwner) {
+            (binding.recyclerView.adapter as? ChartCollectionListAdapter)?.submitList(it)
+            (binding.recyclerView.adapter as? ChartCollectionGridAdapter)?.submitList(it)
         }
     }
 }
