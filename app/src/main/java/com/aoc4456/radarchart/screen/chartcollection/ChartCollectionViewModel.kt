@@ -13,8 +13,6 @@ class ChartCollectionViewModel @Inject constructor(
 
     lateinit var groupData: GroupWithLabelAndCharts
 
-    val viewType: ChartCollectionType = ChartCollectionType.LIST
-
     val maximum = 100
 
     fun onViewCreated(navArgs: ChartCollectionFragmentArgs) {

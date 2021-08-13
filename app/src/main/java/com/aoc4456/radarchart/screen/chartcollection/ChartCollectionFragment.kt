@@ -52,8 +52,8 @@ class ChartCollectionFragment : Fragment() {
         }
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-        binding.recyclerView.adapter = ChartCollectionAdapter(viewModel)
-        (binding.recyclerView.adapter as ChartCollectionAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
+        binding.recyclerView.adapter = ChartCollectionListAdapter(viewModel)
+        (binding.recyclerView.adapter as ChartCollectionListAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
 
         binding.toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
