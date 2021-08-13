@@ -1,5 +1,7 @@
 package com.aoc4456.radarchart.screen.chartcollection
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
@@ -11,11 +13,12 @@ class ChartCollectionViewModel @Inject constructor(
     private val repository: RadarChartRepository
 ) : ViewModel() {
 
-    lateinit var groupData: GroupWithLabelAndCharts
+    private val _groupData = MutableLiveData<GroupWithLabelAndCharts>()
+    val groupData: LiveData<GroupWithLabelAndCharts> = _groupData
 
     val maximum = 100
 
     fun onViewCreated(navArgs: ChartCollectionFragmentArgs) {
-        groupData = navArgs.groupWithLabelAndCharts!!
+        _groupData.value = navArgs.groupWithLabelAndCharts!!
     }
 }

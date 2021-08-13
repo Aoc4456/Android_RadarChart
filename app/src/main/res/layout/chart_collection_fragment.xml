@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:text="@{viewmodel.groupData.group.title}"
                 tools:text="タイトル" />
         </FrameLayout>
 
@@ -53,24 +54,24 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                app:singleSelection="true"
+                app:checkedButton="@id/toggleButtonList"
                 app:selectionRequired="true"
-                app:checkedButton="@id/toggleButtonList">
+                app:singleSelection="true">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/toggleButtonList"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
-                    app:icon="@drawable/ic_baseline_format_list_bulleted_24"/>
+                    android:layout_weight="1"
+                    app:icon="@drawable/ic_baseline_format_list_bulleted_24" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/toggleButtonGrid"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     app:icon="@drawable/ic_baseline_grid_24" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>

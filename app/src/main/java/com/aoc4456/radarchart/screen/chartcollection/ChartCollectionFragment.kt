@@ -36,8 +36,6 @@ class ChartCollectionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.onViewCreated(navArgs)
 
-        binding.toolBarTitle.text = navArgs.groupWithLabelAndCharts!!.group.title
-
         binding.toolbarBackButton.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -60,9 +58,13 @@ class ChartCollectionFragment : Fragment() {
                 when (checkedId) {
                     R.id.toggleButtonList -> {
                         (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 1
+                        binding.recyclerView.adapter = ChartCollectionListAdapter(viewModel)
+                        (binding.recyclerView.adapter as ChartCollectionListAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
                     }
                     R.id.toggleButtonGrid -> {
                         (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 3
+                        binding.recyclerView.adapter = ChartCollectionGridAdapter(viewModel)
+                        (binding.recyclerView.adapter as ChartCollectionGridAdapter).submitList(navArgs.groupWithLabelAndCharts!!.chartList)
                     }
                 }
             }
