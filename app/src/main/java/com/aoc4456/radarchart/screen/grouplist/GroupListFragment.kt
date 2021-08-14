@@ -44,6 +44,7 @@ class GroupListFragment : Fragment() {
 
         binding.recyclerView.adapter = GroupListAdapter(viewModel)
 
+        // TODO BindingAdapter化する
         viewModel.groupList.observe(viewLifecycleOwner) {
             (binding.recyclerView.adapter as GroupListAdapter).submitList(it)
         }
