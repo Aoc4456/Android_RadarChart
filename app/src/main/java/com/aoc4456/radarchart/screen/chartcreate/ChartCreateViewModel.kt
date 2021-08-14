@@ -80,8 +80,10 @@ class ChartCreateViewModel @Inject constructor(
         } else {
             _chartArgs.value = args.chart
             chartArgs.value?.let { chartWithValue ->
+                _title.value = chartWithValue.myChart.title
                 _chartColor.value = chartWithValue.myChart.color
                 _chartIntValues.value = chartWithValue.values.map { it.value.toInt() }
+                _comment.value = chartWithValue.myChart.comment
             }
         }
         _chartUpdate.value = true

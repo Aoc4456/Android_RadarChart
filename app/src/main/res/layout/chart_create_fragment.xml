@@ -77,6 +77,7 @@
                     android:hint="@string/input_the_title"
                     android:importantForAutofill="no"
                     android:inputType="text"
+                    android:text="@{viewmodel.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/titleLabel"
@@ -114,9 +115,9 @@
                     android:layout_height="30dp"
                     android:gravity="bottom|end"
                     android:text="@{@string/maximum_value_of_graph(viewmodel.chartMaximum)}"
+                    app:layout_constraintBottom_toTopOf="@id/totalAverageView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/totalAverageView"
                     tools:text="グラフの最大値：10058" />
 
                 <TextView
@@ -126,8 +127,8 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/border_radius"
                     android:gravity="center"
-                    android:textStyle="bold"
                     android:text="@{@string/total_and_average(viewmodel.total,viewmodel.average)}"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/radarChart"
@@ -165,6 +166,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textMultiLine"
                     android:paddingHorizontal="8dp"
+                    android:text="@{viewmodel.comment}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/noteLabel"
