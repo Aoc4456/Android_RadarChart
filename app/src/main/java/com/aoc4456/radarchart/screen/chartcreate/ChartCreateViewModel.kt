@@ -80,8 +80,10 @@ class ChartCreateViewModel @Inject constructor(
         } else {
             _chartArgs.value = args.chart
             chartArgs.value?.let { chartWithValue ->
+                _title.value = chartWithValue.myChart.title
                 _chartColor.value = chartWithValue.myChart.color
                 _chartIntValues.value = chartWithValue.values.map { it.value.toInt() }
+                _comment.value = chartWithValue.myChart.comment
             }
         }
         _chartUpdate.value = true
@@ -158,11 +160,23 @@ class ChartCreateViewModel @Inject constructor(
     }
 
     private fun createMyChart(): MyChart {
-        return MyChart(
-            chartGroupId = groupData.value!!.group.id,
-            title = title.value!!,
-            color = chartColor.value!!,
-            comment = comment.value!!
-        )
+        val isNew = chartArgs.value == null
+
+        if (isNew) {
+            return MyChart(
+                chartGroupId = groupData.value!!.group.id,
+                title = title.value!!,
+                color = chartColor.value!!,
+                comment = comment.value!!
+            )
+        }
+
+        val oldChart = chartArgs.value!!.myChart
+        return oldChart.also {
+            it.title = title.value!!
+            it.color = chartColor.value!!
+            it.comment = comment.value!!
+            it.updatedAt = System.currentTimeMillis()
+        }
     }
 }
