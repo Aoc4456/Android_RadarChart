@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.aoc4456.radarchart.R
-import com.aoc4456.radarchart.component.MultiEditTextOutput
 import com.aoc4456.radarchart.component.dialog.BaseDialogFragment
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogListener
@@ -64,13 +63,9 @@ class GroupCreateFragment : Fragment(), DialogListener {
             viewModel.onChangeMaximumText(editable.toString())
         }
 
-        binding.multiEditText.setTextChangeListener(
-            object : MultiEditTextOutput {
-                override fun onMultiEditTextChanged(index: Int, text: String) {
-                    viewModel.onTextChangeMultiEditText(index, text)
-                }
-            }
-        )
+        binding.multiEditText.setTextChangeListener { index, newText ->
+            viewModel.onTextChangeMultiEditText(index, newText)
+        }
 
         binding.toolbarTrashButton.setOnClickListener {
             val dialogFragment = BaseDialogFragment.newInstance(

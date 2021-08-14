@@ -23,7 +23,8 @@ class MultiEditText(context: Context, private val attrs: AttributeSet) :
     MultiEditTextInput {
 
     private val editTextList = mutableListOf<EditText>()
-    private var multiEditTextOutput: MultiEditTextOutput? = null
+
+    private var onChangeTextCallback: ((Int, String) -> Unit)? = null
 
     init {
         orientation = VERTICAL
@@ -65,9 +66,9 @@ class MultiEditText(context: Context, private val attrs: AttributeSet) :
         }
         editText.doAfterTextChanged { editable ->
             val editedText = editable.toString()
-            multiEditTextOutput?.let {
+            onChangeTextCallback?.let {
                 val index = editTextList.indexOf(editText)
-                it.onMultiEditTextChanged(index, editedText)
+                it.invoke(index, editedText)
             }
         }
 
@@ -82,19 +83,14 @@ class MultiEditText(context: Context, private val attrs: AttributeSet) :
         view.setMargin(top = topMargin)
     }
 
-    // TODO インターフェースコールバックをやめる
-    override fun setTextChangeListener(listener: MultiEditTextOutput) {
-        this.multiEditTextOutput = listener
+    override fun setTextChangeListener(callback: (Int, String) -> Unit) {
+        this.onChangeTextCallback = callback
     }
 }
 
 interface MultiEditTextInput {
-    fun setTextChangeListener(listener: MultiEditTextOutput)
+    fun setTextChangeListener(callback: (Int, String) -> Unit)
     fun changeNumberOfItems(textList: List<String>)
-}
-
-interface MultiEditTextOutput {
-    fun onMultiEditTextChanged(index: Int, text: String)
 }
 
 /**
