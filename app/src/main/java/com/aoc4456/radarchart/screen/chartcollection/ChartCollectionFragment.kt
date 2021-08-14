@@ -71,5 +71,14 @@ class ChartCollectionFragment : Fragment() {
             (binding.recyclerView.adapter as? ChartCollectionListAdapter)?.submitList(it)
             (binding.recyclerView.adapter as? ChartCollectionGridAdapter)?.submitList(it)
         }
+
+        viewModel.navigateToChartEdit.observe(viewLifecycleOwner) {
+            val action =
+                ChartCollectionFragmentDirections.actionChartCollectionFragmentToChartEditFragment(
+                    navArgs.groupWithLabelAndCharts!!,
+                    it
+                )
+            findNavController().navigate(action)
+        }
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
+import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
@@ -20,8 +21,8 @@ class ChartCreateViewModel @Inject constructor(
 
     private val groupData = MutableLiveData<GroupWithLabelAndCharts>()
 
-    private val _chartArgs = MutableLiveData<MyChart>()
-    val chartArgs: LiveData<MyChart> = _chartArgs
+    private val _chartArgs = MutableLiveData<MyChartWithValue>()
+    val chartArgs: LiveData<MyChartWithValue> = _chartArgs
 
     private val _title = MutableLiveData("")
     val title: LiveData<String> = _title
@@ -76,9 +77,9 @@ class ChartCreateViewModel @Inject constructor(
                 ChartDataUtil.getNPercentValues(chartMaximum.value!!, 60, chartLabels.value!!.size)
         } else {
             _chartArgs.value = args.chart
-            chartArgs.value?.let {
-                _chartColor.value = it.color
-                // TODO chartValuesを代入
+            chartArgs.value?.let { chartWithValue ->
+                _chartColor.value = chartWithValue.myChart.color
+                _chartIntValues.value = chartWithValue.values.map { it.value.toInt() }
             }
         }
         _chartUpdate.value = true
