@@ -35,6 +35,10 @@ class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel
                 it.notifyDataSetChanged()
             }
             binding.title.text = item.myChart.title
+
+            binding.frameForClick.setOnClickListener {
+                viewModel.onClickCollectionItem(item)
+            }
         }
 
         companion object {

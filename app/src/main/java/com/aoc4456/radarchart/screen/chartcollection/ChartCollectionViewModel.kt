@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,5 +32,9 @@ class ChartCollectionViewModel @Inject constructor(
                 _chartList.postValue(repository.getChartList(groupData.value!!.group.id))
             }
         }
+    }
+
+    fun onClickCollectionItem(item: MyChartWithValue) {
+        Timber.d("アイテムがクリック = ${item.myChart.title}")
     }
 }

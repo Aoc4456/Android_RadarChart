@@ -37,6 +37,10 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
             }
             binding.title.text = item.myChart.title
             binding.comment.text = item.myChart.comment
+
+            binding.frameForClick.setOnClickListener {
+                viewModel.onClickCollectionItem(item)
+            }
         }
 
         companion object {
