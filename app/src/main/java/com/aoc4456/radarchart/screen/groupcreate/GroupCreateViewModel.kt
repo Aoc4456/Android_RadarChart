@@ -120,7 +120,7 @@ class GroupCreateViewModel @Inject constructor(
         // 保存
         val entity = createEntity()
         viewModelScope.launch {
-            repository.saveGroup(entity.first, entity.second)
+            repository.saveGroup(entity.first, entity.second, groupArgs.value)
         }
 
         _dismiss.value = true

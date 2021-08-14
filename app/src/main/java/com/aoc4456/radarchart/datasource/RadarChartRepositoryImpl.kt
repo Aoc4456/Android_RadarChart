@@ -15,9 +15,17 @@ class RadarChartRepositoryImpl(
      * Create
      */
 
-    override suspend fun saveGroup(group: ChartGroup, labels: List<String>) {
+    override suspend fun saveGroup(
+        group: ChartGroup,
+        labels: List<String>,
+        oldGroup: GroupWithLabelAndCharts?
+    ) {
         withContext(ioDispatcher) {
-            radarChartDao.saveChartGroupAndLabel(group, labels)
+            if (oldGroup == null) {
+                radarChartDao.saveChartGroupAndLabel(group, labels)
+            } else {
+                radarChartDao.updateChartGroupAndLabel(group, labels, oldGroup)
+            }
         }
     }
 
