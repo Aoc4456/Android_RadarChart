@@ -1,6 +1,8 @@
 package com.aoc4456.radarchart.screen.chartcreate
 
 import androidx.lifecycle.*
+import com.aoc4456.radarchart.component.dialog.DialogButtonType
+import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
@@ -125,6 +127,20 @@ class ChartCreateViewModel @Inject constructor(
         }
 
         _dismiss.value = true
+    }
+
+    fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
+        when (buttonType) {
+            DialogButtonType.POSITIVE -> {
+                if (chartArgs.value == null) return
+                viewModelScope.launch {
+                    repository.deleteMyChart(chartArgs.value!!.myChart.id)
+                }
+                _dismiss.value = true
+            }
+            DialogButtonType.NEGATIVE -> {
+            }
+        }
     }
 
     private fun validateInputField(): Pair<Boolean, Int?> {

@@ -92,13 +92,7 @@ class GroupCreateFragment : Fragment(), DialogListener {
         }
     }
 
-    override fun onDialogButtonClick(dialogType: DialogType, buttonType: DialogButtonType) {
-        when (buttonType) {
-            DialogButtonType.POSITIVE -> {
-                viewModel.onClickTrashDialogPositive()
-            }
-            DialogButtonType.NEGATIVE -> {
-            }
-        }
+    override fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
+        viewModel.onClickButtonInDialog(dialogType, buttonType)
     }
 }

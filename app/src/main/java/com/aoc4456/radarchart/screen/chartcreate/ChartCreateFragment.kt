@@ -10,11 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.aoc4456.radarchart.R
+import com.aoc4456.radarchart.component.dialog.BaseDialogFragment
+import com.aoc4456.radarchart.component.dialog.DialogButtonType
+import com.aoc4456.radarchart.component.dialog.DialogListener
+import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.databinding.ChartCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChartCreateFragment : Fragment() {
+class ChartCreateFragment : Fragment(), DialogListener {
 
     private lateinit var binding: ChartCreateFragmentBinding
     private val viewModel by viewModels<ChartCreateViewModel>()
@@ -37,18 +42,33 @@ class ChartCreateFragment : Fragment() {
 
         viewModel.onViewCreated(navArgs)
 
+        // ツールバー
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
         }
 
+        binding.toolbarTrashButton.setOnClickListener {
+            val dialogFragment = BaseDialogFragment.newInstance(
+                type = DialogType.CHART_DELETE,
+                title = getString(R.string.delete_chart_title),
+                message = getString(R.string.delete_chart_message),
+                positiveText = getString(R.string.delete),
+                negativeText = getString(R.string.cancel)
+            )
+            dialogFragment.show(childFragmentManager, "TRASH_DIALOG_TAG")
+        }
+
+        // タイトル
         binding.titleEditText.doAfterTextChanged { editable ->
             viewModel.onChangeTitleText(editable.toString())
         }
 
+        // 色選択
         binding.colorView.setOnChooseColorListener(requireActivity()) { chooseColor ->
             viewModel.onChooseColor(chooseColor)
         }
 
+        // チャートの値入力
         binding.multiInputView.setup(
             labels = viewModel.chartLabels.value!!,
             initialValues = viewModel.chartIntValues.value!!,
@@ -58,6 +78,7 @@ class ChartCreateFragment : Fragment() {
             }
         )
 
+        // コメントTextView
         binding.noteEditText.doAfterTextChanged { editable ->
             viewModel.onChangeComment(editable.toString())
         }
@@ -69,5 +90,9 @@ class ChartCreateFragment : Fragment() {
         viewModel.dismiss.observe(viewLifecycleOwner) {
             findNavController().popBackStack()
         }
+    }
+
+    override fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
+        viewModel.onClickButtonInDialog(dialogType, buttonType)
     }
 }
