@@ -1,6 +1,8 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
 import androidx.lifecycle.*
+import com.aoc4456.radarchart.component.dialog.DialogButtonType
+import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
@@ -124,13 +126,18 @@ class GroupCreateViewModel @Inject constructor(
         _dismiss.value = true
     }
 
-    fun onClickTrashDialogPositive() {
-        if (groupArgs.value == null) return
-        viewModelScope.launch {
-            repository.deleteGroup(groupArgs.value!!.group.id)
+    fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
+        when (buttonType) {
+            DialogButtonType.POSITIVE -> {
+                if (groupArgs.value == null) return
+                viewModelScope.launch {
+                    repository.deleteGroup(groupArgs.value!!.group.id)
+                }
+                _dismiss.value = true
+            }
+            DialogButtonType.NEGATIVE -> {
+            }
         }
-
-        _dismiss.value = true
     }
 
     private fun updateChart() {
