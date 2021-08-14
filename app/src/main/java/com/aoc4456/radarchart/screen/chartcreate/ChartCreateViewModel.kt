@@ -160,11 +160,23 @@ class ChartCreateViewModel @Inject constructor(
     }
 
     private fun createMyChart(): MyChart {
-        return MyChart(
-            chartGroupId = groupData.value!!.group.id,
-            title = title.value!!,
-            color = chartColor.value!!,
-            comment = comment.value!!
-        )
+        val isNew = chartArgs.value == null
+
+        if (isNew) {
+            return MyChart(
+                chartGroupId = groupData.value!!.group.id,
+                title = title.value!!,
+                color = chartColor.value!!,
+                comment = comment.value!!
+            )
+        }
+
+        val oldChart = chartArgs.value!!.myChart
+        return oldChart.also {
+            it.title = title.value!!
+            it.color = chartColor.value!!
+            it.comment = comment.value!!
+            it.updatedAt = System.currentTimeMillis()
+        }
     }
 }
