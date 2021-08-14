@@ -54,6 +54,13 @@
             app:exitAnim="@anim/nav_up_exit_anim"
             app:popEnterAnim="@anim/nav_up_pop_enter_anim"
             app:popExitAnim="@anim/nav_up_pop_exit_anim" />
+        <action
+            android:id="@+id/action_chartCollectionFragment_to_chartEditFragment"
+            app:destination="@id/chartCreateFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right" />
     </fragment>
     <fragment
         android:id="@+id/testFragment"
@@ -72,7 +79,7 @@
             app:nullable="false" />
         <argument
             android:name="chart"
-            app:argType="com.aoc4456.radarchart.datasource.database.MyChart"
+            app:argType="com.aoc4456.radarchart.datasource.database.MyChartWithValue"
             app:nullable="true" />
     </fragment>
 </navigation>

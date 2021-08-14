@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
+import com.aoc4456.radarchart.util.PublishLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +25,9 @@ class ChartCollectionViewModel @Inject constructor(
     private val _chartList = MutableLiveData<List<MyChartWithValue>>()
     val chartList: LiveData<List<MyChartWithValue>> = _chartList
 
+    private val _navigateToChartEdit = PublishLiveData<MyChartWithValue?>()
+    val navigateToChartEdit: PublishLiveData<MyChartWithValue?> = _navigateToChartEdit
+
     fun onViewCreated(navArgs: ChartCollectionFragmentArgs) {
         _groupData.value = navArgs.groupWithLabelAndCharts!!
         viewModelScope.launch {
@@ -31,5 +35,9 @@ class ChartCollectionViewModel @Inject constructor(
                 _chartList.postValue(repository.getChartList(groupData.value!!.group.id))
             }
         }
+    }
+
+    fun onClickCollectionItem(item: MyChartWithValue) {
+        _navigateToChartEdit.value = item
     }
 }
