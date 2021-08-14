@@ -62,9 +62,6 @@ interface RadarChartDao {
     @Update
     suspend fun updateGroup(group: ChartGroup)
 
-    @Update
-    suspend fun updateGroupLabel(labels: ChartGroupLabel)
-
     @Transaction
     suspend fun updateGroupAndLabel(
         group: ChartGroup,
@@ -80,8 +77,26 @@ interface RadarChartDao {
 
         val numberOfItemsDiff = labels.size - oldGroup.labelList.size
         if (numberOfItemsDiff > 0) { // 項目数増加
+            val startIndex = labels.size
+            val last = startIndex + numberOfItemsDiff
+
+            oldGroup.chartList.forEach { chart ->
+                for (i in startIndex until last) {
+                    insertChartValue(
+                        ChartValue(
+                            myChartId = chart.myChart.id,
+                            index = i,
+                            value = group.maximumValue * 0.6
+                        )
+                    )
+                }
+            }
         }
-        if (numberOfItemsDiff < 0) { // 項目数減少
+
+        if (numberOfItemsDiff < 0) { // 項目数減少 TODO sortedIndex の 調整
+            oldGroup.chartList.forEach { chart ->
+                deleteChartValueGreaterThanIndex(chart.myChart.id, labels.size)
+            }
         }
     }
 
@@ -97,4 +112,7 @@ interface RadarChartDao {
 
     @Query("DELETE FROM MyChart WHERE id = :chartId")
     suspend fun deleteMyChart(chartId: String)
+
+    @Query("DELETE FROM ChartValue WHERE myChartId = :chartId AND `index` >= :index")
+    suspend fun deleteChartValueGreaterThanIndex(chartId: String, index: Int)
 }
