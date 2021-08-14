@@ -56,12 +56,15 @@ interface RadarChartDao {
      * Read
      */
 
-    @Query("SELECT * FROM ChartGroup")
-    fun getAllChartGroup(): List<ChartGroup>
-
+    // TODO 並び順の管理
     @Transaction
     @Query("SELECT * FROM ChartGroup")
     fun observeChartGroupForGroupList(): LiveData<List<GroupWithLabelAndCharts>>
+
+    // TODO 並び順の管理
+    @Transaction
+    @Query("SELECT * FROM MyChart WHERE chartGroupId = :groupId ORDER BY createdAt ASC")
+    suspend fun getChartList(groupId: String): List<MyChartWithValue>
 
     /**
      * Delete

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
+import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 
 interface RadarChartRepository {
 
@@ -19,7 +20,9 @@ interface RadarChartRepository {
      * Read
      */
 
-    fun observeChartGroupList(): LiveData<List<GroupWithLabelAndCharts>>
+    fun observeGroupList(): LiveData<List<GroupWithLabelAndCharts>>
+
+    suspend fun getChartList(groupId: String): List<MyChartWithValue>
 
     /**
      * Delete

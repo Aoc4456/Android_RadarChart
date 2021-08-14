@@ -14,7 +14,7 @@ class GroupListViewModel @Inject constructor(
     private val repository: RadarChartRepository
 ) : ViewModel() {
 
-    private val _groupList = repository.observeChartGroupList()
+    private val _groupList = repository.observeGroupList()
     val groupList: LiveData<List<GroupWithLabelAndCharts>> = _groupList
 
     private val _navigateToGroupEdit = PublishLiveData<GroupWithLabelAndCharts?>()
