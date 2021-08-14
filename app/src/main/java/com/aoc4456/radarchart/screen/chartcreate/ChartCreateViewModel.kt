@@ -1,6 +1,8 @@
 package com.aoc4456.radarchart.screen.chartcreate
 
 import androidx.lifecycle.*
+import com.aoc4456.radarchart.component.dialog.DialogButtonType
+import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
@@ -11,6 +13,7 @@ import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -125,6 +128,16 @@ class ChartCreateViewModel @Inject constructor(
         }
 
         _dismiss.value = true
+    }
+
+    fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
+        when (buttonType) {
+            DialogButtonType.POSITIVE -> {
+                Timber.d("削除ボタンが押されました")
+            }
+            DialogButtonType.NEGATIVE -> {
+            }
+        }
     }
 
     private fun validateInputField(): Pair<Boolean, Int?> {

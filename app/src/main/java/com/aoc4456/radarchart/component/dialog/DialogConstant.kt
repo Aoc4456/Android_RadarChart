@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 interface DialogListener {
-    fun onDialogButtonClick(dialogType: DialogType, buttonType: DialogButtonType)
+    fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType)
 }
 
 @Parcelize

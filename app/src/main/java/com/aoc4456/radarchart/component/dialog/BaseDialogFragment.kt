@@ -44,12 +44,12 @@ class BaseDialogFragment : DialogFragment() {
                 message?.let { setMessage(message) }
                 positiveText?.let {
                     setPositiveButton(positiveText) { _, _ ->
-                        dialogListener.onDialogButtonClick(dialogType!!, DialogButtonType.POSITIVE)
+                        dialogListener.onClickButtonInDialog(dialogType!!, DialogButtonType.POSITIVE)
                     }
                 }
                 negativeText?.let {
                     setNegativeButton(negativeText) { _, _ ->
-                        dialogListener.onDialogButtonClick(dialogType!!, DialogButtonType.NEGATIVE)
+                        dialogListener.onClickButtonInDialog(dialogType!!, DialogButtonType.NEGATIVE)
                     }
                 }
             }
