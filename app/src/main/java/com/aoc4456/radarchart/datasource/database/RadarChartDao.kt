@@ -72,4 +72,7 @@ interface RadarChartDao {
 
     @Query("DELETE FROM ChartGroup WHERE id = :groupId")
     suspend fun deleteChartGroup(groupId: String)
+
+    @Query("DELETE FROM MyChart WHERE id = :chartId")
+    suspend fun deleteMyChart(chartId: String)
 }

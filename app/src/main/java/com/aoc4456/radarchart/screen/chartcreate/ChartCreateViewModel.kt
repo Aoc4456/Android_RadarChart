@@ -13,7 +13,6 @@ import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -133,7 +132,11 @@ class ChartCreateViewModel @Inject constructor(
     fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
         when (buttonType) {
             DialogButtonType.POSITIVE -> {
-                Timber.d("削除ボタンが押されました")
+                if (chartArgs.value == null) return
+                viewModelScope.launch {
+                    repository.deleteMyChart(chartArgs.value!!.myChart.id)
+                }
+                _dismiss.value = true
             }
             DialogButtonType.NEGATIVE -> {
             }

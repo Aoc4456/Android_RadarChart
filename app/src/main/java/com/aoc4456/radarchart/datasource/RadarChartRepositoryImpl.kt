@@ -48,4 +48,10 @@ class RadarChartRepositoryImpl(
             radarChartDao.deleteChartGroup(groupId)
         }
     }
+
+    override suspend fun deleteMyChart(chartId: String) {
+        withContext(ioDispatcher) {
+            radarChartDao.deleteMyChart(chartId)
+        }
+    }
 }

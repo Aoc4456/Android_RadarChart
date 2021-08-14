@@ -29,4 +29,6 @@ interface RadarChartRepository {
      */
 
     suspend fun deleteGroup(groupId: String)
+
+    suspend fun deleteMyChart(chartId: String)
 }
