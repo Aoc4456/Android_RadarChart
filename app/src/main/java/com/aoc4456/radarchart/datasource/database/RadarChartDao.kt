@@ -11,21 +11,16 @@ interface RadarChartDao {
      */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertChartGroup(group: ChartGroup)
+    suspend fun insertGroup(group: ChartGroup)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertChartGroupLabel(label: ChartGroupLabel)
+    suspend fun insertGroupLabel(label: ChartGroupLabel)
 
     @Transaction
-    suspend fun saveChartGroupAndLabel(group: ChartGroup, labels: List<String>) {
-        insertChartGroup(group)
-        for (i in labels.indices) {
-            val groupLabel = ChartGroupLabel(
-                chartGroupId = group.id,
-                index = i,
-                text = labels[i]
-            )
-            insertChartGroupLabel(groupLabel)
+    suspend fun saveGroupAndLabel(group: ChartGroup, labels: List<ChartGroupLabel>) {
+        insertGroup(group)
+        labels.forEach {
+            insertGroupLabel(it)
         }
     }
 
@@ -40,15 +35,10 @@ interface RadarChartDao {
     suspend fun insertChartValue(chartValue: ChartValue)
 
     @Transaction
-    suspend fun saveChartAndValues(chart: MyChart, values: List<Int>) {
+    suspend fun saveChartAndValues(chart: MyChart, values: List<ChartValue>) {
         insertChart(chart)
-        for (i in values.indices) {
-            val chartValues = ChartValue(
-                myChartId = chart.id,
-                index = i,
-                value = values[i].toDouble()
-            )
-            insertChartValue(chartValues)
+        values.forEach {
+            insertChartValue(it)
         }
     }
 
@@ -59,7 +49,7 @@ interface RadarChartDao {
     // TODO 並び順の管理
     @Transaction
     @Query("SELECT * FROM ChartGroup")
-    fun observeChartGroupForGroupList(): LiveData<List<GroupWithLabelAndCharts>>
+    fun observeGroupWithLabelAndCharts(): LiveData<List<GroupWithLabelAndCharts>>
 
     // TODO 並び順の管理
     @Transaction
@@ -76,26 +66,23 @@ interface RadarChartDao {
     suspend fun updateGroupLabel(labels: ChartGroupLabel)
 
     @Transaction
-    suspend fun updateChartGroupAndLabel(
+    suspend fun updateGroupAndLabel(
         group: ChartGroup,
-        labels: List<String>,
+        labels: List<ChartGroupLabel>,
         oldGroup: GroupWithLabelAndCharts
     ) {
         updateGroup(group)
 
         deleteGroupLabel(group.id)
-        for (i in labels.indices) {
-            val groupLabel = ChartGroupLabel(
-                chartGroupId = group.id,
-                index = i,
-                text = labels[i]
-            )
-            insertChartGroupLabel(groupLabel)
+        labels.forEach {
+            insertGroupLabel(it)
         }
 
-        // 個数が増えた場合、グループに属するチャート全てに、初期値でValueを追加する
-
-        // 個数が減った場合
+        val numberOfItemsDiff = labels.size - oldGroup.labelList.size
+        if (numberOfItemsDiff > 0) { // 項目数増加
+        }
+        if (numberOfItemsDiff < 0) { // 項目数減少
+        }
     }
 
     /**
@@ -103,7 +90,7 @@ interface RadarChartDao {
      */
 
     @Query("DELETE FROM ChartGroup WHERE id = :groupId")
-    suspend fun deleteChartGroup(groupId: String)
+    suspend fun deleteGroup(groupId: String)
 
     @Query("DELETE FROM ChartGroupLabel WHERE chartGroupId = :groupId")
     suspend fun deleteGroupLabel(groupId: String)
