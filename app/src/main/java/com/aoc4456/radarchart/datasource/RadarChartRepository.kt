@@ -12,7 +12,7 @@ interface RadarChartRepository {
      * Create
      */
 
-    suspend fun saveGroup(group: ChartGroup, labels: List<String>)
+    suspend fun saveGroup(group: ChartGroup, labels: List<String>, oldGroup: GroupWithLabelAndCharts?)
 
     suspend fun saveChart(chart: MyChart, values: List<Int>)
 

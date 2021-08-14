@@ -15,15 +15,45 @@ class RadarChartRepositoryImpl(
      * Create
      */
 
-    override suspend fun saveGroup(group: ChartGroup, labels: List<String>) {
+    override suspend fun saveGroup(
+        group: ChartGroup,
+        labels: List<String>,
+        oldGroup: GroupWithLabelAndCharts?
+    ) {
+        val chartLabels = mutableListOf<ChartGroupLabel>()
+        for (i in labels.indices) {
+            chartLabels.add(
+                ChartGroupLabel(
+                    chartGroupId = group.id,
+                    index = i,
+                    text = labels[i]
+                )
+            )
+        }
+
         withContext(ioDispatcher) {
-            radarChartDao.saveChartGroupAndLabel(group, labels)
+            if (oldGroup == null) {
+                radarChartDao.saveGroupAndLabel(group, chartLabels)
+            } else {
+                radarChartDao.updateGroupAndLabel(group, chartLabels, oldGroup)
+            }
         }
     }
 
     override suspend fun saveChart(chart: MyChart, values: List<Int>) {
+        val chartValueList = mutableListOf<ChartValue>()
+        for (i in values.indices) {
+            chartValueList.add(
+                ChartValue(
+                    myChartId = chart.id,
+                    index = i,
+                    value = values[i].toDouble()
+                )
+            )
+        }
+
         withContext(ioDispatcher) {
-            radarChartDao.saveChartAndValues(chart, values)
+            radarChartDao.saveChartAndValues(chart, chartValueList)
         }
     }
 
@@ -32,7 +62,7 @@ class RadarChartRepositoryImpl(
      */
 
     override fun observeGroupList(): LiveData<List<GroupWithLabelAndCharts>> {
-        return radarChartDao.observeChartGroupForGroupList()
+        return radarChartDao.observeGroupWithLabelAndCharts()
     }
 
     override suspend fun getChartList(groupId: String): List<MyChartWithValue> {
@@ -45,7 +75,7 @@ class RadarChartRepositoryImpl(
 
     override suspend fun deleteGroup(groupId: String) {
         withContext(ioDispatcher) {
-            radarChartDao.deleteChartGroup(groupId)
+            radarChartDao.deleteGroup(groupId)
         }
     }
 
