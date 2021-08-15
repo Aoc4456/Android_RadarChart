@@ -53,7 +53,7 @@ interface RadarChartDao {
 
     // TODO 並び順の管理
     @Transaction
-    @Query("SELECT * FROM MyChart WHERE chartGroupId = :groupId ORDER BY createdAt ASC")
+    @Query("SELECT * FROM MyChart WHERE chartGroupId = :groupId")
     suspend fun getChartList(groupId: String): List<MyChartWithValue>
 
     /**
