@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.databinding.ChartCollectionFragmentBinding
+import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,10 +36,12 @@ class ChartCollectionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.onViewCreated(navArgs)
 
+        // ツールバー
         binding.toolbarBackButton.setOnClickListener {
             findNavController().popBackStack()
         }
 
+        // FAB
         binding.floatingActionButton.setOnClickListener {
             val action =
                 ChartCollectionFragmentDirections.actionChartCollectionFragmentToChartCreateFragment(
@@ -49,27 +51,33 @@ class ChartCollectionFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
-        binding.recyclerView.adapter = ChartCollectionListAdapter(viewModel)
-
-        binding.toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        // トグルボタン
+        binding.toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
-                when (checkedId) {
-                    R.id.toggleButtonList -> {
-                        (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 1
-                        binding.recyclerView.adapter = ChartCollectionListAdapter(viewModel)
-                    }
-                    R.id.toggleButtonGrid -> {
-                        (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 3
-                        binding.recyclerView.adapter = ChartCollectionGridAdapter(viewModel)
-                    }
-                }
+                viewModel.onToggleButtonCheckedChanged(checkedId)
             }
         }
 
+        /**
+         * ViewModel Observer
+         */
+
         viewModel.chartList.observe(viewLifecycleOwner) {
-            (binding.recyclerView.adapter as? ChartCollectionListAdapter)?.submitList(it)
-            (binding.recyclerView.adapter as? ChartCollectionGridAdapter)?.submitList(it)
+            submitList(it)
+        }
+
+        viewModel.listOrGrid.observe(viewLifecycleOwner) { type ->
+            when (type) {
+                CollectionType.LIST -> {
+                    binding.recyclerView.adapter = ChartCollectionListAdapter(viewModel)
+                    (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 1
+                }
+                else -> {
+                    binding.recyclerView.adapter = ChartCollectionGridAdapter(viewModel)
+                    (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 3
+                }
+            }
+            viewModel.chartList.value?.let { submitList(it) }
         }
 
         viewModel.navigateToChartEdit.observe(viewLifecycleOwner) {
@@ -81,4 +89,14 @@ class ChartCollectionFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
+
+    private fun submitList(list: List<MyChartWithValue>) {
+        (binding.recyclerView.adapter as? ChartCollectionListAdapter)?.submitList(list)
+        (binding.recyclerView.adapter as? ChartCollectionGridAdapter)?.submitList(list)
+    }
+}
+
+enum class CollectionType {
+    LIST,
+    GRID
 }
