@@ -6,16 +6,33 @@
 
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".screen.setting.SettingFragment">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="設定画面" />
+        <FrameLayout
+            android:id="@+id/toolbar"
+            style="@style/ToolBar">
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/toolbar_close_button"
+                style="@style/ToolBarImageButton"
+                android:layout_marginStart="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_baseline_close_24" />
+
+            <TextView
+                android:id="@+id/toolBarTitle"
+                style="@style/ToolBarTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/setting" />
+
+        </FrameLayout>
+
+    </LinearLayout>
 </layout>

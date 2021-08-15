@@ -30,6 +30,12 @@ class GroupListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // ツールバー
+        binding.btnSetting.setOnClickListener {
+            val action = GroupListFragmentDirections.actionGroupListFragmentToSettingFragment()
+            findNavController().navigate(action)
+        }
+
         // setup FAB
         binding.floatingActionButton.setOnClickListener {
             val action =

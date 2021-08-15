@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.SettingFragmentBinding
 
 class SettingFragment : Fragment() {
@@ -19,5 +20,13 @@ class SettingFragment : Fragment() {
         binding = SettingFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbarCloseButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }
