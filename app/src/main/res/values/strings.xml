@@ -28,4 +28,5 @@
     <string name="comment">コメント</string>
     <string name="delete_chart_title">このチャートを削除しますか？</string>
     <string name="delete_chart_message">この操作は取り消せません</string>
+    <string name="setting">設定</string>
 </resources>
