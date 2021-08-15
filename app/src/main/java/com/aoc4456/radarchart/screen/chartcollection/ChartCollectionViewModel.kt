@@ -9,6 +9,7 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.PublishLiveData
+import com.aoc4456.radarchart.util.getSortedChartList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +37,13 @@ class ChartCollectionViewModel @Inject constructor(
         _groupData.value = navArgs.groupWithLabelAndCharts!!
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _chartList.postValue(repository.getChartList(groupData.value!!.group.id))
+                val list = (repository.getChartList(groupData.value!!.group.id))
+                val sortedList = getSortedChartList(
+                    list = list,
+                    sortIndex = groupData.value!!.group.sortIndex,
+                    orderBy = groupData.value!!.group.orderBy
+                )
+                _chartList.postValue(sortedList)
             }
         }
     }
