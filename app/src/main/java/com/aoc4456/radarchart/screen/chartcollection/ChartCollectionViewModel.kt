@@ -8,8 +8,8 @@ import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
+import com.aoc4456.radarchart.datasource.database.OrderBy
 import com.aoc4456.radarchart.util.PublishLiveData
-import com.aoc4456.radarchart.util.getSortedChartList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,13 +37,13 @@ class ChartCollectionViewModel @Inject constructor(
         _groupData.value = navArgs.groupWithLabelAndCharts!!
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                val list = (repository.getChartList(groupData.value!!.group.id))
-                val sortedList = getSortedChartList(
-                    list = list,
-                    sortIndex = groupData.value!!.group.sortIndex,
-                    orderBy = groupData.value!!.group.orderBy
+                _chartList.postValue(
+                    repository.getSortedChartList(
+                        groupId = groupData.value!!.group.id,
+                        sortIndex = groupData.value!!.group.sortIndex,
+                        orderBy = groupData.value!!.group.orderBy
+                    )
                 )
-                _chartList.postValue(sortedList)
             }
         }
     }
@@ -59,6 +59,22 @@ class ChartCollectionViewModel @Inject constructor(
             }
             R.id.toggleButtonGrid -> {
                 _listOrGrid.value = CollectionType.GRID
+            }
+        }
+    }
+
+    fun onClickAscDescButton() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.changeAscDesc(
+                    groupId = groupData.value!!.group.id,
+                    orderBy = when (groupData.value!!.group.orderBy) {
+                        OrderBy.ASC -> {
+                            OrderBy.DESC
+                        }
+                        else -> OrderBy.ASC
+                    }
+                )
             }
         }
     }

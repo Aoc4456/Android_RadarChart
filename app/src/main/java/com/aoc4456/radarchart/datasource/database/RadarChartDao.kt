@@ -100,6 +100,9 @@ interface RadarChartDao {
         }
     }
 
+    @Query("UPDATE ChartGroup SET orderBy = :orderBy WHERE id = :groupId")
+    suspend fun changeAscDesc(groupId: String, orderBy: OrderBy)
+
     /**
      * Delete
      */

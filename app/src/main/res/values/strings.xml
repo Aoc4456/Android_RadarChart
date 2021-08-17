@@ -29,4 +29,9 @@
     <string name="delete_chart_title">このチャートを削除しますか？</string>
     <string name="delete_chart_message">この操作は取り消せません</string>
     <string name="setting">設定</string>
+    <string name="created_at">作成日</string>
+    <string name="updated_at">更新日</string>
+    <string name="total_value">合計値</string>
+    <string name="asc_order">昇順</string>
+    <string name="desc_order">降順</string>
 </resources>
