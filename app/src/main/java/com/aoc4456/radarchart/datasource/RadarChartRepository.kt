@@ -1,10 +1,7 @@
 package com.aoc4456.radarchart.datasource
 
 import androidx.lifecycle.LiveData
-import com.aoc4456.radarchart.datasource.database.ChartGroup
-import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
-import com.aoc4456.radarchart.datasource.database.MyChart
-import com.aoc4456.radarchart.datasource.database.MyChartWithValue
+import com.aoc4456.radarchart.datasource.database.*
 
 interface RadarChartRepository {
 
@@ -12,7 +9,11 @@ interface RadarChartRepository {
      * Create
      */
 
-    suspend fun saveGroup(group: ChartGroup, labels: List<String>, oldGroup: GroupWithLabelAndCharts?)
+    suspend fun saveGroup(
+        group: ChartGroup,
+        labels: List<String>,
+        oldGroup: GroupWithLabelAndCharts?
+    )
 
     suspend fun saveChart(chart: MyChart, values: List<Int>)
 
@@ -22,7 +23,11 @@ interface RadarChartRepository {
 
     fun observeGroupList(): LiveData<List<GroupWithLabelAndCharts>>
 
-    suspend fun getChartList(groupId: String): List<MyChartWithValue>
+    suspend fun getSortedChartList(
+        groupId: String,
+        sortIndex: Int,
+        orderBy: OrderBy
+    ): List<MyChartWithValue>
 
     /**
      * Delete

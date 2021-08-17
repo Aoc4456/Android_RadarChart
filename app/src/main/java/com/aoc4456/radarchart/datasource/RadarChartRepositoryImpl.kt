@@ -2,6 +2,7 @@ package com.aoc4456.radarchart.datasource
 
 import androidx.lifecycle.LiveData
 import com.aoc4456.radarchart.datasource.database.*
+import com.aoc4456.radarchart.util.MyChartOrder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -65,8 +66,13 @@ class RadarChartRepositoryImpl(
         return radarChartDao.observeGroupWithLabelAndCharts()
     }
 
-    override suspend fun getChartList(groupId: String): List<MyChartWithValue> {
-        return radarChartDao.getChartList(groupId)
+    override suspend fun getSortedChartList(
+        groupId: String,
+        sortIndex: Int,
+        orderBy: OrderBy
+    ): List<MyChartWithValue> {
+        val chartList = radarChartDao.getChartList(groupId)
+        return MyChartOrder.getSortedChartList(chartList, sortIndex, orderBy)
     }
 
     /**
