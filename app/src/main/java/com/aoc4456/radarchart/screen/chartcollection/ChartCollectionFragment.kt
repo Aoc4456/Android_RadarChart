@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.databinding.ChartCollectionFragmentBinding
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
+import com.aoc4456.radarchart.datasource.database.OrderBy
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,6 +63,15 @@ class ChartCollectionFragment : Fragment() {
         /**
          * ViewModel Observer
          */
+        viewModel.groupData.observe(viewLifecycleOwner) {
+            binding.btnOrder.text = ChartCollectionUtil.sortIndexToString(
+                sortIndex = it.group.sortIndex,
+                labels = it.labelList.map { it.text },
+                context = requireContext()
+            )
+            binding.btnAscDesc.text =
+                if (it.group.orderBy == OrderBy.ASC) getString(R.string.asc_order) else getString(R.string.desc_order)
+        }
 
         viewModel.chartList.observe(viewLifecycleOwner) {
             submitList(it)
