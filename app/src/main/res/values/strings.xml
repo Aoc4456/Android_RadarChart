@@ -34,4 +34,9 @@
     <string name="total_value">合計値</string>
     <string name="asc_order">昇順</string>
     <string name="desc_order">降順</string>
+    <string name="others">その他</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="review_this_app">このアプリを評価する</string>
+    <string name="license">ライセンス</string>
+    <string name="app_version">アプリのバージョン</string>
 </resources>
