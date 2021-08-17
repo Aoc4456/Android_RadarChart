@@ -8,6 +8,7 @@ import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
+import com.aoc4456.radarchart.datasource.database.OrderBy
 import com.aoc4456.radarchart.util.PublishLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -58,6 +59,22 @@ class ChartCollectionViewModel @Inject constructor(
             }
             R.id.toggleButtonGrid -> {
                 _listOrGrid.value = CollectionType.GRID
+            }
+        }
+    }
+
+    fun onClickAscDescButton() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repository.changeAscDesc(
+                    groupId = groupData.value!!.group.id,
+                    orderBy = when (groupData.value!!.group.orderBy) {
+                        OrderBy.ASC -> {
+                            OrderBy.DESC
+                        }
+                        else -> OrderBy.ASC
+                    }
+                )
             }
         }
     }

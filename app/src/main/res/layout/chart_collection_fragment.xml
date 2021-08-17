@@ -96,6 +96,7 @@
                 android:layout_height="0dp"
                 android:backgroundTint="@color/light_gray"
                 android:lines="1"
+                android:onClick="@{() -> viewmodel.onClickAscDescButton()}"
                 android:paddingHorizontal="0dp"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"

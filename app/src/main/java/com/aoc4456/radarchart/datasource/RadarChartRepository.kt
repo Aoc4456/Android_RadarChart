@@ -30,6 +30,11 @@ interface RadarChartRepository {
     ): List<MyChartWithValue>
 
     /**
+     * Update
+     */
+    suspend fun changeAscDesc(groupId: String, orderBy: OrderBy)
+
+    /**
      * Delete
      */
 

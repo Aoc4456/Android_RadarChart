@@ -76,6 +76,13 @@ class RadarChartRepositoryImpl(
     }
 
     /**
+     * Update
+     */
+    override suspend fun changeAscDesc(groupId: String, orderBy: OrderBy) {
+        radarChartDao.changeAscDesc(groupId, orderBy)
+    }
+
+    /**
      * Delete
      */
 
