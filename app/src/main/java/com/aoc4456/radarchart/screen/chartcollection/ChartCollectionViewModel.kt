@@ -9,6 +9,7 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.OrderBy
+import com.aoc4456.radarchart.util.MyChartOrder
 import com.aoc4456.radarchart.util.PublishLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -58,9 +59,17 @@ class ChartCollectionViewModel @Inject constructor(
     fun onClickAscDescButton() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                launch { updateAscDesc() }.join()
+                updateAscDesc()
+                fetchGroup()
             }
+            reOrderChartList()
         }
+    }
+
+    private suspend fun fetchGroup() {
+        _groupData.postValue(
+            repository.getGroupById(groupData.value!!.group.id)
+        )
     }
 
     private suspend fun fetchSortedChartList() {
@@ -82,6 +91,14 @@ class ChartCollectionViewModel @Inject constructor(
                 }
                 else -> OrderBy.ASC
             }
+        )
+    }
+
+    private fun reOrderChartList() {
+        _chartList.value = MyChartOrder.getSortedChartList(
+            list = chartList.value!!,
+            sortIndex = groupData.value!!.group.sortIndex,
+            orderBy = groupData.value!!.group.orderBy
         )
     }
 }
