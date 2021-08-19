@@ -13,6 +13,7 @@ import com.aoc4456.radarchart.util.MyChartOrder
 import com.aoc4456.radarchart.util.PublishLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -39,8 +40,11 @@ class ChartCollectionViewModel @Inject constructor(
     fun onViewCreated(navArgs: ChartCollectionFragmentArgs) {
         groupId = navArgs.groupWithLabelAndCharts!!.group.id
         viewModelScope.launch {
-            withContext(Dispatchers.IO) { fetchGroup() }
-            withContext(Dispatchers.IO) { fetchSortedChartList() }
+            val deferred = async(Dispatchers.IO) { fetchGroup() }
+            _groupData.value = deferred.await()
+            withContext(Dispatchers.IO) {
+                fetchSortedChartList()
+            }
         }
     }
 
@@ -62,15 +66,14 @@ class ChartCollectionViewModel @Inject constructor(
     fun onClickAscDescButton() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) { updateAscDesc() }
-            withContext(Dispatchers.IO) { fetchGroup() }
+            val deferred = async(Dispatchers.IO) { fetchGroup() }
+            _groupData.value = deferred.await()
             reOrderChartList()
         }
     }
 
-    private suspend fun fetchGroup() {
-        _groupData.postValue(
-            repository.getGroupById(groupId)
-        )
+    private suspend fun fetchGroup(): GroupWithLabelAndCharts {
+        return repository.getGroupById(groupId)
     }
 
     private suspend fun fetchSortedChartList() {
