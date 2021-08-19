@@ -9,6 +9,7 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.OrderBy
+import com.aoc4456.radarchart.util.MyChartOrder
 import com.aoc4456.radarchart.util.PublishLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,8 @@ import javax.inject.Inject
 class ChartCollectionViewModel @Inject constructor(
     private val repository: RadarChartRepository
 ) : ViewModel() {
+
+    lateinit var groupId: String
 
     private val _groupData = MutableLiveData<GroupWithLabelAndCharts>()
     val groupData: LiveData<GroupWithLabelAndCharts> = _groupData
@@ -34,17 +37,10 @@ class ChartCollectionViewModel @Inject constructor(
     val navigateToChartEdit: PublishLiveData<MyChartWithValue?> = _navigateToChartEdit
 
     fun onViewCreated(navArgs: ChartCollectionFragmentArgs) {
-        _groupData.value = navArgs.groupWithLabelAndCharts!!
+        groupId = navArgs.groupWithLabelAndCharts!!.group.id
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _chartList.postValue(
-                    repository.getSortedChartList(
-                        groupId = groupData.value!!.group.id,
-                        sortIndex = groupData.value!!.group.sortIndex,
-                        orderBy = groupData.value!!.group.orderBy
-                    )
-                )
-            }
+            withContext(Dispatchers.IO) { fetchGroup() }
+            withContext(Dispatchers.IO) { fetchSortedChartList() }
         }
     }
 
@@ -65,17 +61,45 @@ class ChartCollectionViewModel @Inject constructor(
 
     fun onClickAscDescButton() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                repository.changeAscDesc(
-                    groupId = groupData.value!!.group.id,
-                    orderBy = when (groupData.value!!.group.orderBy) {
-                        OrderBy.ASC -> {
-                            OrderBy.DESC
-                        }
-                        else -> OrderBy.ASC
-                    }
-                )
-            }
+            withContext(Dispatchers.IO) { updateAscDesc() }
+            withContext(Dispatchers.IO) { fetchGroup() }
+            reOrderChartList()
         }
+    }
+
+    private suspend fun fetchGroup() {
+        _groupData.postValue(
+            repository.getGroupById(groupId)
+        )
+    }
+
+    private suspend fun fetchSortedChartList() {
+        _chartList.postValue(
+            repository.getSortedChartList(
+                groupId = groupData.value!!.group.id,
+                sortIndex = groupData.value!!.group.sortIndex,
+                orderBy = groupData.value!!.group.orderBy
+            )
+        )
+    }
+
+    private suspend fun updateAscDesc() {
+        repository.changeAscDesc(
+            groupId = groupData.value!!.group.id,
+            orderBy = when (groupData.value!!.group.orderBy) {
+                OrderBy.ASC -> {
+                    OrderBy.DESC
+                }
+                else -> OrderBy.ASC
+            }
+        )
+    }
+
+    private fun reOrderChartList() {
+        _chartList.value = MyChartOrder.getSortedChartList(
+            list = chartList.value!!,
+            sortIndex = groupData.value!!.group.sortIndex,
+            orderBy = groupData.value!!.group.orderBy
+        )
     }
 }

@@ -66,6 +66,10 @@ class RadarChartRepositoryImpl(
         return radarChartDao.observeGroupWithLabelAndCharts()
     }
 
+    override suspend fun getGroupById(groupId: String): GroupWithLabelAndCharts {
+        return radarChartDao.getGroupById(groupId)
+    }
+
     override suspend fun getSortedChartList(
         groupId: String,
         sortIndex: Int,

@@ -23,6 +23,8 @@ interface RadarChartRepository {
 
     fun observeGroupList(): LiveData<List<GroupWithLabelAndCharts>>
 
+    suspend fun getGroupById(groupId: String): GroupWithLabelAndCharts
+
     suspend fun getSortedChartList(
         groupId: String,
         sortIndex: Int,
