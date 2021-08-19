@@ -36,15 +36,7 @@ class ChartCollectionViewModel @Inject constructor(
     fun onViewCreated(navArgs: ChartCollectionFragmentArgs) {
         _groupData.value = navArgs.groupWithLabelAndCharts!!
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _chartList.postValue(
-                    repository.getSortedChartList(
-                        groupId = groupData.value!!.group.id,
-                        sortIndex = groupData.value!!.group.sortIndex,
-                        orderBy = groupData.value!!.group.orderBy
-                    )
-                )
-            }
+            withContext(Dispatchers.IO) { fetchSortedChartList() }
         }
     }
 
@@ -66,16 +58,30 @@ class ChartCollectionViewModel @Inject constructor(
     fun onClickAscDescButton() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repository.changeAscDesc(
-                    groupId = groupData.value!!.group.id,
-                    orderBy = when (groupData.value!!.group.orderBy) {
-                        OrderBy.ASC -> {
-                            OrderBy.DESC
-                        }
-                        else -> OrderBy.ASC
-                    }
-                )
+                launch { updateAscDesc() }.join()
             }
         }
+    }
+
+    private suspend fun fetchSortedChartList() {
+        _chartList.postValue(
+            repository.getSortedChartList(
+                groupId = groupData.value!!.group.id,
+                sortIndex = groupData.value!!.group.sortIndex,
+                orderBy = groupData.value!!.group.orderBy
+            )
+        )
+    }
+
+    private suspend fun updateAscDesc() {
+        repository.changeAscDesc(
+            groupId = groupData.value!!.group.id,
+            orderBy = when (groupData.value!!.group.orderBy) {
+                OrderBy.ASC -> {
+                    OrderBy.DESC
+                }
+                else -> OrderBy.ASC
+            }
+        )
     }
 }
