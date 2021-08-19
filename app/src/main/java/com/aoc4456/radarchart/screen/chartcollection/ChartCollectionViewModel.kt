@@ -22,6 +22,8 @@ class ChartCollectionViewModel @Inject constructor(
     private val repository: RadarChartRepository
 ) : ViewModel() {
 
+    lateinit var groupId: String
+
     private val _groupData = MutableLiveData<GroupWithLabelAndCharts>()
     val groupData: LiveData<GroupWithLabelAndCharts> = _groupData
 
@@ -35,8 +37,9 @@ class ChartCollectionViewModel @Inject constructor(
     val navigateToChartEdit: PublishLiveData<MyChartWithValue?> = _navigateToChartEdit
 
     fun onViewCreated(navArgs: ChartCollectionFragmentArgs) {
-        _groupData.value = navArgs.groupWithLabelAndCharts!!
+        groupId = navArgs.groupWithLabelAndCharts!!.group.id
         viewModelScope.launch {
+            withContext(Dispatchers.IO) { fetchGroup() }
             withContext(Dispatchers.IO) { fetchSortedChartList() }
         }
     }
@@ -58,17 +61,15 @@ class ChartCollectionViewModel @Inject constructor(
 
     fun onClickAscDescButton() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                updateAscDesc()
-                fetchGroup()
-            }
+            withContext(Dispatchers.IO) { updateAscDesc() }
+            withContext(Dispatchers.IO) { fetchGroup() }
             reOrderChartList()
         }
     }
 
     private suspend fun fetchGroup() {
         _groupData.postValue(
-            repository.getGroupById(groupData.value!!.group.id)
+            repository.getGroupById(groupId)
         )
     }
 
