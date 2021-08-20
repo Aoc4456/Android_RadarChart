@@ -5,13 +5,12 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import java.util.*
 
 class ListDialogFragment : DialogFragment() {
 
     private val dialogType get() = arguments?.getParcelable<DialogType>(DIALOG_TYPE)
     private val title get() = arguments?.getString(TITLE)
-    private val items get() = arguments?.getStringArrayList(ITEMS)
+    private val items get() = arguments?.getStringArray(ITEMS)
 
     private lateinit var dialogListener: ListDialogListener
 
@@ -29,10 +28,9 @@ class ListDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
-            val array = items!!.toArray(arrayOfNulls<CharSequence>(0))
             builder.run {
                 title?.let { setTitle(it) }
-                setItems(array) { _, which ->
+                setItems(items) { _, which ->
                     dialogListener.onSelectListItemInDialog(dialogType!!, which)
                 }
             }
@@ -53,7 +51,7 @@ class ListDialogFragment : DialogFragment() {
             bundle.putParcelable(DIALOG_TYPE, type)
             bundle.putString(TITLE, title)
             @Suppress("UNCHECKED_CAST")
-            bundle.putStringArrayList(ITEMS, items as ArrayList<String>)
+            bundle.putStringArray(ITEMS, items.toTypedArray())
 
             dialogFragment.arguments = bundle
             return dialogFragment
