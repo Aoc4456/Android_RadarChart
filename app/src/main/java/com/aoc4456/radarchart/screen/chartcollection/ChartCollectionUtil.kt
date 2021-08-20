@@ -36,4 +36,15 @@ object ChartCollectionUtil {
         list.add(context.getString(R.string.updated_at))
         return list
     }
+
+    fun convertSelectedItemToSortIndex(selectedIndex: Int, labelSize: Int): Int {
+        if (selectedIndex == 0) return SortIndex.SUM_OF_VALUES
+        if (selectedIndex <= labelSize) return selectedIndex - 1
+        return when (selectedIndex - 1 - labelSize) {
+            0 -> SortIndex.CHART_TITLE
+            1 -> SortIndex.CREATED_AT
+            2 -> SortIndex.UPDATED_AT
+            else -> SortIndex.CREATED_AT
+        }
+    }
 }

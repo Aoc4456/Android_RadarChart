@@ -124,7 +124,7 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
     }
 
     override fun onSelectListItemInDialog(dialogType: DialogType, index: Int) {
-        Timber.d("$dialogType $index")
+        Timber.d("index = $index -> ${ChartCollectionUtil.convertSelectedItemToSortIndex(index, viewModel.groupData.value!!.labelList.size)}")
     }
 }
 
