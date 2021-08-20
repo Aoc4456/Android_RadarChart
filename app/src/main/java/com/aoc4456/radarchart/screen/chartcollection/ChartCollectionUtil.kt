@@ -24,4 +24,16 @@ object ChartCollectionUtil {
             }
         }
     }
+
+    fun getItemsOrderByDialog(labels: List<String>, context: Context): List<String> {
+        val list = mutableListOf<String>()
+        list.add(context.getString(R.string.total_value))
+        labels.forEach {
+            list.add(it)
+        }
+        list.add(context.getString(R.string.title))
+        list.add(context.getString(R.string.created_at))
+        list.add(context.getString(R.string.updated_at))
+        return list
+    }
 }
