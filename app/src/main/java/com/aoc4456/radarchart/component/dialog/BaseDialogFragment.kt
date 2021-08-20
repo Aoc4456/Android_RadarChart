@@ -23,15 +23,15 @@ class BaseDialogFragment : DialogFragment() {
     private val positiveText get() = arguments?.getString(POSITIVE_TEXT)
     private val negativeText get() = arguments?.getString(NEGATIVE_TEXT)
 
-    private lateinit var dialogListener: DialogListener
+    private lateinit var dialogListener: BaseDialogListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            dialogListener = parentFragment as DialogListener
+            dialogListener = parentFragment as BaseDialogListener
         } catch (e: ClassCastException) {
             throw ClassCastException(
-                ("$context must implement DialogListener")
+                ("$context must implement BaseDialogListener")
             )
         }
     }

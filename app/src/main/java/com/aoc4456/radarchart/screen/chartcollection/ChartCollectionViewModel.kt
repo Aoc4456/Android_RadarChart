@@ -42,9 +42,7 @@ class ChartCollectionViewModel @Inject constructor(
         viewModelScope.launch {
             val deferred = async(Dispatchers.IO) { fetchGroup() }
             _groupData.value = deferred.await()
-            withContext(Dispatchers.IO) {
-                fetchSortedChartList()
-            }
+            withContext(Dispatchers.IO) { fetchSortedChartList() }
         }
     }
 

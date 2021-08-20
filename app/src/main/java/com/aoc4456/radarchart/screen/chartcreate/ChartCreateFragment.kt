@@ -12,14 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.component.dialog.BaseDialogFragment
+import com.aoc4456.radarchart.component.dialog.BaseDialogListener
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
-import com.aoc4456.radarchart.component.dialog.DialogListener
 import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.databinding.ChartCreateFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChartCreateFragment : Fragment(), DialogListener {
+class ChartCreateFragment : Fragment(), BaseDialogListener {
 
     private lateinit var binding: ChartCreateFragmentBinding
     private val viewModel by viewModels<ChartCreateViewModel>()
