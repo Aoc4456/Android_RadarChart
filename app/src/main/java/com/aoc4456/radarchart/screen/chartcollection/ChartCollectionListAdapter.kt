@@ -39,6 +39,13 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
             }
             binding.title.text = item.myChart.title
             binding.comment.text = item.myChart.comment
+            binding.comment2.let {
+                it.text = ChartCollectionUtil.getLabelForComment2(
+                    it.context,
+                    viewModel.groupData.value!!,
+                    item
+                )
+            }
             binding.total.let { totalView ->
                 val sum = item.values.map { it.value }.sum().toInt().toString()
                 totalView.text = totalView.resources.getString(R.string.total_with_value, sum)
