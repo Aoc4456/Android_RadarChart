@@ -50,6 +50,7 @@ interface RadarChartDao {
     @Query("SELECT * FROM ChartGroup")
     fun observeGroupWithLabelAndCharts(): LiveData<List<GroupWithLabelAndCharts>>
 
+    @Transaction
     @Query("SELECT * From ChartGroup WHERE id = :groupId")
     suspend fun getGroupById(groupId: String): GroupWithLabelAndCharts
 

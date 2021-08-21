@@ -11,31 +11,55 @@
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingHorizontal="8dp"
             android:orientation="horizontal">
 
-            <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
-                android:id="@+id/radarChart"
+            <LinearLayout
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
-                app:chartType="chart_collection_list" />
+                android:orientation="vertical">
+
+                <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
+                    android:id="@+id/radarChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="6"
+                    app:chartType="chart_collection_list" />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:textSize="11dp"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="4dp"
+                    tools:text="合計値 : 360"
+                    tools:ignore="SpUsage" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                android:layout_marginStart="12dp">
 
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="4"
+                    android:layout_weight="5"
+                    android:textStyle="bold"
                     android:autoSizeTextType="uniform"
-                    android:gravity="center_vertical"
+                    android:gravity="bottom"
                     tools:text="タイトル" />
 
                 <TextView
@@ -43,15 +67,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="6"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
                     tools:text="コメント" />
 
                 <TextView
-                    android:id="@+id/total"
+                    android:id="@+id/comment2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
                     android:gravity="center_vertical"
-                    tools:text="合計値" />
+                    android:textSize="11dp"
+                    tools:text="作成日 : 2021/09/11" />
 
             </LinearLayout>
 

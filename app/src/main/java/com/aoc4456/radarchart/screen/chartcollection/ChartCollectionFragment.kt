@@ -68,7 +68,7 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
             val listDialogFragment = ListDialogFragment.newInstance(
                 type = DialogType.CHART_ORDER_BY,
                 title = null,
-                items = ChartCollectionUtil.getItemsOrderByDialog(
+                items = ChartCollectionUtil.getItemsForSortDialog(
                     labels = viewModel.groupData.value!!.labelList.map { it.text },
                     requireContext()
                 )
