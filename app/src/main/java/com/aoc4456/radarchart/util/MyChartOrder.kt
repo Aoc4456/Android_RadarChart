@@ -57,7 +57,14 @@ object MyChartOrder {
                 }
             }
             else -> {
-                sortedList = list
+                sortedList = when (orderBy) {
+                    OrderBy.ASC -> {
+                        list.sortedBy { it.values[sortIndex].value }
+                    }
+                    OrderBy.DESC -> {
+                        list.sortedByDescending { it.values[sortIndex].value }
+                    }
+                }
             }
         }
         return sortedList
