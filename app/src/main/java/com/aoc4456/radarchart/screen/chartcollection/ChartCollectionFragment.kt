@@ -10,13 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.aoc4456.radarchart.R
+import com.aoc4456.radarchart.component.dialog.DialogType
+import com.aoc4456.radarchart.component.dialog.ListDialogFragment
+import com.aoc4456.radarchart.component.dialog.ListDialogListener
 import com.aoc4456.radarchart.databinding.ChartCollectionFragmentBinding
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.OrderBy
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChartCollectionFragment : Fragment() {
+class ChartCollectionFragment : Fragment(), ListDialogListener {
 
     private val viewModel by viewModels<ChartCollectionViewModel>()
     private lateinit var binding: ChartCollectionFragmentBinding
@@ -58,6 +61,19 @@ class ChartCollectionFragment : Fragment() {
             if (isChecked) {
                 viewModel.onToggleButtonCheckedChanged(checkedId)
             }
+        }
+
+        // ソートボタン
+        binding.btnOrder.setOnClickListener {
+            val listDialogFragment = ListDialogFragment.newInstance(
+                type = DialogType.CHART_ORDER_BY,
+                title = null,
+                items = ChartCollectionUtil.getItemsOrderByDialog(
+                    labels = viewModel.groupData.value!!.labelList.map { it.text },
+                    requireContext()
+                )
+            )
+            listDialogFragment.show(childFragmentManager, "ORDER_BY_DIALOG_TAG")
         }
 
         /**
@@ -104,6 +120,10 @@ class ChartCollectionFragment : Fragment() {
     private fun submitList(list: List<MyChartWithValue>) {
         (binding.recyclerView.adapter as? ChartCollectionListAdapter)?.submitList(list)
         (binding.recyclerView.adapter as? ChartCollectionGridAdapter)?.submitList(list)
+    }
+
+    override fun onSelectListItemInDialog(dialogType: DialogType, index: Int) {
+        viewModel.onSelectItemInSortDialog(index)
     }
 }
 

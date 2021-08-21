@@ -42,9 +42,7 @@ class ChartCollectionViewModel @Inject constructor(
         viewModelScope.launch {
             val deferred = async(Dispatchers.IO) { fetchGroup() }
             _groupData.value = deferred.await()
-            withContext(Dispatchers.IO) {
-                fetchSortedChartList()
-            }
+            withContext(Dispatchers.IO) { fetchSortedChartList() }
         }
     }
 
@@ -66,6 +64,19 @@ class ChartCollectionViewModel @Inject constructor(
     fun onClickAscDescButton() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) { updateAscDesc() }
+            val deferred = async(Dispatchers.IO) { fetchGroup() }
+            _groupData.value = deferred.await()
+            reOrderChartList()
+        }
+    }
+
+    fun onSelectItemInSortDialog(index: Int) {
+        val sortIndex = ChartCollectionUtil.convertSelectedItemToSortIndex(
+            index,
+            groupData.value!!.labelList.size
+        )
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) { updateSortIndex(sortIndex) }
             val deferred = async(Dispatchers.IO) { fetchGroup() }
             _groupData.value = deferred.await()
             reOrderChartList()
@@ -95,6 +106,13 @@ class ChartCollectionViewModel @Inject constructor(
                 }
                 else -> OrderBy.ASC
             }
+        )
+    }
+
+    private suspend fun updateSortIndex(sortIndex: Int) {
+        repository.updateSortIndex(
+            groupId = groupData.value!!.group.id,
+            sortIndex = sortIndex
         )
     }
 
