@@ -36,6 +36,8 @@ interface RadarChartRepository {
      */
     suspend fun changeAscDesc(groupId: String, orderBy: OrderBy)
 
+    suspend fun updateSortIndex(groupId: String, sortIndex: Int)
+
     /**
      * Delete
      */

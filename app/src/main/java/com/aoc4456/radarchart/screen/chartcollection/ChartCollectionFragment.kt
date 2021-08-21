@@ -17,7 +17,6 @@ import com.aoc4456.radarchart.databinding.ChartCollectionFragmentBinding
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.OrderBy
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class ChartCollectionFragment : Fragment(), ListDialogListener {
@@ -124,7 +123,7 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
     }
 
     override fun onSelectListItemInDialog(dialogType: DialogType, index: Int) {
-        Timber.d("index = $index -> ${ChartCollectionUtil.convertSelectedItemToSortIndex(index, viewModel.groupData.value!!.labelList.size)}")
+        viewModel.onSelectItemInSortDialog(index)
     }
 }
 
