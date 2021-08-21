@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.databinding.ChartCollectionListItemBinding
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
@@ -29,14 +30,19 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
                 item.myChart.color,
                 item.values.map { it.value.toInt() }
             )
-            binding.radarChart.let {
-                it.data = radarData
-                it.yAxis.axisMaximum = viewModel.groupData.value!!.group.maximumValue.toFloat()
-                it.setChartItemLabel(viewModel.groupData.value!!.labelList.map { it.text })
-                it.notifyDataSetChanged()
+            binding.radarChart.let { radarChart ->
+                radarChart.data = radarData
+                radarChart.yAxis.axisMaximum =
+                    viewModel.groupData.value!!.group.maximumValue.toFloat()
+                radarChart.setChartItemLabel(viewModel.groupData.value!!.labelList.map { it.text })
+                radarChart.notifyDataSetChanged()
             }
             binding.title.text = item.myChart.title
             binding.comment.text = item.myChart.comment
+            binding.total.let { totalView ->
+                val sum = item.values.map { it.value }.sum().toInt().toString()
+                totalView.text = totalView.resources.getString(R.string.total_with_value, sum)
+            }
 
             binding.frameForClick.setOnClickListener {
                 viewModel.onClickCollectionItem(item)

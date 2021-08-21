@@ -32,6 +32,7 @@
     <string name="created_at">作成日</string>
     <string name="updated_at">更新日</string>
     <string name="total_value">合計値</string>
+    <string name="total_with_value">合計 : %1$s</string>
     <string name="asc_order">昇順</string>
     <string name="desc_order">降順</string>
     <string name="others">その他</string>

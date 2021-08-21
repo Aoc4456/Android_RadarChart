@@ -25,7 +25,7 @@ object ChartCollectionUtil {
         }
     }
 
-    fun getItemsOrderByDialog(labels: List<String>, context: Context): List<String> {
+    fun getItemsForSortDialog(labels: List<String>, context: Context): List<String> {
         val list = mutableListOf<String>()
         list.add(context.getString(R.string.total_value))
         labels.forEach {

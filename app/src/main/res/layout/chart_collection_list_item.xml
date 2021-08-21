@@ -36,8 +36,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    tools:text="合計値" />
+                    android:gravity="center_vertical|end"
+                    android:textSize="11dp"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="4dp"
+                    tools:text="合計値 : 360"
+                    tools:ignore="SpUsage" />
 
             </LinearLayout>
 
@@ -73,7 +77,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="3"
                     android:gravity="center_vertical"
-                    tools:text="合計値" />
+                    tools:text="作成日 : 2021/09/11" />
 
             </LinearLayout>
 
