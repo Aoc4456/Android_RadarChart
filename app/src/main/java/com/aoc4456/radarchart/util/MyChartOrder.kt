@@ -62,6 +62,7 @@ object MyChartOrder {
                         list.sortedBy { it.values[sortIndex].value }
                     }
                     OrderBy.DESC -> {
+                        // TODO java.lang.IndexOutOfBoundsException: Index: 4, Size: 4
                         list.sortedByDescending { it.values[sortIndex].value }
                     }
                 }

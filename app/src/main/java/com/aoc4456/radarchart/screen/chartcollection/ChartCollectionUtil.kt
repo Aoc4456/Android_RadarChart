@@ -5,6 +5,7 @@ import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.SortIndex
+import timber.log.Timber
 
 object ChartCollectionUtil {
     fun sortIndexToString(sortIndex: Int, labels: List<String>, context: Context): String {
@@ -70,5 +71,12 @@ object ChartCollectionUtil {
                 return "$label  :  $value"
             }
         }
+    }
+
+    fun calcSpanCountBasedOnScreenSize(context: Context): Int {
+        val displayMetrics = context.resources.displayMetrics
+        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+        Timber.d("画面幅 = $dpWidth")
+        return (dpWidth / 120).toInt()
     }
 }
