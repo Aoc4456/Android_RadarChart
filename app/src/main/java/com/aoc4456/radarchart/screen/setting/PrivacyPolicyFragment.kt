@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.aoc4456.radarchart.databinding.SettingFragmentBinding
+import com.aoc4456.radarchart.databinding.PrivacyPolicyFragmentBinding
 
-class SettingFragment : Fragment() {
+class PrivacyPolicyFragment : Fragment() {
 
-    private lateinit var binding: SettingFragmentBinding
+    private lateinit var binding: PrivacyPolicyFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = SettingFragmentBinding.inflate(inflater, container, false)
+        binding = PrivacyPolicyFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
         return binding.root
     }
@@ -28,9 +28,6 @@ class SettingFragment : Fragment() {
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.privacyPolicy.setOnClickListener {
-            val action = SettingFragmentDirections.actionSettingFragmentToPrivacyPolicyFragment()
-            findNavController().navigate(action)
-        }
+        binding.webviewPrivacyPolicy.loadUrl("https://radarchart-aocm.web.app/")
     }
 }
