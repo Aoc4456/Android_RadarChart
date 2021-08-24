@@ -1,9 +1,6 @@
 package com.aoc4456.radarchart.screen.chartcollection
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
@@ -122,5 +119,15 @@ class ChartCollectionViewModel @Inject constructor(
             sortIndex = groupData.value!!.group.sortIndex,
             orderBy = groupData.value!!.group.orderBy
         )
+    }
+
+    fun getChartListWithSortIndex(
+        chartList: List<MyChartWithValue>
+    ): List<Pair<MyChartWithValue, Int>> {
+        val list = mutableListOf<Pair<MyChartWithValue, Int>>()
+        chartList.forEach {
+            list.add(Pair(it, groupData.value!!.group.sortIndex))
+        }
+        return list
     }
 }

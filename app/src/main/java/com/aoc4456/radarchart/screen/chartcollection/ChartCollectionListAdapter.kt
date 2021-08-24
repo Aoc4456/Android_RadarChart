@@ -11,7 +11,9 @@ import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
 
 class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel) :
-    ListAdapter<MyChartWithValue, ChartCollectionListAdapter.ViewHolder>(ChartCollectionDiffCallBack()) {
+    ListAdapter<Pair<MyChartWithValue, Int>, ChartCollectionListAdapter.ViewHolder>(
+        ChartCollectionDiffCallBack()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.createViewHolder(parent)
@@ -19,7 +21,7 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, viewModel)
+        holder.bind(item.first, viewModel)
     }
 
     class ViewHolder private constructor(val binding: ChartCollectionListItemBinding) :
@@ -66,17 +68,17 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
     }
 }
 
-class ChartCollectionDiffCallBack : DiffUtil.ItemCallback<MyChartWithValue>() {
+class ChartCollectionDiffCallBack : DiffUtil.ItemCallback<Pair<MyChartWithValue, Int>>() {
     override fun areItemsTheSame(
-        oldItem: MyChartWithValue,
-        newItem: MyChartWithValue
+        oldItem: Pair<MyChartWithValue, Int>,
+        newItem: Pair<MyChartWithValue, Int>
     ): Boolean {
-        return oldItem.myChart.id == newItem.myChart.id
+        return oldItem.first.myChart.id == newItem.first.myChart.id
     }
 
     override fun areContentsTheSame(
-        oldItem: MyChartWithValue,
-        newItem: MyChartWithValue
+        oldItem: Pair<MyChartWithValue, Int>,
+        newItem: Pair<MyChartWithValue, Int>
     ): Boolean {
         return oldItem == newItem
     }

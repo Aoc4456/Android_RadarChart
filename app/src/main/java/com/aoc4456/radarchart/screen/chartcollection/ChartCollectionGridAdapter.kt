@@ -9,7 +9,9 @@ import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
 
 class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel) :
-    ListAdapter<MyChartWithValue, ChartCollectionGridAdapter.ViewHolder>(ChartCollectionDiffCallBack()) {
+    ListAdapter<Pair<MyChartWithValue, Int>, ChartCollectionGridAdapter.ViewHolder>(
+        ChartCollectionDiffCallBack()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.createViewHolder(parent)
@@ -17,7 +19,7 @@ class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, viewModel)
+        holder.bind(item.first, viewModel)
     }
 
     class ViewHolder private constructor(val binding: ChartCollectionGridItemBinding) :

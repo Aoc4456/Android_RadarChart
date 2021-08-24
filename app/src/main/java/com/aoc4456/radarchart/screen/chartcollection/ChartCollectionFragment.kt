@@ -119,8 +119,9 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
     }
 
     private fun submitList(list: List<MyChartWithValue>) {
-        (binding.recyclerView.adapter as? ChartCollectionListAdapter)?.submitList(list)
-        (binding.recyclerView.adapter as? ChartCollectionGridAdapter)?.submitList(list)
+        val indexedList = viewModel.getChartListWithSortIndex(list)
+        (binding.recyclerView.adapter as? ChartCollectionListAdapter)?.submitList(indexedList)
+        (binding.recyclerView.adapter as? ChartCollectionGridAdapter)?.submitList(indexedList)
     }
 
     override fun onSelectListItemInDialog(dialogType: DialogType, index: Int) {
