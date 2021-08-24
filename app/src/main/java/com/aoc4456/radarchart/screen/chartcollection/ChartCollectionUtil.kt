@@ -5,6 +5,7 @@ import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.SortIndex
+import com.aoc4456.radarchart.util.DateUtil
 import timber.log.Timber
 
 object ChartCollectionUtil {
@@ -60,10 +61,24 @@ object ChartCollectionUtil {
             SortIndex.CHART_TITLE -> return ""
             SortIndex.SUM_OF_VALUES -> return ""
             SortIndex.CREATED_AT -> {
-                return "作成日 : aaaaaa"
+                val dateString = DateUtil.getLocalDateStringFromMilliSecond(
+                    context = context,
+                    milliSecond = myChart.myChart.createdAt
+                )
+                return context.resources.getString(
+                    R.string.created_at_with_value,
+                    dateString
+                )
             }
             SortIndex.UPDATED_AT -> {
-                return "更新日 : aaaaaa"
+                val dateString = DateUtil.getLocalDateStringFromMilliSecond(
+                    context = context,
+                    milliSecond = myChart.myChart.updatedAt
+                )
+                return context.resources.getString(
+                    R.string.updated_at_with_value,
+                    dateString
+                )
             }
             else -> {
                 val label = group.labelList.getOrNull(sortIndex)?.text ?: ""
