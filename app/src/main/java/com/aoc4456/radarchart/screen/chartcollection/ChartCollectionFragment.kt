@@ -101,7 +101,8 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
                 }
                 else -> {
                     binding.recyclerView.adapter = ChartCollectionGridAdapter(viewModel)
-                    (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = 3
+                    val count = ChartCollectionUtil.calcSpanCountBasedOnScreenSize(requireContext())
+                    (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = count
                 }
             }
             viewModel.chartList.value?.let { submitList(it) }
