@@ -34,6 +34,9 @@
             app:exitAnim="@anim/nav_up_exit_anim"
             app:popEnterAnim="@anim/nav_up_pop_enter_anim"
             app:popExitAnim="@anim/nav_up_pop_exit_anim" />
+        <action
+            android:id="@+id/action_groupListFragment_to_groupSortFragment"
+            app:destination="@id/groupSortFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupCreateFragment"
@@ -107,4 +110,9 @@
         android:name="com.aoc4456.radarchart.screen.setting.PrivacyPolicyFragment"
         android:label="PrivacyPolicyFragment"
         tools:layout="@layout/privacy_policy_fragment" />
+    <fragment
+        android:id="@+id/groupSortFragment"
+        android:name="com.aoc4456.radarchart.screen.grouplistsort.GroupSortFragment"
+        android:label="GroupSortFragment"
+        tools:layout="@layout/group_sort_fragment" />
 </navigation>
