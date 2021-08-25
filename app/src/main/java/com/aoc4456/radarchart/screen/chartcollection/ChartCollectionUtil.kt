@@ -88,10 +88,17 @@ object ChartCollectionUtil {
         }
     }
 
-    fun calcSpanCountBasedOnScreenSize(context: Context): Int {
+    fun calcSpanCountBasedOnScreenSize(context: Context, type: CollectionType): Int {
         val displayMetrics = context.resources.displayMetrics
         val dpWidth = displayMetrics.widthPixels / displayMetrics.density
         Timber.d("画面幅 = $dpWidth")
-        return (dpWidth / 120).toInt()
+        when (type) {
+            CollectionType.LIST -> {
+                return (dpWidth / 240).toInt()
+            }
+            CollectionType.GRID -> {
+                return (dpWidth / 120).toInt()
+            }
+        }
     }
 }

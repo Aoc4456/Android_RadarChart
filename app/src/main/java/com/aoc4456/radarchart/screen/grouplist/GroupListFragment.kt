@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.aoc4456.radarchart.databinding.GroupListFragmentBinding
+import com.aoc4456.radarchart.screen.chartcollection.ChartCollectionUtil
+import com.aoc4456.radarchart.screen.chartcollection.CollectionType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,6 +51,12 @@ class GroupListFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        // RecyclerView
+        val count = ChartCollectionUtil.calcSpanCountBasedOnScreenSize(
+            requireContext(),
+            CollectionType.LIST
+        )
+        (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = count
         binding.recyclerView.adapter = GroupListAdapter(viewModel)
 
         // TODO BindingAdapter化する
