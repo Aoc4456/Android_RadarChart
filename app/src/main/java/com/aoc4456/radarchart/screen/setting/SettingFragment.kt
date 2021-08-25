@@ -28,5 +28,9 @@ class SettingFragment : Fragment() {
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
         }
+        binding.privacyPolicy.setOnClickListener {
+            val action = SettingFragmentDirections.actionSettingFragmentToPrivacyPolicyFragment()
+            findNavController().navigate(action)
+        }
     }
 }
