@@ -114,5 +114,9 @@
         android:id="@+id/groupSortFragment"
         android:name="com.aoc4456.radarchart.screen.grouplistsort.GroupSortFragment"
         android:label="GroupSortFragment"
-        tools:layout="@layout/group_sort_fragment" />
+        tools:layout="@layout/group_sort_fragment" >
+        <argument
+            android:name="grouplist"
+            app:argType="com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts[]" />
+    </fragment>
 </navigation>

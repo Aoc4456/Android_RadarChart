@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.aoc4456.radarchart.databinding.GroupSortFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupSortFragment : Fragment() {
 
     private lateinit var binding: GroupSortFragmentBinding
     private val viewModel by viewModels<GroupSortViewModel>()
+
+    private val navArgs: GroupSortFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +32,8 @@ class GroupSortFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Timber.d("並び替え画面の引数 ${navArgs.grouplist.size}")
 
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
