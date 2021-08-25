@@ -34,10 +34,23 @@
                 android:text="@string/privacy_policy" />
         </FrameLayout>
 
-        <WebView
-            android:id="@+id/webview_privacy_policy"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <WebView
+                android:id="@+id/webview_privacy_policy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                tools:visibility="visible" />
+        </FrameLayout>
 
     </LinearLayout>
 </layout>
