@@ -78,7 +78,8 @@ interface RadarChartDao {
         }
 
         val numberOfItemsDiff = labels.size - oldGroup.labelList.size
-        if (numberOfItemsDiff > 0) { // 項目数増加
+        // 項目数増加時、グループに属するチャートのValueをデフォルト値で増やす
+        if (numberOfItemsDiff > 0) {
             val startIndex = labels.size
             val last = startIndex + numberOfItemsDiff
 
@@ -95,9 +96,14 @@ interface RadarChartDao {
             }
         }
 
-        if (numberOfItemsDiff < 0) { // 項目数減少 TODO sortedIndex の 調整
+        // 項目数減少時、グループに属するチャートの値の数を減らす
+        // また、ソート条件が項目名の場合、条件を作成日にリセットする
+        if (numberOfItemsDiff < 0) {
             oldGroup.chartList.forEach { chart ->
                 deleteChartValueGreaterThanIndex(chart.myChart.id, labels.size)
+            }
+            if (0 <= group.sortIndex) {
+                resetSortIndex(group.id)
             }
         }
     }
@@ -107,6 +113,9 @@ interface RadarChartDao {
 
     @Query("UPDATE ChartGroup SET sortIndex = :sortIndex WHERE id = :groupId")
     suspend fun updateSortIndex(groupId: String, sortIndex: Int)
+
+    @Query("UPDATE ChartGroup SET sortIndex = -1 WHERE id = :groupId")
+    suspend fun resetSortIndex(groupId: String)
 
     /**
      * Delete
