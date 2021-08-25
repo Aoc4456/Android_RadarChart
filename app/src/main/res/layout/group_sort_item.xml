@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="chartGroup"
-            type="com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -31,44 +28,26 @@
 
             <!-- タイトル -->
             <TextView
+                android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
-                android:text="@{chartGroup.group.title}"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 tools:ignore="RtlSymmetry"
                 tools:text="タイトル" />
 
-            <!-- グループ内のチャートの数 -->
-            <TextView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@{Integer.toString(chartGroup.chartList.size())}"
-                android:textColor="@color/dark_gray"
-                android:textSize="24sp"
-                tools:text="3" />
-
-            <TextView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text=">"
-                android:textColor="@color/dark_gray"
-                android:textSize="30dp"
-                tools:ignore="HardcodedText,SpUsage" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_baseline_reorder_24" />
 
         </LinearLayout>
-
-
-        <FrameLayout
-            android:id="@+id/frameForClick"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground" />
     </androidx.cardview.widget.CardView>
 
 </layout>

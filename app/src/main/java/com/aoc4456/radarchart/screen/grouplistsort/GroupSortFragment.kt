@@ -33,10 +33,15 @@ class GroupSortFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.onViewCreated(navArgs)
+
         Timber.d("並び替え画面の引数 ${navArgs.grouplist.size}")
 
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.recyclerview.adapter = GroupSortAdapter(viewModel)
+        (binding.recyclerview.adapter as GroupSortAdapter).notifyDataSetChanged()
     }
 }
