@@ -16,6 +16,7 @@
     <string name="edit">編集</string>
     <string name="create_new_group">グループ新規作成</string>
     <string name="group_edit">グループ編集</string>
+    <string name="sort">並び替え</string>
     <string name="sorting_items">項目の並び替え</string>
     <string name="delete">削除</string>
     <string name="cancel">キャンセル</string>
@@ -42,6 +43,4 @@
     <string name="review_this_app">このアプリを評価する</string>
     <string name="license">ライセンス</string>
     <string name="app_version">アプリのバージョン</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
