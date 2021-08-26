@@ -20,6 +20,7 @@ class GroupSortAdapter(private val viewModel: GroupSortViewModel) :
         val item = viewModel.groupList[position]
         holder.binding.let {
             it.title.text = item.group.title
+            it.rate.text = item.group.rate.toString()
         }
     }
 

@@ -30,6 +30,7 @@ class GroupSortFragment : Fragment() {
     ): View {
         binding = GroupSortFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
+        binding.viewmodel = this.viewModel
         return binding.root
     }
 
@@ -40,13 +41,13 @@ class GroupSortFragment : Fragment() {
 
         Timber.d("並び替え画面の引数 ${navArgs.grouplist.size}")
 
-        binding.toolbarCloseButton.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
         binding.recyclerview.adapter = GroupSortAdapter(viewModel)
         (binding.recyclerview.adapter as GroupSortAdapter).notifyDataSetChanged()
 
         itemTouchHelper.attachToRecyclerView(binding.recyclerview)
+
+        viewModel.dismiss.observe(viewLifecycleOwner) {
+            findNavController().popBackStack()
+        }
     }
 }
