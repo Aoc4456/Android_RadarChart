@@ -47,7 +47,7 @@ interface RadarChartDao {
      */
     // TODO 並び順の管理
     @Transaction
-    @Query("SELECT * FROM ChartGroup")
+    @Query("SELECT * FROM ChartGroup ORDER BY rate ASC")
     fun observeGroupWithLabelAndCharts(): LiveData<List<GroupWithLabelAndCharts>>
 
     @Transaction
@@ -59,7 +59,7 @@ interface RadarChartDao {
     suspend fun getChartList(groupId: String): List<MyChartWithValue>
 
     @Query("SELECT MAX(rate) FROM ChartGroup")
-    suspend fun getMaxRate(): Int
+    suspend fun getMaxRate(): Int?
 
     /**
      * Update

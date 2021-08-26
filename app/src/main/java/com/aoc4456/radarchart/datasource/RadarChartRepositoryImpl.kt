@@ -21,6 +21,12 @@ class RadarChartRepositoryImpl(
         labels: List<String>,
         oldGroup: GroupWithLabelAndCharts?
     ) {
+        val maxRate = radarChartDao.getMaxRate()
+        group.rate = when (maxRate) {
+            null -> 0
+            else -> maxRate + 1
+        }
+
         val chartLabels = mutableListOf<ChartGroupLabel>()
         for (i in labels.indices) {
             chartLabels.add(
