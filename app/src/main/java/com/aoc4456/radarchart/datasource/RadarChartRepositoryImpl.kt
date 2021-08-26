@@ -96,6 +96,10 @@ class RadarChartRepositoryImpl(
         radarChartDao.updateSortIndex(groupId, sortIndex)
     }
 
+    override suspend fun setGroupRates(list: List<ChartGroup>) {
+        radarChartDao.setRates(list)
+    }
+
     /**
      * Delete
      */

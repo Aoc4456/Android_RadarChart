@@ -111,6 +111,16 @@ interface RadarChartDao {
         }
     }
 
+    @Transaction
+    suspend fun setRates(list: List<ChartGroup>) {
+        for (i in list.indices) {
+            setRate(
+                groupId = list[i].id,
+                rate = i
+            )
+        }
+    }
+
     @Query("UPDATE ChartGroup SET orderBy = :orderBy WHERE id = :groupId")
     suspend fun changeAscDesc(groupId: String, orderBy: OrderBy)
 
@@ -119,6 +129,9 @@ interface RadarChartDao {
 
     @Query("UPDATE ChartGroup SET sortIndex = -1 WHERE id = :groupId")
     suspend fun resetSortIndex(groupId: String)
+
+    @Query("UPDATE ChartGroup SET rate = :rate WHERE id = :groupId")
+    suspend fun setRate(groupId: String, rate: Int)
 
     /**
      * Delete

@@ -38,6 +38,8 @@ interface RadarChartRepository {
 
     suspend fun updateSortIndex(groupId: String, sortIndex: Int)
 
+    suspend fun setGroupRates(list: List<ChartGroup>)
+
     /**
      * Delete
      */
