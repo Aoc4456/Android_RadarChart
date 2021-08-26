@@ -16,4 +16,10 @@ class GroupSortViewModel @Inject constructor(
     fun onViewCreated(navArgs: GroupSortFragmentArgs) {
         groupList = navArgs.grouplist.toMutableList()
     }
+
+    fun onMoveItem(from: Int, to: Int) {
+        val moveItem = groupList[from]
+        groupList.removeAt(from)
+        groupList.add(to, moveItem)
+    }
 }

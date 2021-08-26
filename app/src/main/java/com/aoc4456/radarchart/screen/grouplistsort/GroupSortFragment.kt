@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.aoc4456.radarchart.databinding.GroupSortFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -19,6 +20,8 @@ class GroupSortFragment : Fragment() {
     private val viewModel by viewModels<GroupSortViewModel>()
 
     private val navArgs: GroupSortFragmentArgs by navArgs()
+
+    private val itemTouchHelper = ItemTouchHelper(GroupItemTouchCallback())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,5 +46,7 @@ class GroupSortFragment : Fragment() {
 
         binding.recyclerview.adapter = GroupSortAdapter(viewModel)
         (binding.recyclerview.adapter as GroupSortAdapter).notifyDataSetChanged()
+
+        itemTouchHelper.attachToRecyclerView(binding.recyclerview)
     }
 }
