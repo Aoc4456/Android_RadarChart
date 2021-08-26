@@ -39,6 +39,13 @@ class GroupListFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.toolbarSortButton.setOnClickListener {
+            val action = GroupListFragmentDirections.actionGroupListFragmentToGroupSortFragment(
+                grouplist = viewModel.groupList.value!!.toTypedArray()
+            )
+            findNavController().navigate(action)
+        }
+
         // setup FAB
         binding.floatingActionButton.setOnClickListener {
             val action =
