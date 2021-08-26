@@ -21,7 +21,8 @@ data class ChartGroup(
     var createdAt: Long = System.currentTimeMillis(),
     var updatedAt: Long = System.currentTimeMillis(),
     var sortIndex: Int = SortIndex.CREATED_AT,
-    var orderBy: OrderBy = OrderBy.ASC
+    var orderBy: OrderBy = OrderBy.ASC,
+    var rate: Int = 0
 ) : Parcelable
 
 @Parcelize

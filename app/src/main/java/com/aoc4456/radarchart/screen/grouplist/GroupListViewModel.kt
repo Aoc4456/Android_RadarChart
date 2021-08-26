@@ -2,6 +2,7 @@ package com.aoc4456.radarchart.screen.grouplist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
@@ -23,6 +24,10 @@ class GroupListViewModel @Inject constructor(
     private val _navigateToChartCollection = PublishLiveData<GroupWithLabelAndCharts?>()
     val navigateToChartCollection: PublishLiveData<GroupWithLabelAndCharts?> =
         _navigateToChartCollection
+
+    val sortButtonEnable: LiveData<Boolean> = groupList.map {
+        it.size >= 2
+    }
 
     fun onClickListItem(groupItem: GroupWithLabelAndCharts) {
         _navigateToChartCollection.value = groupItem

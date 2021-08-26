@@ -27,6 +27,7 @@ class GroupListFragment : Fragment() {
     ): View {
         binding = GroupListFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
+        binding.viewmodel = this.viewModel
         return binding.root
     }
 
