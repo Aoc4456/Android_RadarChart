@@ -38,7 +38,7 @@ class GroupSortFragment : Fragment() {
 
         viewModel.onViewCreated(navArgs)
 
-        binding.recyclerview.adapter = GroupSortAdapter(viewModel)
+        binding.recyclerview.adapter = GroupSortAdapter(viewModel, itemTouchHelper)
         (binding.recyclerview.adapter as GroupSortAdapter).notifyDataSetChanged()
 
         itemTouchHelper.attachToRecyclerView(binding.recyclerview)
