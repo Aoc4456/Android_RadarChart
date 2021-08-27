@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.DOWN
-import androidx.recyclerview.widget.ItemTouchHelper.UP
+import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.databinding.GroupSortItemBinding
-import timber.log.Timber
 
 class GroupSortAdapter(
     private val viewModel: GroupSortViewModel,
@@ -45,7 +43,6 @@ class GroupSortAdapter(
     }
 
     fun moveItem(from: Int, to: Int) {
-        Timber.d("FROM = $from TO = $to")
         viewModel.onMoveItem(from, to)
     }
 }
@@ -67,4 +64,22 @@ class GroupItemTouchCallback : ItemTouchHelper.SimpleCallback(UP or DOWN, 0) {
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+
+    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+        super.onSelectedChanged(viewHolder, actionState)
+        if (actionState == ACTION_STATE_DRAG) {
+            viewHolder?.itemView?.let {
+                it.elevation = 12f
+                it.alpha = 0.8f
+            }
+        }
+    }
+
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        super.clearView(recyclerView, viewHolder)
+        viewHolder.itemView.let {
+            it.elevation = 6f
+            it.alpha = 1f
+        }
+    }
 }
