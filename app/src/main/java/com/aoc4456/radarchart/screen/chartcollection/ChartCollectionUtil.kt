@@ -8,7 +8,7 @@ import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.SortIndex
 import com.aoc4456.radarchart.util.DateUtil
 import timber.log.Timber
-import kotlin.math.max
+import kotlin.math.min
 
 object ChartCollectionUtil {
     fun sortIndexToString(sortIndex: Int, labels: List<String>, context: Context): String {
@@ -110,11 +110,11 @@ object ChartCollectionUtil {
             }
             CollectionType.GRID -> {
                 return if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    val base = (dpWidth / 240).toInt()
-                    max(base, 4)
-                } else {
                     val base = (dpWidth / 120).toInt()
-                    max(base, 5)
+                    min(base, 4)
+                } else {
+                    val base = (dpWidth / 150).toInt()
+                    min(base, 5)
                 }
             }
         }
