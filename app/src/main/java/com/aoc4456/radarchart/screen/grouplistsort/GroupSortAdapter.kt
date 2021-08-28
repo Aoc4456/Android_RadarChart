@@ -46,9 +46,7 @@ class GroupSortAdapter(
 
     class ViewHolder(val binding: GroupSortItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun getItemCount(): Int {
-        return viewModel.groupList.size
-    }
+    override fun getItemCount() = viewModel.groupList.size
 
     fun moveItem(from: Int, to: Int) {
         viewModel.onMoveItem(from, to)
