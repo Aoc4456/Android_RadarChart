@@ -83,6 +83,11 @@ class GroupListFragment : Fragment() {
                 GroupListFragmentDirections.actionGroupListFragmentToGroupCreateFragment(it)
             findNavController().navigate(action)
         }
+
+        viewModel.navigateToItemSort.observe(viewLifecycleOwner) {
+            val action = GroupListFragmentDirections.actionGroupListFragmentToItemSortFragment(it!!)
+            findNavController().navigate(action)
+        }
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
