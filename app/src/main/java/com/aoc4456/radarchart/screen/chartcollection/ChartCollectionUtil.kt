@@ -1,12 +1,14 @@
 package com.aoc4456.radarchart.screen.chartcollection
 
 import android.content.Context
+import android.content.res.Configuration
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.SortIndex
 import com.aoc4456.radarchart.util.DateUtil
 import timber.log.Timber
+import kotlin.math.max
 
 object ChartCollectionUtil {
     fun sortIndexToString(sortIndex: Int, labels: List<String>, context: Context): String {
@@ -89,15 +91,31 @@ object ChartCollectionUtil {
     }
 
     fun calcSpanCountBasedOnScreenSize(context: Context, type: CollectionType): Int {
+        val orientation = context.resources.configuration.orientation
         val displayMetrics = context.resources.displayMetrics
         val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+
         Timber.d("画面幅 = $dpWidth")
         when (type) {
             CollectionType.LIST -> {
-                return (dpWidth / 240).toInt()
+                return if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    return if (dpWidth < 600) {
+                        1
+                    } else {
+                        2
+                    }
+                } else {
+                    2
+                }
             }
             CollectionType.GRID -> {
-                return (dpWidth / 120).toInt()
+                return if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    val base = (dpWidth / 240).toInt()
+                    max(base, 4)
+                } else {
+                    val base = (dpWidth / 120).toInt()
+                    max(base, 5)
+                }
             }
         }
     }

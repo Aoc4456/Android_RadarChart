@@ -11,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.aoc4456.radarchart.databinding.GroupSortFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class GroupSortFragment : Fragment() {
@@ -39,9 +38,7 @@ class GroupSortFragment : Fragment() {
 
         viewModel.onViewCreated(navArgs)
 
-        Timber.d("並び替え画面の引数 ${navArgs.grouplist.size}")
-
-        binding.recyclerview.adapter = GroupSortAdapter(viewModel)
+        binding.recyclerview.adapter = GroupSortAdapter(viewModel, itemTouchHelper)
         (binding.recyclerview.adapter as GroupSortAdapter).notifyDataSetChanged()
 
         itemTouchHelper.attachToRecyclerView(binding.recyclerview)
