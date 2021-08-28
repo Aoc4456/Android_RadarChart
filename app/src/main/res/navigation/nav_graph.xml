@@ -23,10 +23,10 @@
         <action
             android:id="@+id/action_groupListFragment_to_chartCollectionFragment"
             app:destination="@id/chartCollectionFragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_to_right" />
+            app:enterAnim="@anim/nav_slide_from_right"
+            app:exitAnim="@anim/nav_slide_to_left"
+            app:popEnterAnim="@anim/nav_slide_from_left"
+            app:popExitAnim="@anim/nav_slide_to_right" />
         <action
             android:id="@+id/action_groupListFragment_to_settingFragment"
             app:destination="@id/settingFragment"
@@ -67,10 +67,10 @@
         <action
             android:id="@+id/action_chartCollectionFragment_to_chartEditFragment"
             app:destination="@id/chartCreateFragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_to_right" />
+            app:enterAnim="@anim/nav_slide_from_right"
+            app:exitAnim="@anim/nav_slide_to_left"
+            app:popEnterAnim="@anim/nav_slide_from_left"
+            app:popExitAnim="@anim/nav_slide_to_right" />
     </fragment>
     <fragment
         android:id="@+id/testFragment"
@@ -100,10 +100,10 @@
         <action
             android:id="@+id/action_settingFragment_to_privacyPolicyFragment"
             app:destination="@id/privacyPolicyFragment"
-            app:enterAnim="@anim/slide_from_right"
-            app:exitAnim="@anim/slide_to_left"
-            app:popEnterAnim="@anim/slide_from_left"
-            app:popExitAnim="@anim/slide_to_right" />
+            app:enterAnim="@anim/nav_slide_from_right"
+            app:exitAnim="@anim/nav_slide_to_left"
+            app:popEnterAnim="@anim/nav_slide_from_left"
+            app:popExitAnim="@anim/nav_slide_to_right" />
     </fragment>
     <fragment
         android:id="@+id/privacyPolicyFragment"

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -26,6 +28,9 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
 
     private val navArgs: ChartCollectionFragmentArgs by navArgs()
 
+    private lateinit var fadeInAnimation: Animation
+    private lateinit var fadeOutAnimation: Animation
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +44,9 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fadein)
+        fadeOutAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fadeout)
+
         viewModel.onViewCreated(navArgs)
 
         // ツールバー
@@ -59,7 +67,15 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
         // トグルボタン
         binding.toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
-                viewModel.onToggleButtonCheckedChanged(checkedId)
+                fadeOutAnimation.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {}
+                    override fun onAnimationRepeat(animation: Animation?) {}
+                    override fun onAnimationEnd(animation: Animation?) {
+                        viewModel.onToggleButtonCheckedChanged(checkedId)
+                        binding.recyclerView.startAnimation(fadeInAnimation)
+                    }
+                })
+                binding.recyclerView.startAnimation(fadeOutAnimation)
             }
         }
 
