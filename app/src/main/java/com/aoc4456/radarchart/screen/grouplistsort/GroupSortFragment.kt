@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.aoc4456.radarchart.databinding.GroupSortFragmentBinding
+import com.aoc4456.radarchart.util.ListItemTouchCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +21,7 @@ class GroupSortFragment : Fragment() {
 
     private val navArgs: GroupSortFragmentArgs by navArgs()
 
-    private val itemTouchHelper = ItemTouchHelper(GroupItemTouchCallback())
+    private val itemTouchHelper = ItemTouchHelper(ListItemTouchCallback())
 
     override fun onCreateView(
         inflater: LayoutInflater,
