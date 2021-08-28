@@ -18,6 +18,7 @@ import com.aoc4456.radarchart.component.dialog.ListDialogListener
 import com.aoc4456.radarchart.databinding.ChartCollectionFragmentBinding
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.datasource.database.OrderBy
+import com.aoc4456.radarchart.util.calcSpanCountBasedOnScreenSize
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -118,7 +119,7 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
                     binding.recyclerView.adapter = ChartCollectionGridAdapter(viewModel)
                 }
             }
-            val count = ChartCollectionUtil.calcSpanCountBasedOnScreenSize(requireContext(), type)
+            val count = calcSpanCountBasedOnScreenSize(requireContext(), type)
             (binding.recyclerView.layoutManager as GridLayoutManager).spanCount = count
             viewModel.chartList.value?.let { submitList(it) }
         }

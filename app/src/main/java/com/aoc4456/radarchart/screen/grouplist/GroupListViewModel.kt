@@ -21,6 +21,9 @@ class GroupListViewModel @Inject constructor(
     private val _navigateToGroupEdit = PublishLiveData<GroupWithLabelAndCharts?>()
     val navigateToGroupEdit: PublishLiveData<GroupWithLabelAndCharts?> = _navigateToGroupEdit
 
+    private val _navigateToItemSort = PublishLiveData<GroupWithLabelAndCharts?>()
+    val navigateToItemSort: PublishLiveData<GroupWithLabelAndCharts?> = _navigateToItemSort
+
     private val _navigateToChartCollection = PublishLiveData<GroupWithLabelAndCharts?>()
     val navigateToChartCollection: PublishLiveData<GroupWithLabelAndCharts?> =
         _navigateToChartCollection
@@ -39,6 +42,7 @@ class GroupListViewModel @Inject constructor(
                 _navigateToGroupEdit.value = groupItem
             }
             R.id.sorting_items -> {
+                _navigateToItemSort.value = groupItem
             }
         }
     }
