@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.aoc4456.radarchart.databinding.GroupListFragmentBinding
-import com.aoc4456.radarchart.screen.chartcollection.ChartCollectionUtil
 import com.aoc4456.radarchart.screen.chartcollection.CollectionType
+import com.aoc4456.radarchart.util.calcSpanCountBasedOnScreenSize
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -60,7 +60,7 @@ class GroupListFragment : Fragment() {
         }
 
         // RecyclerView
-        val count = ChartCollectionUtil.calcSpanCountBasedOnScreenSize(
+        val count = calcSpanCountBasedOnScreenSize(
             requireContext(),
             CollectionType.LIST
         )
