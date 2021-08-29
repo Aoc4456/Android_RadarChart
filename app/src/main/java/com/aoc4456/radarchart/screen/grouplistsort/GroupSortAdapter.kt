@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.databinding.GroupSortItemBinding
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.SortableAdapter
 
 class GroupSortAdapter(
     private val viewModel: GroupSortViewModel,
     private val itemTouchHelper: ItemTouchHelper
 ) :
-    RecyclerView.Adapter<GroupSortAdapter.ViewHolder>() {
+    RecyclerView.Adapter<GroupSortAdapter.ViewHolder>(), SortableAdapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -48,7 +49,7 @@ class GroupSortAdapter(
 
     override fun getItemCount() = viewModel.groupList.size
 
-    fun moveItem(from: Int, to: Int) {
+    override fun moveItem(from: Int, to: Int) {
         viewModel.onMoveItem(from, to)
     }
 }

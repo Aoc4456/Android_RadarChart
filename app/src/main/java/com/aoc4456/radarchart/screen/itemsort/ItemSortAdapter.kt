@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.databinding.ItemSortListItemBinding
+import com.aoc4456.radarchart.util.SortableAdapter
 
 class ItemSortAdapter(
     private val viewModel: ItemSortViewModel,
     private val itemTouchHelper: ItemTouchHelper
-) : RecyclerView.Adapter<ItemSortAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ItemSortAdapter.ViewHolder>(), SortableAdapter {
 
     class ViewHolder(val binding: ItemSortListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -25,4 +26,8 @@ class ItemSortAdapter(
     }
 
     override fun getItemCount(): Int = viewModel.labelList.size
+
+    override fun moveItem(from: Int, to: Int) {
+        viewModel.onMoveItem(from, to)
+    }
 }

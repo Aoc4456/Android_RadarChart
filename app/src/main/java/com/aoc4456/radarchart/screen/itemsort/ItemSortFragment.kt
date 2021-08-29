@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.aoc4456.radarchart.databinding.ItemSortFragmentBinding
+import com.aoc4456.radarchart.util.ListItemTouchCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +20,8 @@ class ItemSortFragment : Fragment() {
     private lateinit var binding: ItemSortFragmentBinding
 
     private val navArgs: ItemSortFragmentArgs by navArgs()
+
+    private val itemTouchHelper = ItemTouchHelper(ListItemTouchCallback())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,8 +35,15 @@ class ItemSortFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.onViewCreated(navArgs)
+
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.recyclerView.adapter = ItemSortAdapter(viewModel, itemTouchHelper)
+        (binding.recyclerView.adapter as ItemSortAdapter).notifyDataSetChanged()
+
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 }

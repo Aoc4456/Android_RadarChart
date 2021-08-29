@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.screen.chartcollection.CollectionType
-import com.aoc4456.radarchart.screen.grouplistsort.GroupSortAdapter
 import timber.log.Timber
 import kotlin.math.min
 
@@ -46,12 +45,12 @@ class ListItemTouchCallback :
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        val adapter = recyclerView.adapter as GroupSortAdapter
+        val adapter = recyclerView.adapter as SortableAdapter
         val from = viewHolder.adapterPosition
         val to = target.adapterPosition
 
         adapter.moveItem(from, to)
-        adapter.notifyItemMoved(from, to)
+        (adapter as RecyclerView.Adapter<*>).notifyItemMoved(from, to)
 
         return true
     }
@@ -75,4 +74,8 @@ class ListItemTouchCallback :
             it.alpha = 1f
         }
     }
+}
+
+interface SortableAdapter {
+    fun moveItem(from: Int, to: Int)
 }
