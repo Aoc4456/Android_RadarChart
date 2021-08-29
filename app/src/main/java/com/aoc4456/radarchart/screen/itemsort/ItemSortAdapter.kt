@@ -1,41 +1,32 @@
-package com.aoc4456.radarchart.screen.grouplistsort
+package com.aoc4456.radarchart.screen.itemsort
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
-import com.aoc4456.radarchart.databinding.GroupSortItemBinding
-import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.databinding.ItemSortListItemBinding
 import com.aoc4456.radarchart.util.SortableAdapter
 
-class GroupSortAdapter(
-    private val viewModel: GroupSortViewModel,
+class ItemSortAdapter(
+    private val viewModel: ItemSortViewModel,
     private val itemTouchHelper: ItemTouchHelper
-) :
-    RecyclerView.Adapter<GroupSortAdapter.ViewHolder>(), SortableAdapter {
+) : RecyclerView.Adapter<ItemSortAdapter.ViewHolder>(), SortableAdapter {
+
+    class ViewHolder(val binding: ItemSortListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = GroupSortItemBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemSortListItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = viewModel.groupList[position]
+        val item = viewModel.labelList[position]
         holder.binding.let {
-            it.title.text = item.group.title
-            it.rate.text = item.group.rate.toString()
-            val radarData = ChartDataUtil.getRadarDataWithTheSameValue(
-                color = item.group.color,
-                numberOfItems = item.labelList.size
-            )
-            it.radarChart.data = radarData
-            it.radarChart.notifyDataSetChanged()
-
+            it.label.text = item.text
             it.dragHandle.setOnTouchListener { _, event ->
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                     itemTouchHelper.startDrag(holder)
@@ -45,9 +36,7 @@ class GroupSortAdapter(
         }
     }
 
-    class ViewHolder(val binding: GroupSortItemBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun getItemCount() = viewModel.groupList.size
+    override fun getItemCount(): Int = viewModel.labelList.size
 
     override fun moveItem(from: Int, to: Int) {
         viewModel.onMoveItem(from, to)
