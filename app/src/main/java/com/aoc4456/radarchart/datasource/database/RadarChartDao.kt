@@ -55,7 +55,7 @@ interface RadarChartDao {
     suspend fun getGroupById(groupId: String): GroupWithLabelAndCharts
 
     @Transaction
-    @Query("SELECT * FROM MyChart WHERE chartGroupId = :groupId")
+    @Query("SELECT * FROM MyChart WHERE chartGroupId = :groupId ORDER BY createdAt ASC")
     suspend fun getChartList(groupId: String): List<MyChartWithValue>
 
     @Query("SELECT MAX(rate) FROM ChartGroup")
