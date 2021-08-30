@@ -69,6 +69,12 @@ interface RadarChartDao {
     @Update
     suspend fun updateGroup(group: ChartGroup)
 
+    @Update
+    suspend fun updateGroupLabel(label: ChartGroupLabel)
+
+    @Update
+    suspend fun updateChartValue(value: ChartValue)
+
     @Transaction
     suspend fun updateGroupAndLabel(
         group: ChartGroup,
@@ -92,7 +98,7 @@ interface RadarChartDao {
                 for (i in startIndex until last) {
                     insertChartValue(
                         ChartValue(
-                            myChartId = chart.id,
+                            myChartId = chart.myChart.id,
                             index = i,
                             value = group.maximumValue * 0.6
                         )
@@ -105,7 +111,7 @@ interface RadarChartDao {
         // また、ソート条件が項目名の場合、条件を作成日にリセットする
         if (numberOfItemsDiff < 0) {
             oldGroup.chartList.forEach { chart ->
-                deleteChartValueGreaterThanIndex(chart.id, labels.size)
+                deleteChartValueGreaterThanIndex(chart.myChart.id, labels.size)
             }
             if (0 <= group.sortIndex) {
                 resetSortIndex(group.id)
@@ -134,6 +140,20 @@ interface RadarChartDao {
 
     @Query("UPDATE ChartGroup SET rate = :rate WHERE id = :groupId")
     suspend fun setRate(groupId: String, rate: Int)
+
+    @Transaction
+    suspend fun swapGroupLabel(groupId: String, from: Int, to: Int) {
+        val group = getGroupById(groupId)
+        // ChartGroupLabel の index を入れ替え
+        updateGroupLabel(group.labelList[from].apply { this.index = to })
+        updateGroupLabel(group.labelList[to].apply { this.index = from })
+
+        // グループに属するチャートのValueのindexを入れ替え
+        group.chartList.forEach { chart ->
+            updateChartValue(chart.values[from].apply { this.index = to })
+            updateChartValue(chart.values[to].apply { this.index = from })
+        }
+    }
 
     /**
      * Delete
