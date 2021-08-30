@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">レーダーチャート</string>
     <string name="group">グループ</string>
+    <string name="group_empty">+ボタンをタップしてグループを作成しましょう！</string>
     <string name="title">タイトル</string>
     <string name="input_the_title">タイトルを入力</string>
     <string name="group_color">グループの色</string>
@@ -38,6 +39,7 @@
     <string name="total_with_value">合計 : %1$s</string>
     <string name="asc_order">昇順</string>
     <string name="desc_order">降順</string>
+    <string name="chart_empty">+ボタンをタップしてチャートを作成しましょう！</string>
     <string name="others">その他</string>
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="review_this_app">このアプリを評価する</string>
