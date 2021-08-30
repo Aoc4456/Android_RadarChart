@@ -80,8 +80,17 @@ class RadarChartRepositoryImpl(
         sortIndex: Int,
         orderBy: OrderBy
     ): List<MyChartWithValue> {
+        val list = mutableListOf<MyChartWithValue>()
         val chartList = radarChartDao.getChartList(groupId)
-        return MyChartOrder.getSortedChartList(chartList, sortIndex, orderBy)
+        chartList.forEach {
+            list.add(
+                MyChartWithValue(
+                    myChart = it,
+                    values = radarChartDao.getChartValueById(it.id)
+                )
+            )
+        }
+        return MyChartOrder.getSortedChartList(list, sortIndex, orderBy)
     }
 
     /**

@@ -45,7 +45,6 @@ interface RadarChartDao {
     /**
      * Read
      */
-    // TODO 並び順の管理
     @Transaction
     @Query("SELECT * FROM ChartGroup ORDER BY rate ASC")
     fun observeGroupWithLabelAndCharts(): LiveData<List<GroupWithLabelAndCharts>>
@@ -56,7 +55,10 @@ interface RadarChartDao {
 
     @Transaction
     @Query("SELECT * FROM MyChart WHERE chartGroupId = :groupId ORDER BY createdAt ASC")
-    suspend fun getChartList(groupId: String): List<MyChartWithValue>
+    suspend fun getChartList(groupId: String): List<MyChart>
+
+    @Query("SELECT * FROM ChartValue WHERE myChartId = :chartId ORDER BY `index` ASC")
+    suspend fun getChartValueById(chartId: String): List<ChartValue>
 
     @Query("SELECT MAX(rate) FROM ChartGroup")
     suspend fun getMaxRate(): Int?
@@ -90,7 +92,7 @@ interface RadarChartDao {
                 for (i in startIndex until last) {
                     insertChartValue(
                         ChartValue(
-                            myChartId = chart.myChart.id,
+                            myChartId = chart.id,
                             index = i,
                             value = group.maximumValue * 0.6
                         )
@@ -103,7 +105,7 @@ interface RadarChartDao {
         // また、ソート条件が項目名の場合、条件を作成日にリセットする
         if (numberOfItemsDiff < 0) {
             oldGroup.chartList.forEach { chart ->
-                deleteChartValueGreaterThanIndex(chart.myChart.id, labels.size)
+                deleteChartValueGreaterThanIndex(chart.id, labels.size)
             }
             if (0 <= group.sortIndex) {
                 resetSortIndex(group.id)
