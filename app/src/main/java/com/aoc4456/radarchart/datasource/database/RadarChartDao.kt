@@ -92,7 +92,7 @@ interface RadarChartDao {
                 for (i in startIndex until last) {
                     insertChartValue(
                         ChartValue(
-                            myChartId = chart.id,
+                            myChartId = chart.myChart.id,
                             index = i,
                             value = group.maximumValue * 0.6
                         )
@@ -105,7 +105,7 @@ interface RadarChartDao {
         // また、ソート条件が項目名の場合、条件を作成日にリセットする
         if (numberOfItemsDiff < 0) {
             oldGroup.chartList.forEach { chart ->
-                deleteChartValueGreaterThanIndex(chart.id, labels.size)
+                deleteChartValueGreaterThanIndex(chart.myChart.id, labels.size)
             }
             if (0 <= group.sortIndex) {
                 resetSortIndex(group.id)
@@ -134,6 +134,12 @@ interface RadarChartDao {
 
     @Query("UPDATE ChartGroup SET rate = :rate WHERE id = :groupId")
     suspend fun setRate(groupId: String, rate: Int)
+
+    @Transaction
+    suspend fun swapGroupLabel(groupId: String, from: Int, to: Int) {
+        // ChartGroupLabel　の index の 入れ替え
+        // グループに属するチャート
+    }
 
     /**
      * Delete
