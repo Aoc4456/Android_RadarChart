@@ -45,7 +45,6 @@ interface RadarChartDao {
     /**
      * Read
      */
-    // TODO 並び順の管理
     @Transaction
     @Query("SELECT * FROM ChartGroup ORDER BY rate ASC")
     fun observeGroupWithLabelAndCharts(): LiveData<List<GroupWithLabelAndCharts>>
@@ -56,7 +55,10 @@ interface RadarChartDao {
 
     @Transaction
     @Query("SELECT * FROM MyChart WHERE chartGroupId = :groupId ORDER BY createdAt ASC")
-    suspend fun getChartList(groupId: String): List<MyChartWithValue>
+    suspend fun getChartList(groupId: String): List<MyChart>
+
+    @Query("SELECT * FROM ChartValue WHERE myChartId = :chartId ORDER BY `index` ASC")
+    suspend fun getChartValueById(chartId: String): List<ChartValue>
 
     @Query("SELECT MAX(rate) FROM ChartGroup")
     suspend fun getMaxRate(): Int?
