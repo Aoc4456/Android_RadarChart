@@ -69,6 +69,12 @@ interface RadarChartDao {
     @Update
     suspend fun updateGroup(group: ChartGroup)
 
+    @Update
+    suspend fun updateGroupLabel(label: ChartGroupLabel)
+
+    @Update
+    suspend fun updateChartValue(value: ChartValue)
+
     @Transaction
     suspend fun updateGroupAndLabel(
         group: ChartGroup,
@@ -137,8 +143,16 @@ interface RadarChartDao {
 
     @Transaction
     suspend fun swapGroupLabel(groupId: String, from: Int, to: Int) {
-        // ChartGroupLabel　の index の 入れ替え
-        // グループに属するチャート
+        val group = getGroupById(groupId)
+        // ChartGroupLabel の index を入れ替え
+        updateGroupLabel(group.labelList[from].apply { this.index = to })
+        updateGroupLabel(group.labelList[to].apply { this.index = from })
+
+        // グループに属するチャートのValueのindexを入れ替え
+        group.chartList.forEach { chart ->
+            updateChartValue(chart.values[from].apply { this.index = to })
+            updateChartValue(chart.values[to].apply { this.index = from })
+        }
     }
 
     /**
