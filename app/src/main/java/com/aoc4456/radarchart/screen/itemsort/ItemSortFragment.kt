@@ -30,6 +30,7 @@ class ItemSortFragment : Fragment() {
     ): View {
         binding = ItemSortFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
+        binding.viewmodel = this.viewModel
         return binding.root
     }
 
