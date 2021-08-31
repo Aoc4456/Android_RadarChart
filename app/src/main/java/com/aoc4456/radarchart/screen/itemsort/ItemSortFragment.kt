@@ -46,5 +46,14 @@ class ItemSortFragment : Fragment() {
         (binding.recyclerView.adapter as ItemSortAdapter).notifyDataSetChanged()
 
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
+        viewModel.chartUpdate.observe(viewLifecycleOwner) {
+            binding.radarChart.let { radarChart ->
+                radarChart.data = viewModel.radarData
+                radarChart.setChartItemLabel(viewModel.labelList.map { it.text })
+                radarChart.notifyDataSetChanged()
+                radarChart.invalidate()
+            }
+        }
     }
 }
