@@ -18,7 +18,8 @@ class ItemSortViewModel @Inject constructor(
     lateinit var labelList: MutableList<ChartGroupLabel>
 
     fun onViewCreated(navArgs: ItemSortFragmentArgs) {
-        group = navArgs.groupWithLabelAndCharts // TODO 毎回データベースから取得しないと危険？
+        if (::group.isInitialized) return
+        group = navArgs.groupWithLabelAndCharts
         labelList = navArgs.groupWithLabelAndCharts.labelList.toMutableList()
     }
 

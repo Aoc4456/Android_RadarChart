@@ -23,6 +23,7 @@ class GroupSortViewModel @Inject constructor(
     val dismiss: LiveData<Boolean> = _dismiss
 
     fun onViewCreated(navArgs: GroupSortFragmentArgs) {
+        if (::groupList.isInitialized) return
         groupList = navArgs.grouplist.toMutableList()
     }
 
