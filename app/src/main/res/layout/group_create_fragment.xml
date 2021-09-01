@@ -117,13 +117,14 @@
                     app:layout_constraintStart_toEndOf="@+id/groupColorLabel"
                     app:layout_constraintTop_toBottomOf="@id/titleEditText" />
 
-                <View
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iconView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/red_700"
                     android:text="@string/group_color"
+                    app:shapeAppearanceOverlay="@style/circleImageView"
                     app:layout_constraintEnd_toEndOf="@id/iconLabel"
                     app:layout_constraintStart_toStartOf="@id/iconLabel"
                     app:layout_constraintTop_toBottomOf="@id/iconLabel" />

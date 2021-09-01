@@ -21,6 +21,11 @@
         <item name="android:clickable">true</item>
     </style>
 
+    <style name="circleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <!-- テキスト系 -->
     <style name="LabelBlueText">
         <item name="android:textSize">16sp</item>
