@@ -33,7 +33,7 @@ class GroupCreateFragment : Fragment(), BaseDialogListener {
         if (result.isSuccessful) {
             // use the returned uri
             val uriContent = result.uriContent
-            val uriFilePath = result.getUriFilePath(requireContext()) // optional usage
+            binding.iconView.setImageURI(uriContent)
         } else {
             // an error occurred
             val exception = result.error
@@ -96,6 +96,8 @@ class GroupCreateFragment : Fragment(), BaseDialogListener {
             cropImage.launch(
                 options {
                     setGuidelines(CropImageView.Guidelines.ON)
+                    setCropShape(CropImageView.CropShape.OVAL)
+                    setFixAspectRatio(true)
                 }
             )
         }
