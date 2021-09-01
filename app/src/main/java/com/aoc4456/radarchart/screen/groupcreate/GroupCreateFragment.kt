@@ -16,6 +16,9 @@ import com.aoc4456.radarchart.component.dialog.BaseDialogListener
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageView
+import com.canhub.cropper.options
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +28,17 @@ class GroupCreateFragment : Fragment(), BaseDialogListener {
     private val viewModel by viewModels<GroupCreateViewModel>()
 
     private val navArgs: GroupCreateFragmentArgs by navArgs()
+
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            // use the returned uri
+            val uriContent = result.uriContent
+            val uriFilePath = result.getUriFilePath(requireContext()) // optional usage
+        } else {
+            // an error occurred
+            val exception = result.error
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,6 +90,14 @@ class GroupCreateFragment : Fragment(), BaseDialogListener {
                 negativeText = getString(R.string.cancel)
             )
             dialogFragment.show(childFragmentManager, "TRASH_DIALOG_TAG")
+        }
+
+        binding.iconView.setOnClickListener {
+            cropImage.launch(
+                options {
+                    setGuidelines(CropImageView.Guidelines.ON)
+                }
+            )
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
