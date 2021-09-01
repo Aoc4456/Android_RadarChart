@@ -117,6 +117,9 @@ dependencies {
     // Color Picker (jcenter にしか存在しない)
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 
+    // Image Cropper
+    implementation 'com.github.CanHub:Android-Image-Cropper:3.2.2'
+
     // Local Unit Test
     testImplementation "org.hamcrest:hamcrest-all:1.3"
 }
