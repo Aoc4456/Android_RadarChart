@@ -6,6 +6,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import java.io.ByteArrayOutputStream
 
 object ImageUtil {
 
@@ -21,5 +22,11 @@ object ImageUtil {
         } catch (e: Exception) {
             null
         }
+    }
+
+    fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
+        return outputStream.toByteArray()
     }
 }
