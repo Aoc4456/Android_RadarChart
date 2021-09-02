@@ -88,6 +88,9 @@ class GroupCreateViewModel @Inject constructor(
             _maximum.value = groupArgs.group.maximumValue.toString()
             itemTextList.value = GroupCreateUtil.getMaximumSizeTextList(groupArgs.labelList)
             _numberOfItems.value = groupArgs.labelList.size
+            groupArgs.group.iconImage?.let {
+                _iconImage.value = ImageUtil.byteArrayToBitmap(it)
+            }
         }
         updateChart()
     }
