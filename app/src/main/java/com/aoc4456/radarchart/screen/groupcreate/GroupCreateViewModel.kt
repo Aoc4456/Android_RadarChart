@@ -1,5 +1,8 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
+import android.app.Application
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.*
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
@@ -7,6 +10,7 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ImageUtil
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.maximumValidate
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
@@ -17,8 +21,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupCreateViewModel @Inject constructor(
+    application: Application,
     private val repository: RadarChartRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val _groupArgs = MutableLiveData<GroupWithLabelAndCharts?>()
     val groupArgs: LiveData<GroupWithLabelAndCharts?> = _groupArgs
@@ -34,6 +39,9 @@ class GroupCreateViewModel @Inject constructor(
 
     private val _maximum = MutableLiveData("100")
     val maximum: LiveData<String> = _maximum
+
+    private val _iconImage = MutableLiveData<Bitmap>()
+    val iconImage: LiveData<Bitmap> = _iconImage
 
     private var itemTextList =
         MutableLiveData(GroupCreateUtil.defaultTextList.toMutableList())
@@ -88,6 +96,11 @@ class GroupCreateViewModel @Inject constructor(
         if (newColor == _groupColor.value) return
         _groupColor.value = newColor
         updateChart()
+    }
+
+    fun onClippedIconImage(uri: Uri) {
+        val bitmap = ImageUtil.uriToBitmap(getApplication<Application>().contentResolver, uri)
+        bitmap?.let { _iconImage.value = it }
     }
 
     fun onChangeTitleText(newText: String) {

@@ -31,11 +31,9 @@ class GroupCreateFragment : Fragment(), BaseDialogListener {
 
     private val cropImage = registerForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
-            // use the returned uri
             val uriContent = result.uriContent
-            binding.iconView.setImageURI(uriContent)
+            uriContent?.let { viewModel.onClippedIconImage(it) }
         } else {
-            // an error occurred
             val exception = result.error
         }
     }
