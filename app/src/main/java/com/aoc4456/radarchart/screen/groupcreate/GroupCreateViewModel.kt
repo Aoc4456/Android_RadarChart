@@ -43,6 +43,12 @@ class GroupCreateViewModel @Inject constructor(
     private val _iconImage = MutableLiveData<Bitmap>()
     val iconImage: LiveData<Bitmap> = _iconImage
 
+    private val iconImageByteArray: ByteArray?
+        get() {
+            if (iconImage.value == null) return null
+            return ImageUtil.bitmapToByteArray(iconImage.value!!)
+        }
+
     private var itemTextList =
         MutableLiveData(GroupCreateUtil.defaultTextList.toMutableList())
 
@@ -185,6 +191,7 @@ class GroupCreateViewModel @Inject constructor(
                 title = title.value!!,
                 color = groupColor.value!!,
                 maximumValue = maximum.value!!.toInt(),
+                iconImage = iconImageByteArray
             )
         }
 

@@ -18,6 +18,8 @@ data class ChartGroup(
     var color: Int,
     var iconFileName: String = "",
     var maximumValue: Int = 0,
+    @Suppress("ArrayInDataClass") @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    var iconImage: ByteArray? = null,
     var createdAt: Long = System.currentTimeMillis(),
     var updatedAt: Long = System.currentTimeMillis(),
     var sortIndex: Int = SortIndex.CREATED_AT,
