@@ -2,6 +2,7 @@ package com.aoc4456.radarchart.datasource
 
 import androidx.lifecycle.LiveData
 import com.aoc4456.radarchart.datasource.database.*
+import com.aoc4456.radarchart.screen.chartcollection.CollectionType
 
 interface RadarChartRepository {
 
@@ -49,4 +50,12 @@ interface RadarChartRepository {
     suspend fun deleteGroup(groupId: String)
 
     suspend fun deleteMyChart(chartId: String)
+
+    /**
+     * Shared Preferences
+     */
+
+    fun saveCollectionType(type: CollectionType)
+
+    fun loadCollectionType(): CollectionType
 }

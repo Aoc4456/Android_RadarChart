@@ -6,6 +6,7 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.RadarChartRepositoryImpl
 import com.aoc4456.radarchart.datasource.database.RadarChartDao
 import com.aoc4456.radarchart.datasource.database.RadarChartDatabase
+import com.aoc4456.radarchart.datasource.sharedpreferences.RadarChartPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,10 +48,11 @@ object RadarChartRepositoryModule {
     @Provides
     fun provideRepository(
         radarChartDao: RadarChartDao,
-        ioDispatcher: CoroutineDispatcher
+        ioDispatcher: CoroutineDispatcher,
+        preferences: RadarChartPreferences
     ): RadarChartRepository {
         return RadarChartRepositoryImpl(
-            radarChartDao, ioDispatcher
+            radarChartDao, ioDispatcher, preferences
         )
     }
 }
