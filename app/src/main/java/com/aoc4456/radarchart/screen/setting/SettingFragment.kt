@@ -1,5 +1,6 @@
 package com.aoc4456.radarchart.screen.setting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.aoc4456.radarchart.databinding.SettingFragmentBinding
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 class SettingFragment : Fragment() {
 
@@ -28,9 +30,14 @@ class SettingFragment : Fragment() {
         binding.toolbarCloseButton.setOnClickListener {
             findNavController().popBackStack()
         }
+
         binding.privacyPolicy.setOnClickListener {
             val action = SettingFragmentDirections.actionSettingFragmentToPrivacyPolicyFragment()
             findNavController().navigate(action)
+        }
+
+        binding.license.setOnClickListener {
+            startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
         }
     }
 }

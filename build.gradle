@@ -20,6 +20,9 @@ buildscript {
 
         // Safe Args (Navigation)
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
+
+        // Licenses
+        classpath 'com.google.android.gms:oss-licenses-plugin:0.10.4'
     }
 }
 
