@@ -3,6 +3,7 @@ package com.aoc4456.radarchart.datasource
 import androidx.lifecycle.LiveData
 import com.aoc4456.radarchart.datasource.database.*
 import com.aoc4456.radarchart.datasource.sharedpreferences.RadarChartPreferences
+import com.aoc4456.radarchart.screen.chartcollection.CollectionType
 import com.aoc4456.radarchart.util.MyChartOrder
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -128,5 +129,17 @@ class RadarChartRepositoryImpl(
         withContext(ioDispatcher) {
             radarChartDao.deleteMyChart(chartId)
         }
+    }
+
+    /**
+     * Shared Preferences
+     */
+
+    override fun saveCollectionType(type: CollectionType) {
+        preferences.saveCollectionType(type)
+    }
+
+    override fun loadCollectionType(): CollectionType {
+        return preferences.loadCollectionType()
     }
 }
