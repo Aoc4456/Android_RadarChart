@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="6dp"
+        app:cardCornerRadius="4dp">
 
-        <!-- 項目名 -->
-        <TextView
-            android:id="@+id/label"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry"
-            tools:text="タイトル" />
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/drag_handle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_baseline_reorder_24" />
-    </LinearLayout>
+            <!-- 項目名 -->
+            <TextView
+                android:id="@+id/label"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="26sp"
+                tools:ignore="RtlSymmetry"
+                tools:text="タイトル" />
+
+            <ImageButton
+                android:id="@+id/drag_handle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_baseline_reorder_24" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </layout>
