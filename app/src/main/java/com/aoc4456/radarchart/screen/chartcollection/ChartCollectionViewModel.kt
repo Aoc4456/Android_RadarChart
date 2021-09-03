@@ -1,6 +1,9 @@
 package com.aoc4456.radarchart.screen.chartcollection
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
@@ -28,7 +31,7 @@ class ChartCollectionViewModel @Inject constructor(
     private val _chartList = MutableLiveData<List<MyChartWithValue>>()
     val chartList: LiveData<List<MyChartWithValue>> = _chartList
 
-    private val _listOrGrid = MutableLiveData(CollectionType.LIST)
+    private val _listOrGrid = MutableLiveData(repository.loadCollectionType())
     val listOrGrid: LiveData<CollectionType> = _listOrGrid
 
     private val _navigateToChartEdit = PublishLiveData<MyChartWithValue?>()
@@ -51,9 +54,11 @@ class ChartCollectionViewModel @Inject constructor(
         when (checkedId) {
             R.id.toggleButtonList -> {
                 _listOrGrid.value = CollectionType.LIST
+                repository.saveCollectionType(CollectionType.LIST)
             }
             R.id.toggleButtonGrid -> {
                 _listOrGrid.value = CollectionType.GRID
+                repository.saveCollectionType(CollectionType.GRID)
             }
         }
     }
