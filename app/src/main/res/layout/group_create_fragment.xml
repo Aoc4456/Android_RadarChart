@@ -18,7 +18,7 @@
         android:orientation="vertical"
         tools:context=".screen.groupcreate.GroupCreateFragment">
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
             style="@style/ToolBar">
 
@@ -28,15 +28,33 @@
                 android:layout_marginStart="16dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_baseline_close_24" />
+                android:src="@drawable/ic_baseline_close_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/ToolBarTextButton"
+                android:layout_marginStart="14dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="@{() -> viewmodel.onClickSaveButton()}"
+                android:text="@string/save"
+                android:visibility="@{viewmodel.groupArgs == null ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/toolbar_close_button"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/toolBarTitle"
                 style="@style/ToolBarTitle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:gravity="center"
                 android:text="@{viewmodel.groupArgs == null ? @string/create_new_group : @string/group_edit}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="グループ新規作成" />
 
             <ImageView
@@ -47,8 +65,11 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_baseline_delete_forever_24"
-                android:visibility="@{viewmodel.groupArgs == null ? View.INVISIBLE : View.VISIBLE}" />
-        </FrameLayout>
+                android:visibility="@{viewmodel.groupArgs == null ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -74,9 +95,9 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
+                    android:hint="@string/input_the_title"
                     android:importantForAutofill="no"
                     android:inputType="text"
-                    android:hint="@string/input_the_title"
                     android:text="@{viewmodel.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -124,10 +145,10 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/red_700"
                     android:text="@string/group_color"
-                    app:shapeAppearanceOverlay="@style/circleImageView"
                     app:layout_constraintEnd_toEndOf="@id/iconLabel"
                     app:layout_constraintStart_toStartOf="@id/iconLabel"
-                    app:layout_constraintTop_toBottomOf="@id/iconLabel" />
+                    app:layout_constraintTop_toBottomOf="@id/iconLabel"
+                    app:shapeAppearanceOverlay="@style/circleImageView" />
 
                 <TextView
                     android:id="@+id/numberOfItemsLabel"
@@ -170,13 +191,13 @@
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_marginTop="8dp"
+                    app:chartType="group_create"
                     app:labels="@{viewmodel.exactlySizedTextList}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/numberOfItemsSlider"
                     app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
-                    app:radarData="@{viewmodel.chartData}"
-                    app:chartType="group_create"/>
+                    app:radarData="@{viewmodel.chartData}" />
 
                 <TextView
                     android:id="@+id/maximumValueLabel"
