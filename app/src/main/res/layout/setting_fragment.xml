@@ -52,21 +52,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
+                android:background="?android:attr/selectableItemBackground"
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:contentDescription="@null"
-                    android:padding="6dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_baseline_person_outline_24" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
                     android:text="@string/privacy_policy"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- ライセンス -->
@@ -75,21 +77,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
+                android:background="?android:attr/selectableItemBackground"
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:contentDescription="@null"
-                    android:padding="6dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_baseline_info_24" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
                     android:text="@string/license"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- このアプリをレビューする -->
@@ -97,21 +101,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
+                android:background="?android:attr/selectableItemBackground"
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:contentDescription="@null"
-                    android:padding="6dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_baseline_rate_review_24" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
                     android:text="@string/review_this_app"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <TextView
