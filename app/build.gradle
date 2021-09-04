@@ -89,6 +89,9 @@ dependencies {
     // ログ出力
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    // Google Play Core (In App Review)
+    implementation 'com.google.android.play:core-ktx:1.8.1'
+
     // Firebase
     // Firebase Android BoM を使用すると、アプリで常に互換性のある Firebase ライブラリ バージョンが使用されるようになります。
     implementation platform('com.google.firebase:firebase-bom:28.2.0')
