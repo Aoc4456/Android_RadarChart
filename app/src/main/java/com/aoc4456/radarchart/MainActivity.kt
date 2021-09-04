@@ -3,8 +3,8 @@ package com.aoc4456.radarchart
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.aoc4456.radarchart.datasource.sharedpreferences.RadarChartPreferences
+import com.google.android.play.core.review.ReviewManagerFactory
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -19,10 +19,17 @@ class MainActivity : AppCompatActivity() {
 
         // アプリ起動回数5回毎に、In App Review を要求
         val appLaunchCount = preferences.loadAppLaunchCount()
-        Timber.d("アプリ起動回数 = $appLaunchCount")
         if (appLaunchCount >= 5) {
             preferences.resetAppLaunchCount()
-            Timber.d("アプリ起動回数をリセット")
+
+            val manager = ReviewManagerFactory.create(this)
+            val request = manager.requestReviewFlow()
+            request.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val reviewInfo = task.result
+                    manager.launchReviewFlow(this, reviewInfo)
+                }
+            }
         }
     }
 }
