@@ -51,16 +51,17 @@ class ChartCollectionViewModel @Inject constructor(
     }
 
     fun onToggleButtonCheckedChanged(checkedId: Int) {
-        when (checkedId) {
+        val type = when (checkedId) {
             R.id.toggleButtonList -> {
-                _listOrGrid.value = CollectionType.LIST
-                repository.saveCollectionType(CollectionType.LIST)
+                CollectionType.LIST
             }
-            R.id.toggleButtonGrid -> {
-                _listOrGrid.value = CollectionType.GRID
-                repository.saveCollectionType(CollectionType.GRID)
+            else -> {
+                CollectionType.GRID
             }
         }
+        if (_listOrGrid.value == type) return
+        _listOrGrid.value = type
+        repository.saveCollectionType(type)
     }
 
     fun onClickAscDescButton() {

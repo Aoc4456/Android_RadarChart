@@ -114,9 +114,11 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
             when (type) {
                 CollectionType.LIST -> {
                     binding.recyclerView.adapter = ChartCollectionListAdapter(viewModel)
+                    binding.toggleGroup.check(R.id.toggleButtonList)
                 }
                 else -> {
                     binding.recyclerView.adapter = ChartCollectionGridAdapter(viewModel)
+                    binding.toggleGroup.check(R.id.toggleButtonGrid)
                 }
             }
             val count = calcSpanCountBasedOnScreenSize(requireContext(), type)
