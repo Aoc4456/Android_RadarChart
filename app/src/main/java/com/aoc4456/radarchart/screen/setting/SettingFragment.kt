@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.aoc4456.radarchart.BuildConfig
+import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.databinding.SettingFragmentBinding
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
@@ -38,6 +40,14 @@ class SettingFragment : Fragment() {
 
         binding.license.setOnClickListener {
             startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
+        }
+
+        binding.appVersionLabel.let {
+            val versionText = it.resources.getString(
+                R.string.app_version_with_value,
+                BuildConfig.VERSION_NAME
+            )
+            it.text = versionText
         }
     }
 }
