@@ -127,12 +127,17 @@ class ChartCollectionViewModel @Inject constructor(
         )
     }
 
-    fun getChartListWithSortIndex(
+    fun getIndexedChartList(
         chartList: List<MyChartWithValue>
-    ): List<Pair<MyChartWithValue, Int>> {
-        val list = mutableListOf<Pair<MyChartWithValue, Int>>()
+    ): List<IndexedMyChart> {
+        val list = mutableListOf<IndexedMyChart>()
         chartList.forEach {
-            list.add(Pair(it, groupData.value!!.group.sortIndex))
+            list.add(
+                IndexedMyChart(
+                    sortIndex = groupData.value!!.group.sortIndex,
+                    myChartWithValue = it
+                )
+            )
         }
         return list
     }

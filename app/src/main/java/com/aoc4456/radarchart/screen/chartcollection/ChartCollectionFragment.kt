@@ -137,7 +137,7 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
     }
 
     private fun submitList(list: List<MyChartWithValue>) {
-        val indexedList = viewModel.getChartListWithSortIndex(list)
+        val indexedList = viewModel.getIndexedChartList(list)
         (binding.recyclerView.adapter as? ChartCollectionListAdapter)?.submitList(indexedList)
         (binding.recyclerView.adapter as? ChartCollectionGridAdapter)?.submitList(indexedList)
     }
