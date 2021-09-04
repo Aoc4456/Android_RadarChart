@@ -84,7 +84,8 @@
                     android:layout_weight="3"
                     android:gravity="center_vertical"
                     android:textSize="11dp"
-                    tools:text="作成日 : 2021/09/11" />
+                    tools:text="作成日 : 2021/09/11"
+                    tools:ignore="SpUsage" />
 
             </LinearLayout>
 

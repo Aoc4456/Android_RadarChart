@@ -13,7 +13,7 @@ class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(
     private val plusButton: Button
     private val minusButton: Button
 
-    var minimumValue: Double = 0.0
+    private var minimumValue: Double = 0.0
         set(newValue) {
             field = newValue
             if (value < minimumValue) {

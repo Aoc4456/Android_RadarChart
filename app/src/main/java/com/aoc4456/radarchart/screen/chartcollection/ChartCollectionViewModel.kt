@@ -23,7 +23,7 @@ class ChartCollectionViewModel @Inject constructor(
     private val repository: RadarChartRepository
 ) : ViewModel() {
 
-    lateinit var groupId: String
+    private lateinit var groupId: String
 
     private val _groupData = MutableLiveData<GroupWithLabelAndCharts>()
     val groupData: LiveData<GroupWithLabelAndCharts> = _groupData
