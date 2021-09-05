@@ -115,7 +115,8 @@
                     app:layout_constraintTop_toBottomOf="@id/titleEditText"
                     app:maximum="@{viewmodel.chartMaximum}"
                     app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
-                    app:radarData="@{viewmodel.chartData}" />
+                    app:radarData="@{viewmodel.chartData}"
+                    app:chartType="chart_create"/>
 
                 <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"

@@ -55,6 +55,14 @@ class CustomRadarChart(context: Context, attrs: AttributeSet) :
     override fun applyChartType(type: ChartType) {
         this.chartType = type
         when (type) {
+            ChartType.GROUP_CREATE -> {
+                fixedLongestLabel = "12345"
+                xAxis.textSize = 12F
+            }
+            ChartType.CHART_CREATE -> {
+                fixedLongestLabel = "12345"
+                xAxis.textSize = 12F
+            }
             ChartType.GROUP_LIST -> {
                 yAxis.setLabelCount(4, true)
                 yAxis.axisMaximum = 90f
