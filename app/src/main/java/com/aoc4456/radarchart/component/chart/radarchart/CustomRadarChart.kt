@@ -62,6 +62,7 @@ class CustomRadarChart(context: Context, attrs: AttributeSet) :
             ChartType.CHART_CREATE -> {
                 fixedLongestLabel = "12345"
                 xAxis.textSize = 12F
+                xAxis.setMultiLineLabel(true)
             }
             ChartType.GROUP_LIST -> {
                 yAxis.setLabelCount(4, true)
