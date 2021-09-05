@@ -41,6 +41,15 @@ class ChartCreateViewModel @Inject constructor(
     private val _chartIntValues = MutableLiveData<List<Int>>()
     val chartIntValues: LiveData<List<Int>> = _chartIntValues
 
+    val valuedLabel = MediatorLiveData<List<String>>().apply {
+        addSource(chartLabels) { labels ->
+            value = ChartCreateUtil.getValuedLabelList(labels, chartIntValues.value)
+        }
+        addSource(chartIntValues) { values ->
+            value = ChartCreateUtil.getValuedLabelList(chartLabels.value, values)
+        }
+    }
+
     val chartData = MediatorLiveData<RadarData>().apply {
         addSource(chartColor) { color ->
             chartIntValues.value?.let { value = ChartDataUtil.getRadarDataFromValues(color, it) }
