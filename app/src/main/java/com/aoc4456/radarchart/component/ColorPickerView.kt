@@ -46,7 +46,7 @@ class ColorPickerView(context: Context, attrs: AttributeSet) :
     }
 }
 
-@BindingAdapter("app:currentColor")
+@BindingAdapter("currentColor")
 fun setCurrentItem(view: ColorPickerView, color: Int) {
     view.currentColor = color
     view.background.setTint(color)
