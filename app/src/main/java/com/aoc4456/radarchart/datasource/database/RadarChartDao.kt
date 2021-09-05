@@ -91,7 +91,7 @@ interface RadarChartDao {
         val numberOfItemsDiff = labels.size - oldGroup.labelList.size
         // 項目数増加時、グループに属するチャートのValueをデフォルト値で増やす
         if (numberOfItemsDiff > 0) {
-            val startIndex = labels.size
+            val startIndex = oldGroup.labelList.size
             val last = startIndex + numberOfItemsDiff
 
             oldGroup.chartList.forEach { chart ->
