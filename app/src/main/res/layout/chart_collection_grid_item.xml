@@ -46,11 +46,15 @@
                     app:chartType="chart_collection_grid" />
 
                 <TextView
-                    android:id="@+id/total"
+                    android:id="@+id/valueLabel"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="-5dp"
+                    android:paddingVertical="2dp"
+                    android:gravity="top|end"
                     tools:text="合計値" />
             </LinearLayout>
 

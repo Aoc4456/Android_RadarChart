@@ -51,7 +51,7 @@ object ChartCollectionUtil {
         }
     }
 
-    fun getLabelForComment2(
+    fun getTextForListComment2(
         context: Context,
         group: GroupWithLabelAndCharts,
         myChart: MyChartWithValue
@@ -83,6 +83,42 @@ object ChartCollectionUtil {
                 val label = group.labelList.getOrNull(sortIndex)?.text ?: ""
                 val value = myChart.values.getOrNull(sortIndex)?.value?.toInt() ?: 0
                 return "$label  :  $value"
+            }
+        }
+    }
+
+    fun getTextForGridComment(
+        context: Context,
+        group: GroupWithLabelAndCharts,
+        myChart: MyChartWithValue
+    ): String {
+        when (val sortIndex = group.group.sortIndex) {
+            SortIndex.CHART_TITLE -> return ""
+            SortIndex.SUM_OF_VALUES -> {
+                val sum = myChart.values.map { it.value }.sum().toInt().toString()
+                return context.resources.getString(
+                    R.string.total_with_value,
+                    sum
+                )
+            }
+            SortIndex.CREATED_AT -> {
+                val dateString = DateUtil.getLocalDateStringFromMilliSecond(
+                    context = context,
+                    milliSecond = myChart.myChart.createdAt
+                )
+                return "($dateString)"
+            }
+            SortIndex.UPDATED_AT -> {
+                val dateString = DateUtil.getLocalDateStringFromMilliSecond(
+                    context = context,
+                    milliSecond = myChart.myChart.updatedAt
+                )
+                return "($dateString)"
+            }
+            else -> {
+                val label = group.labelList.getOrNull(sortIndex)?.text ?: ""
+                val value = myChart.values.getOrNull(sortIndex)?.value?.toInt() ?: 0
+                return "$label : $value"
             }
         }
     }

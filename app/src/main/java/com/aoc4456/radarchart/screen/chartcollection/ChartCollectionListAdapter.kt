@@ -42,7 +42,7 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
             binding.title.text = item.myChart.title
             binding.comment.text = item.myChart.comment
             binding.comment2.let {
-                it.text = ChartCollectionUtil.getLabelForComment2(
+                it.text = ChartCollectionUtil.getTextForListComment2(
                     it.context,
                     viewModel.groupData.value!!,
                     item

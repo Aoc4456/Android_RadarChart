@@ -26,6 +26,8 @@ class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MyChartWithValue, viewModel: ChartCollectionViewModel) {
+            binding.title.text = item.myChart.title
+
             val radarData = ChartDataUtil.getRadarDataFromValues(
                 item.myChart.color,
                 item.values.map { it.value.toInt() }
@@ -36,7 +38,14 @@ class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel
                 it.setChartItemLabel(viewModel.groupData.value!!.labelList.map { it.text })
                 it.notifyDataSetChanged()
             }
-            binding.title.text = item.myChart.title
+
+            binding.valueLabel.let {
+                it.text = ChartCollectionUtil.getTextForGridComment(
+                    it.context,
+                    viewModel.groupData.value!!,
+                    item
+                )
+            }
 
             binding.frameForClick.setOnClickListener {
                 viewModel.onClickCollectionItem(item)
