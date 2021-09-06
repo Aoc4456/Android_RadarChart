@@ -52,6 +52,8 @@ public class XAxis extends AxisBase {
      */
     private XAxisPosition mPosition = XAxisPosition.TOP;
 
+    private boolean mMultiLineLabel = false;
+
     /**
      * enum for the position of the x-labels relative to the chart
      */
@@ -115,4 +117,19 @@ public class XAxis extends AxisBase {
     public boolean isAvoidFirstLastClippingEnabled() {
         return mAvoidFirstLastClipping;
     }
+
+    /**
+     * returns true if multiline label is enabled, false if not
+     *
+     * @return
+     */
+    public boolean isMultiLineLabelEnabled() {
+        return mMultiLineLabel;
+    }
+
+
+    public void setMultiLineLabel(boolean enabled) {
+        mMultiLineLabel = enabled;
+    }
+
 }
