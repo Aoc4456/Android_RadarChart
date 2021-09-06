@@ -54,7 +54,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/white_smoke"
+            android:background="@color/collection_background"
             android:visibility="@{viewmodel.groupList.size() > 0 ? View.VISIBLE : View.INVISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
