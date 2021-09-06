@@ -41,6 +41,7 @@ class InputRowView(
 
         labelTextView = findViewById(R.id.labelText)
         editText = findViewById(R.id.editText)
+        editText.isSaveEnabled = false
         stepper = findViewById(R.id.stepper)
 
         // HACK: 入力中にガチャガチャ補正されて見づらい
