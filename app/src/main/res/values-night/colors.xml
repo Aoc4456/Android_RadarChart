@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/purple_200</color>
-    <color name="colorOnPrimary">@color/black</color>
+    <color name="colorPrimary">#FF333333</color>
+    <color name="colorOnPrimary">#FFDCDCDC</color>
 
     <color name="collection_background">@color/black</color>
     <color name="chart_label_color">@color/white</color>
