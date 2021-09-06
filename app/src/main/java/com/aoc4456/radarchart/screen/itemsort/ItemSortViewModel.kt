@@ -10,6 +10,8 @@ import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +22,9 @@ class ItemSortViewModel @Inject constructor(
 
     lateinit var group: GroupWithLabelAndCharts
     lateinit var labelList: MutableList<ChartGroupLabel>
+
+    private val _listSetup = MutableLiveData<Boolean>()
+    val listSetup: LiveData<Boolean> = _listSetup
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
@@ -34,9 +39,15 @@ class ItemSortViewModel @Inject constructor(
 
     fun onViewCreated(navArgs: ItemSortFragmentArgs) {
         if (::group.isInitialized) return
-        group = navArgs.groupWithLabelAndCharts
-        labelList = navArgs.groupWithLabelAndCharts.labelList.toMutableList()
-        _chartUpdate.value = true
+        viewModelScope.launch {
+            val deferred = async(Dispatchers.IO) {
+                repository.getGroupById(navArgs.groupWithLabelAndCharts.group.id)
+            }
+            group = deferred.await()
+            labelList = group.labelList.toMutableList()
+            _listSetup.value = true
+            _chartUpdate.value = true
+        }
     }
 
     fun onMoveItem(from: Int, to: Int) {

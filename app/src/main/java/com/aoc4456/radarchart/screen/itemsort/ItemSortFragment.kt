@@ -42,10 +42,12 @@ class ItemSortFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.recyclerView.adapter = ItemSortAdapter(viewModel, itemTouchHelper)
-        (binding.recyclerView.adapter as ItemSortAdapter).notifyDataSetChanged()
-
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
+        viewModel.listSetup.observe(viewLifecycleOwner) {
+            binding.recyclerView.adapter = ItemSortAdapter(viewModel, itemTouchHelper)
+            (binding.recyclerView.adapter as ItemSortAdapter).notifyDataSetChanged()
+        }
 
         viewModel.chartUpdate.observe(viewLifecycleOwner) {
             binding.radarChart.let { radarChart ->
