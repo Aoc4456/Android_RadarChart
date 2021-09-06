@@ -41,7 +41,7 @@ class InputRowView(
 
         labelTextView = findViewById(R.id.labelText)
         editText = findViewById(R.id.editText)
-        editText.isSaveEnabled = false
+        editText.isSaveEnabled = false // システムによる自動復元をOFFにしないと、回転時に値がおかしくなる
         stepper = findViewById(R.id.stepper)
 
         // HACK: 入力中にガチャガチャ補正されて見づらい
