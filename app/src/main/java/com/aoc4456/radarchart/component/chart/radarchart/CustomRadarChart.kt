@@ -2,6 +2,7 @@ package com.aoc4456.radarchart.component.chart.radarchart
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.aoc4456.radarchart.R
 import com.github.mikephil.charting.charts.RadarChart
@@ -28,6 +29,7 @@ class CustomRadarChart(context: Context, attrs: AttributeSet) :
         description.isEnabled = false
 
         xAxis.valueFormatter = IndexAxisValueFormatter()
+        xAxis.textColor = ContextCompat.getColor(context, R.color.chart_label_color)
 
         yAxis.setDrawLabels(false)
         yAxis.setLabelCount(6, true)
