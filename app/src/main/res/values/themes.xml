@@ -1,42 +1,28 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- このスタイルを編集するときは、下のスタイルも同じ箇所を編集する -->
     <style name="Theme.RepositoryTemplate" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <!-- アクションバーの背景色 -->
+        <!-- アクションバーの色 -->
         <item name="colorPrimary">@color/blue_500</item>
-        <!-- ステータスバーの背景色 -->
-        <item name="colorPrimaryVariant">@color/blue_700</item>
-        <!-- colorPrimary上のテキストの色 -->
+        <!-- アクションバー上のテキストの色 -->
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <!-- Floating Action Button の色 -->
+        <!-- FAB の色 -->
         <item name="colorSecondary">@color/blue_500</item>
-        <item name="colorSecondaryVariant">@color/blue_500</item>
         <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <!-- ステータスバーの色 -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_700</item>
+        <!-- マルチタップ防止 -->
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
     </style>
 
-    <!-- Action Bar が必要なActivity用 -->
+    <!-- Action Bar が必要なActivity用 (parent以外は全て同じ) -->
     <style name="Theme.RepositoryTemplateWithActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <!-- アクションバーの背景色 -->
         <item name="colorPrimary">@color/blue_500</item>
-        <!-- ステータスバーの背景色 -->
-        <item name="colorPrimaryVariant">@color/blue_700</item>
-        <!-- colorPrimary上のテキストの色 -->
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <!-- Floating Action Button の色 -->
         <item name="colorSecondary">@color/blue_500</item>
-        <item name="colorSecondaryVariant">@color/blue_500</item>
         <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_700</item>
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
     </style>
