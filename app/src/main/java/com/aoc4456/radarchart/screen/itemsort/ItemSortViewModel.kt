@@ -29,6 +29,9 @@ class ItemSortViewModel @Inject constructor(
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
 
+    private val _color = MutableLiveData<Int>()
+    val color: LiveData<Int> = _color
+
     val radarData: RadarData
         get() {
             return ChartDataUtil.getRadarDataWithTheSameValue(
@@ -39,6 +42,8 @@ class ItemSortViewModel @Inject constructor(
 
     fun onViewCreated(navArgs: ItemSortFragmentArgs) {
         if (::group.isInitialized) return
+        _color.value = navArgs.groupWithLabelAndCharts.group.color
+
         viewModelScope.launch {
             val deferred = async(Dispatchers.IO) {
                 repository.getGroupById(navArgs.groupWithLabelAndCharts.group.id)
