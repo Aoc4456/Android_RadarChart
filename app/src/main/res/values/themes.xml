@@ -2,27 +2,24 @@
 
     <!-- このスタイルを編集するときは、下のスタイルも同じ箇所を編集する -->
     <style name="Theme.RepositoryTemplate" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- アクションバーの色 -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <!-- アクションバー上のテキストの色 -->
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- FABなど の色 -->
         <item name="colorSecondary">@color/blue_500</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- ステータスバーの色 -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_700</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/action_bar</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- マルチタップ防止 -->
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
     </style>
 
-    <!-- Action Bar が必要なActivity用 (parent以外は全て同じ) -->
+    <!-- Action Bar が必要なActivity用 -->
     <style name="Theme.RepositoryTemplateWithActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimary">@color/black_700</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/blue_500</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_700</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black_800</item>
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
     </style>

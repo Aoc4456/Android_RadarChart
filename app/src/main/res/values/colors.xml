@@ -3,7 +3,10 @@
     <color name="blue_300">#4169e1</color>
     <color name="blue_500">#155E99</color>
     <color name="blue_700">#0E3E66</color>
+    <color name="blue_light_700">#007AFF</color>
     <color name="red_700">#EF5350</color>
+    <color name="gray_100">#E6E6E6</color>
+    <color name="gray_100_blue">#F8F8F8</color>
     <color name="gray_300">#D3D3D3</color>
     <color name="gray_400">#DCDCDC</color>
     <color name="gray_600">#A9A9A9</color>
@@ -13,10 +16,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- nightモード対応リソース -->
-    <color name="colorPrimary">@color/blue_500</color>
-    <color name="colorOnPrimary">@color/white</color>
+    <color name="action_bar">@color/gray_100</color>
+    <color name="action_bar_text">@color/black</color>
 
-    <color name="collection_background">#F5F5F5</color>
+    <color name="collection_background">@color/gray_100_blue</color>
     <color name="cardview_background">@color/cardview_light_background</color>
     <color name="chart_label_color">@color/black</color>
 </resources>

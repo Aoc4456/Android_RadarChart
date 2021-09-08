@@ -5,13 +5,13 @@
         <item name="android:layout_height">@dimen/toolbar_height</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/action_bar</item>
     </style>
 
     <style name="ToolBarTitle">
         <item name="android:textSize" tools:ignore="SpUsage">20dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="android:textColor">@color/action_bar_text</item>
     </style>
 
     <style name="ToolBarImageButton">
@@ -19,6 +19,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:clickable">true</item>
+        <item name="tint">@color/blue_light_700</item>
     </style>
 
     <style name="ToolBarTextButton">
@@ -27,7 +28,7 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="android:textColor">@color/blue_light_700</item>
         <item name="android:textSize" tools:ignore="SpUsage">17dp</item>
     </style>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF333333</color>
-    <color name="colorOnPrimary">#FFDCDCDC</color>
+    <color name="action_bar">@color/black_700</color>
+    <color name="action_bar_text">#FFDCDCDC</color>
 
     <color name="cardview_background">#FF202020</color>
     <color name="collection_background">@color/black</color>
