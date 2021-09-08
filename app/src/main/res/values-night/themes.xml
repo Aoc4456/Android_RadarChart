@@ -3,11 +3,11 @@
     <!-- このスタイルを編集するときは、下のスタイルも同じ箇所を編集する -->
     <style name="Theme.RepositoryTemplate" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- アクションバーの色 -->
-        <item name="colorPrimary">@color/black_700</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <!-- アクションバー上のテキストの色 -->
-        <item name="colorOnPrimary">@color/gray_400</item>
-        <!-- FAB の色 -->
-        <item name="colorSecondary">@color/blue_700</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <!-- FABなど の色 -->
+        <item name="colorSecondary">@color/blue_300</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- ステータスバーの色 -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/black_800</item>
