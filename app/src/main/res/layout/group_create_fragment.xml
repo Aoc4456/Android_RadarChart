@@ -20,8 +20,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
-            style="@style/ToolBar"
-            android:background="@{viewmodel.groupColor.intValue()}">
+            style="@style/ToolBar">
 
             <ImageView
                 android:id="@+id/toolbar_close_button"
@@ -253,7 +252,6 @@
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
-                    android:backgroundTint="@{viewmodel.groupColor.intValue()}"
                     android:gravity="center"
                     android:onClick="@{() -> viewmodel.onClickSaveButton()}"
                     android:text="@string/save"

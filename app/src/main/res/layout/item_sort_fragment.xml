@@ -19,8 +19,7 @@
 
         <FrameLayout
             android:id="@+id/toolbar"
-            style="@style/ToolBar"
-            android:background="@{viewmodel.color.intValue()}">
+            style="@style/ToolBar">
 
             <ImageView
                 android:id="@+id/toolbar_close_button"

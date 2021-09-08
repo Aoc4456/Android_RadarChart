@@ -19,8 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
-            style="@style/ToolBar"
-            android:background="@{viewmodel.chartColor.intValue()}">
+            style="@style/ToolBar">
 
             <ImageView
                 android:id="@+id/toolbar_close_button"
@@ -110,14 +109,14 @@
                     android:layout_width="0dp"
                     android:layout_height="300dp"
                     android:layout_marginTop="8dp"
-                    app:chartType="chart_create"
                     app:labels="@{viewmodel.valuedLabel}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/titleEditText"
                     app:maximum="@{viewmodel.chartMaximum}"
                     app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
-                    app:radarData="@{viewmodel.chartData}" />
+                    app:radarData="@{viewmodel.chartData}"
+                    app:chartType="chart_create"/>
 
                 <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"
@@ -201,7 +200,6 @@
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="8dp"
-                    android:backgroundTint="@{viewmodel.chartColor.intValue()}"
                     android:gravity="center"
                     android:onClick="@{() -> viewmodel.onClickSaveButton()}"
                     android:text="@string/save"

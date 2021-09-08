@@ -10,8 +10,7 @@
         <item name="colorSecondary">@color/blue_500</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- ステータスバーの色 -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/gray_100</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_700</item>
         <!-- マルチタップ防止 -->
         <item name="android:windowEnableSplitTouch">false</item>
         <item name="android:splitMotionEvents">false</item>
