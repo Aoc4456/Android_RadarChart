@@ -14,8 +14,9 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/cardview_background"
             app:cardCornerRadius="6dp"
+            app:cardUseCompatPadding="true"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +35,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:autoSizeTextType="uniform"
-                    android:textStyle="bold"
                     android:gravity="center"
+                    android:textStyle="bold"
                     tools:text="タイトル" />
 
                 <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
@@ -49,12 +50,12 @@
                     android:id="@+id/valueLabel"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:autoSizeTextType="uniform"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="-5dp"
-                    android:paddingVertical="2dp"
                     android:gravity="top|end"
+                    android:paddingVertical="2dp"
                     tools:text="合計値" />
             </LinearLayout>
 
