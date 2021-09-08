@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- このスタイルを編集するときは、下のスタイルも同じ箇所を編集する -->
     <style name="Theme.RepositoryTemplate" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- アクションバーの色 -->
         <item name="colorPrimary">@color/blue_500</item>
