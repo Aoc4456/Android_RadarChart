@@ -34,9 +34,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:textStyle="bold"
+                    app:autoSizeTextType="uniform"
                     tools:text="タイトル" />
 
                 <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
@@ -53,9 +53,9 @@
                     android:layout_marginTop="-5dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:autoSizeTextType="uniform"
                     android:gravity="top|end"
                     android:paddingVertical="2dp"
+                    app:autoSizeTextType="uniform"
                     tools:text="合計値" />
             </LinearLayout>
 
