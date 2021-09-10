@@ -22,6 +22,7 @@ class BaseDialogFragment : DialogFragment() {
     private val message get() = arguments?.getString(MESSAGE)
     private val positiveText get() = arguments?.getString(POSITIVE_TEXT)
     private val negativeText get() = arguments?.getString(NEGATIVE_TEXT)
+    private val neutralText get() = arguments?.getString(NEUTRAL_TEXT)
 
     private lateinit var dialogListener: BaseDialogListener
 
@@ -43,13 +44,24 @@ class BaseDialogFragment : DialogFragment() {
                 title?.let { setTitle(title) }
                 message?.let { setMessage(message) }
                 positiveText?.let {
-                    setPositiveButton(positiveText) { _, _ ->
-                        dialogListener.onClickButtonInDialog(dialogType!!, DialogButtonType.POSITIVE)
+                    setPositiveButton(it) { _, _ ->
+                        dialogListener.onClickButtonInDialog(
+                            dialogType!!,
+                            DialogButtonType.POSITIVE
+                        )
                     }
                 }
                 negativeText?.let {
-                    setNegativeButton(negativeText) { _, _ ->
-                        dialogListener.onClickButtonInDialog(dialogType!!, DialogButtonType.NEGATIVE)
+                    setNegativeButton(it) { _, _ ->
+                        dialogListener.onClickButtonInDialog(
+                            dialogType!!,
+                            DialogButtonType.NEGATIVE
+                        )
+                    }
+                }
+                neutralText?.let {
+                    setNeutralButton(it) { _, _ ->
+                        dialogListener.onClickButtonInDialog(dialogType!!, DialogButtonType.NEUTRAL)
                     }
                 }
             }
@@ -72,9 +84,10 @@ class BaseDialogFragment : DialogFragment() {
         fun newInstance(
             type: DialogType,
             title: String,
-            message: String?,
+            message: String? = null,
             positiveText: String,
-            negativeText: String?
+            negativeText: String? = null,
+            neutralText: String? = null
         ): BaseDialogFragment {
             val dialogFragment = BaseDialogFragment()
 
@@ -85,6 +98,7 @@ class BaseDialogFragment : DialogFragment() {
             bundle.putString(MESSAGE, message)
             bundle.putString(POSITIVE_TEXT, positiveText)
             bundle.putString(NEGATIVE_TEXT, negativeText)
+            bundle.putString(NEUTRAL_TEXT, neutralText)
 
             dialogFragment.arguments = bundle
             return dialogFragment
@@ -95,5 +109,6 @@ class BaseDialogFragment : DialogFragment() {
         private const val MESSAGE = "message"
         private const val POSITIVE_TEXT = "positiveText"
         private const val NEGATIVE_TEXT = "negativeText"
+        private const val NEUTRAL_TEXT = "neutralText"
     }
 }

@@ -15,10 +15,12 @@ interface ListDialogListener {
 enum class DialogType : Parcelable {
     GROUP_DELETE,
     CHART_DELETE,
-    CHART_ORDER_BY
+    CHART_ORDER_BY,
+    ICON_IMAGE_SELECT
 }
 
 enum class DialogButtonType {
     POSITIVE,
-    NEGATIVE
+    NEGATIVE,
+    NEUTRAL,
 }
