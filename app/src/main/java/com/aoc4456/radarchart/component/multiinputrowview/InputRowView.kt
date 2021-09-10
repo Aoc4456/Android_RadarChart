@@ -18,7 +18,7 @@ import kotlin.math.pow
  */
 class InputRowView(
     context: Context,
-    private val attrs: AttributeSet
+    attrs: AttributeSet
 ) : LinearLayout(context, attrs), InputRowViewInput {
 
     private val labelTextView: TextView
@@ -92,7 +92,7 @@ class InputRowView(
             return Pair(false, 0)
         }
 
-        var intValue = 0
+        val intValue: Int
         try {
             intValue = text.toInt()
         } catch (e: ClassCastException) {
@@ -111,10 +111,10 @@ class InputRowView(
      */
     private fun calcStep(maximum: Int): Double {
         val numberOfDigits = maximum.toString().length
-        if (numberOfDigits <= 2) {
-            return 1.0
+        return if (numberOfDigits <= 2) {
+            1.0
         } else {
-            return 10.0.pow((numberOfDigits - 2).toDouble())
+            10.0.pow((numberOfDigits - 2).toDouble())
         }
     }
 }

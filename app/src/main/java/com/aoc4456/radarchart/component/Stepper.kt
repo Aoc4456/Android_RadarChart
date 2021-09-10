@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import com.aoc4456.radarchart.R
 
-class Stepper(context: Context, private val attrs: AttributeSet) : LinearLayout(context, attrs) {
+class Stepper(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
     private var callback: ((Stepper, Double) -> Unit)? = null
 

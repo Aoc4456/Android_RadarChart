@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupListViewModel @Inject constructor(
-    private val repository: RadarChartRepository
+    repository: RadarChartRepository
 ) : ViewModel() {
 
     private val _groupList = repository.observeGroupList()

@@ -26,8 +26,8 @@ class ListDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            val builder = AlertDialog.Builder(it)
+        return activity?.let { activity ->
+            val builder = AlertDialog.Builder(activity)
             builder.run {
                 title?.let { setTitle(it) }
                 setItems(items) { _, which ->

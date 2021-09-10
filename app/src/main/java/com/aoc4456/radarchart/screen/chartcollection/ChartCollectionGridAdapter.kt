@@ -32,11 +32,11 @@ class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel
                 item.myChart.color,
                 item.values.map { it.value.toInt() }
             )
-            binding.radarChart.let {
-                it.data = radarData
-                it.yAxis.axisMaximum = viewModel.groupData.value!!.group.maximumValue.toFloat()
-                it.setChartItemLabel(viewModel.groupData.value!!.labelList.map { it.text })
-                it.notifyDataSetChanged()
+            binding.radarChart.let { radarChart ->
+                radarChart.data = radarData
+                radarChart.yAxis.axisMaximum = viewModel.groupData.value!!.group.maximumValue.toFloat()
+                radarChart.setChartItemLabel(viewModel.groupData.value!!.labelList.map { it.text })
+                radarChart.notifyDataSetChanged()
             }
 
             binding.valueLabel.let {

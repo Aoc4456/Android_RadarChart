@@ -96,14 +96,14 @@ class ChartCollectionFragment : Fragment(), ListDialogListener {
         /**
          * ViewModel Observer
          */
-        viewModel.groupData.observe(viewLifecycleOwner) {
+        viewModel.groupData.observe(viewLifecycleOwner) { group ->
             binding.btnOrder.text = ChartCollectionUtil.sortIndexToString(
-                sortIndex = it.group.sortIndex,
-                labels = it.labelList.map { it.text },
+                sortIndex = group.group.sortIndex,
+                labels = group.labelList.map { it.text },
                 context = requireContext()
             )
             binding.btnAscDesc.text =
-                if (it.group.orderBy == OrderBy.ASC) getString(R.string.asc_order) else getString(R.string.desc_order)
+                if (group.group.orderBy == OrderBy.ASC) getString(R.string.asc_order) else getString(R.string.desc_order)
         }
 
         viewModel.chartList.observe(viewLifecycleOwner) {
