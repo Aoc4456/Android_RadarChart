@@ -122,15 +122,14 @@
                     android:id="@+id/colorView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
                     android:background="@drawable/shape_rounded_corners"
                     app:currentColor="@{viewmodel.chartColor.intValue()}"
                     app:layout_constraintBottom_toBottomOf="@id/radarChart"
                     app:layout_constraintEnd_toEndOf="@id/radarChart"
-                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintHorizontal_bias="0.98"
                     app:layout_constraintStart_toStartOf="@id/radarChart"
                     app:layout_constraintTop_toTopOf="@id/radarChart"
-                    app:layout_constraintVertical_bias="0.05" />
+                    app:layout_constraintVertical_bias="0.02" />
 
                 <TextView
                     android:id="@+id/chartMaximum"
