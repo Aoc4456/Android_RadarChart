@@ -7,6 +7,10 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.ImageView
+import androidx.core.content.res.ResourcesCompat
+import androidx.databinding.BindingAdapter
+import com.aoc4456.radarchart.R
 import java.io.ByteArrayOutputStream
 
 object ImageUtil {
@@ -33,5 +37,19 @@ object ImageUtil {
 
     fun byteArrayToBitmap(byteArray: ByteArray): Bitmap {
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
+}
+
+@BindingAdapter("iconImageBitmap")
+fun setImageBitmap(imageView: ImageView, bitmap: Bitmap?) {
+    if (bitmap == null) {
+        val drawable = ResourcesCompat.getDrawable(
+            imageView.context.resources,
+            R.drawable.ic_baseline_remove_circle_outline_24,
+            null
+        )
+        imageView.setImageDrawable(drawable)
+    } else {
+        imageView.setImageBitmap(bitmap)
     }
 }
