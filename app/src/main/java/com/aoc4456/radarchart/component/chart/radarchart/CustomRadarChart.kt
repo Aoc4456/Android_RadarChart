@@ -29,7 +29,7 @@ class CustomRadarChart(context: Context, attrs: AttributeSet) :
         description.isEnabled = false
 
         xAxis.valueFormatter = IndexAxisValueFormatter()
-        xAxis.textColor = ContextCompat.getColor(context, R.color.chart_label_color)
+        xAxis.textColor = ContextCompat.getColor(context, R.color.black_white)
 
         yAxis.setDrawLabels(false)
         yAxis.setLabelCount(6, true)

@@ -4,6 +4,8 @@
     <color name="action_bar_text">#FFDCDCDC</color>
 
     <color name="cardview_background">#FF202020</color>
+    <color name="gray_button_background">@color/black_700</color>
     <color name="collection_background">@color/black</color>
-    <color name="chart_label_color">@color/white</color>
+    <color name="toolbar_border">@color/black_700</color>
+    <color name="black_white">@color/white</color>
 </resources>

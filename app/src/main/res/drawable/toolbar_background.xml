@@ -8,7 +8,7 @@
             <solid android:color="@color/action_bar" />
             <stroke
                 android:width="0.5dp"
-                android:color="@color/gray_600" />
+                android:color="@color/toolbar_border" />
         </shape>
     </item>
 </layer-list>
