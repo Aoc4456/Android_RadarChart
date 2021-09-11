@@ -109,14 +109,27 @@
                     android:layout_width="0dp"
                     android:layout_height="300dp"
                     android:layout_marginTop="8dp"
+                    app:chartType="chart_create"
                     app:labels="@{viewmodel.valuedLabel}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/titleEditText"
                     app:maximum="@{viewmodel.chartMaximum}"
                     app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
-                    app:radarData="@{viewmodel.chartData}"
-                    app:chartType="chart_create"/>
+                    app:radarData="@{viewmodel.chartData}" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iconView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:iconImageBitmap="@{viewmodel.iconImage}"
+                    app:layout_constraintBottom_toBottomOf="@id/radarChart"
+                    app:layout_constraintEnd_toEndOf="@id/radarChart"
+                    app:layout_constraintHorizontal_bias="0.02"
+                    app:layout_constraintStart_toStartOf="@id/radarChart"
+                    app:layout_constraintTop_toTopOf="@id/radarChart"
+                    app:layout_constraintVertical_bias="0.02"
+                    app:shapeAppearanceOverlay="@style/circleImageView" />
 
                 <com.aoc4456.radarchart.component.ColorPickerView
                     android:id="@+id/colorView"

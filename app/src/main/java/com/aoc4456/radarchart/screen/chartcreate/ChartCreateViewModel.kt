@@ -1,5 +1,6 @@
 package com.aoc4456.radarchart.screen.chartcreate
 
+import android.graphics.Bitmap
 import androidx.lifecycle.*
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
@@ -8,6 +9,7 @@ import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ImageUtil
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
@@ -67,6 +69,15 @@ class ChartCreateViewModel @Inject constructor(
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
+
+    private val _iconImage = MutableLiveData<Bitmap?>()
+    val iconImage: LiveData<Bitmap?> = _iconImage
+
+    private val iconImageByteArray: ByteArray?
+        get() {
+            if (iconImage.value == null) return null
+            return ImageUtil.bitmapToByteArray(iconImage.value!!)
+        }
 
     private val _errorMessage = MutableLiveData<Int>()
     val errorMessage: LiveData<Int> = _errorMessage
