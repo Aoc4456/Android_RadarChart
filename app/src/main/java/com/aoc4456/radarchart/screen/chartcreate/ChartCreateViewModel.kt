@@ -12,6 +12,7 @@ import com.aoc4456.radarchart.datasource.database.MyChart
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.aoc4456.radarchart.util.ImageUtil
+import com.aoc4456.radarchart.util.PublishLiveData
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
@@ -72,6 +73,8 @@ class ChartCreateViewModel @Inject constructor(
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
+
+    val launchGallery = PublishLiveData<Boolean>()
 
     private val _iconImage = MutableLiveData<Bitmap?>()
     val iconImage: LiveData<Bitmap?> = _iconImage
@@ -160,15 +163,30 @@ class ChartCreateViewModel @Inject constructor(
     }
 
     fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
-        when (buttonType) {
-            DialogButtonType.POSITIVE -> {
-                if (chartArgs.value == null) return
-                viewModelScope.launch {
-                    repository.deleteMyChart(chartArgs.value!!.myChart.id)
+        when (dialogType) {
+            // アイコン画像設定ダイアログ
+            DialogType.ICON_IMAGE_SELECT -> {
+                when (buttonType) {
+                    // 画像を設定
+                    DialogButtonType.POSITIVE -> {
+                        launchGallery.value = true
+                    }
+                    else -> {
+                        _iconImage.value = null
+                    }
                 }
-                _dismiss.value = true
             }
-            DialogButtonType.NEGATIVE -> {
+            // チャート削除ダイアログ
+            DialogType.CHART_DELETE -> {
+                if (buttonType == DialogButtonType.POSITIVE) {
+                    if (chartArgs.value == null) return
+                    viewModelScope.launch {
+                        repository.deleteMyChart(chartArgs.value!!.myChart.id)
+                    }
+                    _dismiss.value = true
+                }
+            }
+            else -> {
             }
         }
     }

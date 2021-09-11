@@ -30,6 +30,7 @@
     <string name="maximum_value_of_graph">グラフの最大値 : %s</string>
     <string name="total_and_average">合計 : %1$s &#160;&#160; 平均 : %2$s</string>
     <string name="comment">コメント</string>
+    <string name="set_chart_icon">このチャートのアイコンを設定しますか？</string>
     <string name="delete_chart_title">このチャートを削除しますか？</string>
     <string name="delete_chart_message">この操作は取り消せません</string>
     <string name="setting">設定</string>
