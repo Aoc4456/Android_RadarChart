@@ -8,6 +8,7 @@ import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.databinding.GroupListItemBinding
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ImageUtil
 
 class GroupListAdapter(private val viewModel: GroupListViewModel) :
     ListAdapter<GroupWithLabelAndCharts, GroupListAdapter.ViewHolder>(ChartGroupDiffCallBack()),
@@ -42,12 +43,17 @@ class GroupListAdapter(private val viewModel: GroupListViewModel) :
         fun bind(item: GroupWithLabelAndCharts) {
             binding.chartGroup = item
 
-            val radarData = ChartDataUtil.getRadarDataWithTheSameValue(
-                color = item.group.color,
-                numberOfItems = item.labelList.size
-            )
-            binding.radarChart.data = radarData
-            binding.radarChart.notifyDataSetChanged()
+            if (item.group.iconImage == null) {
+                val radarData = ChartDataUtil.getRadarDataWithTheSameValue(
+                    color = item.group.color,
+                    numberOfItems = item.labelList.size
+                )
+                binding.radarChart.data = radarData
+                binding.radarChart.notifyDataSetChanged()
+            } else {
+                val bitmap = ImageUtil.byteArrayToBitmap(item.group.iconImage!!)
+                binding.iconView.setImageBitmap(bitmap)
+            }
 
             binding.executePendingBindings()
         }
