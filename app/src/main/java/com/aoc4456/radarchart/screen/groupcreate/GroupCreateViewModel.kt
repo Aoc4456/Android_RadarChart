@@ -1,5 +1,8 @@
 package com.aoc4456.radarchart.screen.groupcreate
 
+import android.app.Application
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.*
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
@@ -7,6 +10,8 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ImageUtil
+import com.aoc4456.radarchart.util.PublishLiveData
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.maximumValidate
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
@@ -17,8 +22,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupCreateViewModel @Inject constructor(
+    application: Application,
     private val repository: RadarChartRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val _groupArgs = MutableLiveData<GroupWithLabelAndCharts?>()
     val groupArgs: LiveData<GroupWithLabelAndCharts?> = _groupArgs
@@ -34,6 +40,15 @@ class GroupCreateViewModel @Inject constructor(
 
     private val _maximum = MutableLiveData("100")
     val maximum: LiveData<String> = _maximum
+
+    private val _iconImage = MutableLiveData<Bitmap?>()
+    val iconImage: LiveData<Bitmap?> = _iconImage
+
+    private val iconImageByteArray: ByteArray?
+        get() {
+            if (iconImage.value == null) return null
+            return ImageUtil.bitmapToByteArray(iconImage.value!!)
+        }
 
     private var itemTextList =
         MutableLiveData(GroupCreateUtil.defaultTextList.toMutableList())
@@ -56,6 +71,8 @@ class GroupCreateViewModel @Inject constructor(
         }
     }
 
+    val launchGallery = PublishLiveData<Boolean>()
+
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
 
@@ -74,6 +91,9 @@ class GroupCreateViewModel @Inject constructor(
             _maximum.value = groupArgs.group.maximumValue.toString()
             itemTextList.value = GroupCreateUtil.getMaximumSizeTextList(groupArgs.labelList)
             _numberOfItems.value = groupArgs.labelList.size
+            groupArgs.group.iconImage?.let {
+                _iconImage.value = ImageUtil.byteArrayToBitmap(it)
+            }
         }
         updateChart()
     }
@@ -88,6 +108,11 @@ class GroupCreateViewModel @Inject constructor(
         if (newColor == _groupColor.value) return
         _groupColor.value = newColor
         updateChart()
+    }
+
+    fun onClippedIconImage(uri: Uri) {
+        val bitmap = ImageUtil.uriToBitmap(getApplication<Application>().contentResolver, uri)
+        bitmap?.let { _iconImage.value = it }
     }
 
     fun onChangeTitleText(newText: String) {
@@ -127,15 +152,31 @@ class GroupCreateViewModel @Inject constructor(
     }
 
     fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
-        when (buttonType) {
-            DialogButtonType.POSITIVE -> {
-                if (groupArgs.value == null) return
-                viewModelScope.launch {
-                    repository.deleteGroup(groupArgs.value!!.group.id)
+        when (dialogType) {
+            // アイコン画像設定ダイアログ
+            DialogType.ICON_IMAGE_SELECT -> {
+                when (buttonType) {
+                    // 画像を設定
+                    DialogButtonType.POSITIVE -> {
+                        launchGallery.value = true
+                    }
+                    else -> {
+                        _iconImage.value = null
+                    }
                 }
-                _dismiss.value = true
             }
-            DialogButtonType.NEGATIVE -> {
+
+            // グループ削除ダイアログ
+            DialogType.GROUP_DELETE -> {
+                if (buttonType == DialogButtonType.POSITIVE) {
+                    if (groupArgs.value == null) return
+                    viewModelScope.launch {
+                        repository.deleteGroup(groupArgs.value!!.group.id)
+                    }
+                    _dismiss.value = true
+                }
+            }
+            else -> {
             }
         }
     }
@@ -172,6 +213,7 @@ class GroupCreateViewModel @Inject constructor(
                 title = title.value!!,
                 color = groupColor.value!!,
                 maximumValue = maximum.value!!.toInt(),
+                iconImage = iconImageByteArray
             )
         }
 
@@ -180,6 +222,7 @@ class GroupCreateViewModel @Inject constructor(
             it.title = title.value!!
             it.color = groupColor.value!!
             it.maximumValue = maximum.value!!.toInt()
+            it.iconImage = iconImageByteArray
             it.updatedAt = System.currentTimeMillis()
         }
     }
