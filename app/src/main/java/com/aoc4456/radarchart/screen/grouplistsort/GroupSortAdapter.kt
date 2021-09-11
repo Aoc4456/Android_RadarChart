@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.databinding.GroupSortItemBinding
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ImageUtil
 import com.aoc4456.radarchart.util.SortableAdapter
 
 class GroupSortAdapter(
@@ -26,17 +27,22 @@ class GroupSortAdapter(
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = viewModel.groupList[position]
-        holder.binding.let {
-            it.title.text = item.group.title
-            it.rate.text = item.group.rate.toString()
-            val radarData = ChartDataUtil.getRadarDataWithTheSameValue(
-                color = item.group.color,
-                numberOfItems = item.labelList.size
-            )
-            it.radarChart.data = radarData
-            it.radarChart.notifyDataSetChanged()
+        holder.binding.let { binding ->
+            binding.chartGroup = item
 
-            it.dragHandle.setOnTouchListener { _, event ->
+            if (item.group.iconImage == null) {
+                val radarData = ChartDataUtil.getRadarDataWithTheSameValue(
+                    color = item.group.color,
+                    numberOfItems = item.labelList.size
+                )
+                binding.radarChart.data = radarData
+                binding.radarChart.notifyDataSetChanged()
+            } else {
+                val bitmap = ImageUtil.byteArrayToBitmap(item.group.iconImage!!)
+                binding.iconView.setImageBitmap(bitmap)
+            }
+
+            binding.dragHandle.setOnTouchListener { _, event ->
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                     itemTouchHelper.startDrag(holder)
                 }

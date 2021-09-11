@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="chartGroup"
             type="com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts" />
@@ -24,11 +26,25 @@
             android:orientation="horizontal">
 
             <!-- チャート or アイコン-->
-            <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
-                android:id="@+id/radarChart"
+            <FrameLayout
                 android:layout_width="100dp"
-                android:layout_height="match_parent"
-                app:chartType="group_list" />
+                android:layout_height="match_parent">
+
+                <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
+                    android:id="@+id/radarChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{chartGroup.group.iconImage == null ? View.VISIBLE : View.INVISIBLE}"
+                    app:chartType="group_list" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iconView"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:visibility="@{chartGroup.group.iconImage != null ? View.VISIBLE : View.INVISIBLE}"
+                    app:shapeAppearanceOverlay="@style/circleImageView" />
+            </FrameLayout>
 
             <!-- タイトル -->
             <TextView
