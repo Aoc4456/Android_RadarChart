@@ -78,6 +78,9 @@ class BaseDialogFragment : DialogFragment() {
         if (dialogType in listOf(DialogType.GROUP_DELETE, DialogType.CHART_DELETE)) {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
         }
+        if (dialogType == DialogType.ICON_IMAGE_SELECT) {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED)
+        }
     }
 
     companion object {

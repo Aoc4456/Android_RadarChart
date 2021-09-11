@@ -17,8 +17,6 @@ import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.databinding.GroupCreateFragmentBinding
 import com.canhub.cropper.CropImageContract
-import com.canhub.cropper.CropImageView
-import com.canhub.cropper.options
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -91,13 +89,24 @@ class GroupCreateFragment : Fragment(), BaseDialogListener {
         }
 
         binding.iconView.setOnClickListener {
-            cropImage.launch(
-                options {
-                    setGuidelines(CropImageView.Guidelines.ON)
-                    setCropShape(CropImageView.CropShape.OVAL)
-                    setFixAspectRatio(true)
+            val dialogFragment = BaseDialogFragment.newInstance(
+                type = DialogType.ICON_IMAGE_SELECT,
+                title = getString(R.string.set_group_icon),
+                positiveText = getString(R.string.select),
+                negativeText = if (viewModel.iconImage.value == null) {
+                    null
+                } else {
+                    getString(R.string.delete)
                 }
             )
+            dialogFragment.show(childFragmentManager, "IMAGE_DIALOG_TAG")
+//            cropImage.launch(
+//                options {
+//                    setGuidelines(CropImageView.Guidelines.ON)
+//                    setCropShape(CropImageView.CropShape.OVAL)
+//                    setFixAspectRatio(true)
+//                }
+//            )
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
