@@ -11,6 +11,7 @@ import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.aoc4456.radarchart.util.ImageUtil
+import com.aoc4456.radarchart.util.PublishLiveData
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.maximumValidate
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
@@ -40,8 +41,8 @@ class GroupCreateViewModel @Inject constructor(
     private val _maximum = MutableLiveData("100")
     val maximum: LiveData<String> = _maximum
 
-    private val _iconImage = MutableLiveData<Bitmap>()
-    val iconImage: LiveData<Bitmap> = _iconImage
+    private val _iconImage = MutableLiveData<Bitmap?>()
+    val iconImage: LiveData<Bitmap?> = _iconImage
 
     private val iconImageByteArray: ByteArray?
         get() {
@@ -69,6 +70,8 @@ class GroupCreateViewModel @Inject constructor(
             value = ChartDataUtil.getRadarDataWithTheSameValue(groupColor.value!!, it)
         }
     }
+
+    val launchGallery = PublishLiveData<Boolean>()
 
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
@@ -149,15 +152,31 @@ class GroupCreateViewModel @Inject constructor(
     }
 
     fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
-        when (buttonType) {
-            DialogButtonType.POSITIVE -> {
-                if (groupArgs.value == null) return
-                viewModelScope.launch {
-                    repository.deleteGroup(groupArgs.value!!.group.id)
+        when (dialogType) {
+            // アイコン画像設定ダイアログ
+            DialogType.ICON_IMAGE_SELECT -> {
+                when (buttonType) {
+                    // 画像を設定
+                    DialogButtonType.POSITIVE -> {
+                        launchGallery.value = true
+                    }
+                    else -> {
+                        _iconImage.value = null
+                    }
                 }
-                _dismiss.value = true
             }
-            DialogButtonType.NEGATIVE -> {
+
+            // グループ削除ダイアログ
+            DialogType.GROUP_DELETE -> {
+                if (buttonType == DialogButtonType.POSITIVE) {
+                    if (groupArgs.value == null) return
+                    viewModelScope.launch {
+                        repository.deleteGroup(groupArgs.value!!.group.id)
+                    }
+                    _dismiss.value = true
+                }
+            }
+            else -> {
             }
         }
     }
