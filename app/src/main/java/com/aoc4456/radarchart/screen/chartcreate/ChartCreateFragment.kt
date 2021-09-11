@@ -16,6 +16,7 @@ import com.aoc4456.radarchart.component.dialog.BaseDialogListener
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.databinding.ChartCreateFragmentBinding
+import com.canhub.cropper.CropImageContract
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +26,15 @@ class ChartCreateFragment : Fragment(), BaseDialogListener {
     private val viewModel by viewModels<ChartCreateViewModel>()
 
     private val navArgs: ChartCreateFragmentArgs by navArgs()
+
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            val uriContent = result.uriContent
+            uriContent?.let { viewModel.onClippedIconImage(it) }
+        } else {
+            val exception = result.error
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

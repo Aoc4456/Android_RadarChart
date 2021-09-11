@@ -1,6 +1,8 @@
 package com.aoc4456.radarchart.screen.chartcreate
 
+import android.app.Application
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.*
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
@@ -20,8 +22,9 @@ import kotlin.math.roundToInt
 
 @HiltViewModel
 class ChartCreateViewModel @Inject constructor(
+    application: Application,
     private val repository: RadarChartRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val groupData = MutableLiveData<GroupWithLabelAndCharts>()
 
@@ -118,6 +121,11 @@ class ChartCreateViewModel @Inject constructor(
         if (newColor == chartColor.value) return
         _chartColor.value = newColor
         _chartUpdate.value = true
+    }
+
+    fun onClippedIconImage(uri: Uri) {
+        val bitmap = ImageUtil.uriToBitmap(getApplication<Application>().contentResolver, uri)
+        bitmap?.let { _iconImage.value = it }
     }
 
     fun onChangeChartIntValue(index: Int, newValue: Int) {
