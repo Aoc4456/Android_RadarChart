@@ -110,6 +110,9 @@ class ChartCreateViewModel @Inject constructor(
                 _chartColor.value = chartWithValue.myChart.color
                 _chartIntValues.value = chartWithValue.values.map { it.value.toInt() }
                 _comment.value = chartWithValue.myChart.comment
+                chartWithValue.myChart.iconImage?.let {
+                    _iconImage.value = ImageUtil.byteArrayToBitmap(it)
+                }
             }
         }
         _chartUpdate.value = true
@@ -213,7 +216,8 @@ class ChartCreateViewModel @Inject constructor(
                 chartGroupId = groupData.value!!.group.id,
                 title = title.value!!,
                 color = chartColor.value!!,
-                comment = comment.value!!
+                comment = comment.value!!,
+                iconImage = iconImageByteArray
             )
         }
 
@@ -222,6 +226,7 @@ class ChartCreateViewModel @Inject constructor(
             it.title = title.value!!
             it.color = chartColor.value!!
             it.comment = comment.value!!
+            it.iconImage = iconImageByteArray
             it.updatedAt = System.currentTimeMillis()
         }
     }
