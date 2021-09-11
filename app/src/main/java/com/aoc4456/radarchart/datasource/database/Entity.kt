@@ -63,6 +63,8 @@ data class MyChart(
     var title: String = "",
     var color: Int,
     var comment: String = "",
+    @Suppress("ArrayInDataClass") @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    var iconImage: ByteArray? = null,
     var createdAt: Long = System.currentTimeMillis(),
     var updatedAt: Long = System.currentTimeMillis()
 ) : Parcelable
