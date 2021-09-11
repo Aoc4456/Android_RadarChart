@@ -222,6 +222,7 @@ class GroupCreateViewModel @Inject constructor(
             it.title = title.value!!
             it.color = groupColor.value!!
             it.maximumValue = maximum.value!!.toInt()
+            it.iconImage = iconImageByteArray
             it.updatedAt = System.currentTimeMillis()
         }
     }
