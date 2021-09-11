@@ -27,11 +27,10 @@ fun calcSpanCountBasedOnScreenSize(context: Context, type: CollectionType): Int 
             }
         }
         CollectionType.GRID -> {
+            val base = (dpWidth / 150).toInt()
             return if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                val base = (dpWidth / 120).toInt()
                 min(base, 4)
             } else {
-                val base = (dpWidth / 150).toInt()
                 min(base, 5)
             }
         }
