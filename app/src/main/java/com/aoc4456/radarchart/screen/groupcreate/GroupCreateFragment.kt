@@ -91,6 +91,20 @@ class GroupCreateFragment : Fragment(), BaseDialogListener {
         }
 
         binding.iconView.setOnClickListener {
+            val dialogFragment = BaseDialogFragment.newInstance(
+                type = DialogType.ICON_IMAGE_SELECT,
+                title = getString(R.string.set_group_icon),
+                positiveText = getString(R.string.select),
+                negativeText = if (viewModel.iconImage.value == null) {
+                    null
+                } else {
+                    getString(R.string.delete)
+                }
+            )
+            dialogFragment.show(childFragmentManager, "IMAGE_DIALOG_TAG")
+        }
+
+        viewModel.launchGallery.observe(viewLifecycleOwner) {
             cropImage.launch(
                 options {
                     setGuidelines(CropImageView.Guidelines.ON)

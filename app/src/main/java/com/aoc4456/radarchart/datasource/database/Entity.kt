@@ -16,7 +16,6 @@ data class ChartGroup(
     var id: String = UUID.randomUUID().toString(),
     var title: String = "",
     var color: Int,
-    var iconFileName: String = "",
     var maximumValue: Int = 0,
     @Suppress("ArrayInDataClass") @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     var iconImage: ByteArray? = null,
