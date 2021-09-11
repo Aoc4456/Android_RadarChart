@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aoc4456.radarchart.databinding.ChartCollectionGridItemBinding
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ImageUtil
 
 class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel) :
     ListAdapter<IndexedMyChart, ChartCollectionGridAdapter.ViewHolder>(
@@ -26,7 +27,11 @@ class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MyChartWithValue, viewModel: ChartCollectionViewModel) {
-            binding.title.text = item.myChart.title
+            binding.myChart = item.myChart
+
+            item.myChart.iconImage?.let {
+                binding.iconView.setImageBitmap(ImageUtil.byteArrayToBitmap(it))
+            }
 
             val radarData = ChartDataUtil.getRadarDataFromValues(
                 item.myChart.color,
@@ -34,7 +39,8 @@ class ChartCollectionGridAdapter(private val viewModel: ChartCollectionViewModel
             )
             binding.radarChart.let { radarChart ->
                 radarChart.data = radarData
-                radarChart.yAxis.axisMaximum = viewModel.groupData.value!!.group.maximumValue.toFloat()
+                radarChart.yAxis.axisMaximum =
+                    viewModel.groupData.value!!.group.maximumValue.toFloat()
                 radarChart.setChartItemLabel(viewModel.groupData.value!!.labelList.map { it.text })
                 radarChart.notifyDataSetChanged()
             }

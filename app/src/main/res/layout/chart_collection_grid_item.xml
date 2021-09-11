@@ -5,6 +5,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="myChart"
+            type="com.aoc4456.radarchart.datasource.database.MyChart" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +17,7 @@
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:cardBackgroundColor="@color/cardview_background"
@@ -24,40 +30,68 @@
             tools:layout_height="300dp"
             tools:layout_width="300dp">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iconView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintWidth_percent="0.25"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHorizontal_bias="0.02"
+                    app:layout_constraintVertical_bias="0.02"
+                    android:visibility="@{myChart.iconImage == null ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/circleImageView" />
 
                 <TextView
                     android:id="@+id/title"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
                     android:gravity="center"
+                    android:text="@{myChart.title}"
                     android:textStyle="bold"
                     app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toTopOf="@id/radarChart"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread"
+                    app:layout_constraintVertical_weight="1"
                     tools:text="タイトル" />
 
                 <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
                     android:id="@+id/radarChart"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="5"
-                    app:chartType="chart_collection_grid" />
+                    app:chartType="chart_collection_grid"
+                    app:layout_constraintBottom_toTopOf="@id/valueLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintVertical_weight="5" />
 
                 <TextView
                     android:id="@+id/valueLabel"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginTop="-5dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
                     android:gravity="top|end"
                     android:paddingVertical="2dp"
                     app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radarChart"
+                    app:layout_constraintVertical_weight="1"
                     tools:text="合計値" />
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <FrameLayout
                 android:id="@+id/frameForClick"
