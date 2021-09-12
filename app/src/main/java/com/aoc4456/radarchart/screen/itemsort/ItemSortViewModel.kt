@@ -10,8 +10,6 @@ import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.util.ChartDataUtil
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,11 +21,11 @@ class ItemSortViewModel @Inject constructor(
     lateinit var group: GroupWithLabelAndCharts
     lateinit var labelList: MutableList<ChartGroupLabel>
 
-    private val _listSetup = MutableLiveData<Boolean>()
-    val listSetup: LiveData<Boolean> = _listSetup
-
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
+
+    private val _dismiss = MutableLiveData<Boolean>()
+    val dismiss: LiveData<Boolean> = _dismiss
 
     val radarData: RadarData
         get() {
@@ -37,26 +35,31 @@ class ItemSortViewModel @Inject constructor(
             )
         }
 
+    private var isChanged = false
+
     fun onViewCreated(navArgs: ItemSortFragmentArgs) {
         if (::group.isInitialized) return
-        viewModelScope.launch {
-            val deferred = async(Dispatchers.IO) {
-                repository.getGroupById(navArgs.groupWithLabelAndCharts.group.id)
-            }
-            group = deferred.await()
-            labelList = group.labelList.toMutableList()
-            _listSetup.value = true
-            _chartUpdate.value = true
-        }
+        group = navArgs.groupWithLabelAndCharts
+        labelList = group.labelList.toMutableList()
+        _chartUpdate.value = true
     }
 
     fun onMoveItem(from: Int, to: Int) {
+        isChanged = true
         val moveItem = labelList[from]
         labelList.removeAt(from)
         labelList.add(to, moveItem)
-        viewModelScope.launch {
-            repository.swapGroupLabel(group.group.id, from, to)
-        }
         _chartUpdate.value = true
+    }
+
+    fun onClickCloseButton() {
+        if (isChanged) {
+            viewModelScope.launch {
+                // TODO 並び替え処理
+                _dismiss.value = true
+            }
+        } else {
+            _dismiss.value = true
+        }
     }
 }

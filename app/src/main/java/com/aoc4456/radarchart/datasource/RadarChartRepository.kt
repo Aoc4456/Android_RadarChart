@@ -41,8 +41,6 @@ interface RadarChartRepository {
 
     suspend fun setGroupRates(list: List<ChartGroup>)
 
-    suspend fun swapGroupLabel(groupId: String, from: Int, to: Int)
-
     /**
      * Delete
      */

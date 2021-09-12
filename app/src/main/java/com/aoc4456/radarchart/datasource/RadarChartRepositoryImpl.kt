@@ -111,10 +111,6 @@ class RadarChartRepositoryImpl(
         radarChartDao.setRates(list)
     }
 
-    override suspend fun swapGroupLabel(groupId: String, from: Int, to: Int) {
-        radarChartDao.swapGroupLabel(groupId, from, to)
-    }
-
     /**
      * Delete
      */

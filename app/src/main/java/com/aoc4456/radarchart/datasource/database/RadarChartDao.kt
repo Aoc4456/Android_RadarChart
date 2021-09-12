@@ -141,20 +141,6 @@ interface RadarChartDao {
     @Query("UPDATE ChartGroup SET rate = :rate WHERE id = :groupId")
     suspend fun setRate(groupId: String, rate: Int)
 
-    @Transaction // TODO 高速でドラッグを繰り返した時、正しく入れ替わらない(データの不整合は起こらないので致命的な問題はない)
-    suspend fun swapGroupLabel(groupId: String, from: Int, to: Int) {
-        val group = getGroupById(groupId)
-        // ChartGroupLabel の index を入れ替え
-        updateGroupLabel(group.labelList[from].apply { this.index = to })
-        updateGroupLabel(group.labelList[to].apply { this.index = from })
-
-        // グループに属するチャートのValueのindexを入れ替え
-        group.chartList.forEach { chart ->
-            updateChartValue(chart.values[from].apply { this.index = to })
-            updateChartValue(chart.values[to].apply { this.index = from })
-        }
-    }
-
     /**
      * Delete
      */

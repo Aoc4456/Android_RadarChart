@@ -27,6 +27,7 @@
                 android:layout_marginStart="16dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="@null"
+                android:onClick="@{() -> viewmodel.onClickCloseButton()}"
                 android:src="@drawable/ic_baseline_close_24" />
 
             <TextView
