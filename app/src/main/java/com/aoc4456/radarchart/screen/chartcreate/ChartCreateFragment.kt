@@ -16,6 +16,9 @@ import com.aoc4456.radarchart.component.dialog.BaseDialogListener
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
 import com.aoc4456.radarchart.databinding.ChartCreateFragmentBinding
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageView
+import com.canhub.cropper.options
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +28,15 @@ class ChartCreateFragment : Fragment(), BaseDialogListener {
     private val viewModel by viewModels<ChartCreateViewModel>()
 
     private val navArgs: ChartCreateFragmentArgs by navArgs()
+
+    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            val uriContent = result.uriContent
+            uriContent?.let { viewModel.onClippedIconImage(it) }
+        } else {
+            val exception = result.error
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +80,21 @@ class ChartCreateFragment : Fragment(), BaseDialogListener {
             viewModel.onChooseColor(chooseColor)
         }
 
+        // アイコン設定
+        binding.iconView.setOnClickListener {
+            val dialogFragment = BaseDialogFragment.newInstance(
+                type = DialogType.ICON_IMAGE_SELECT,
+                title = getString(R.string.set_chart_icon),
+                positiveText = getString(R.string.select),
+                negativeText = if (viewModel.iconImage.value == null) {
+                    null
+                } else {
+                    getString(R.string.delete)
+                }
+            )
+            dialogFragment.show(childFragmentManager, "IMAGE_DIALOG_TAG")
+        }
+
         // チャートの値入力
         binding.multiInputView.setup(
             labels = viewModel.chartLabels.value!!,
@@ -81,6 +108,16 @@ class ChartCreateFragment : Fragment(), BaseDialogListener {
         // コメントTextView
         binding.noteEditText.doAfterTextChanged { editable ->
             viewModel.onChangeComment(editable.toString())
+        }
+
+        viewModel.launchGallery.observe(viewLifecycleOwner) {
+            cropImage.launch(
+                options {
+                    setGuidelines(CropImageView.Guidelines.ON)
+                    setCropShape(CropImageView.CropShape.OVAL)
+                    setFixAspectRatio(true)
+                }
+            )
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->

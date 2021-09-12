@@ -1,5 +1,8 @@
 package com.aoc4456.radarchart.screen.chartcreate
 
+import android.app.Application
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.*
 import com.aoc4456.radarchart.component.dialog.DialogButtonType
 import com.aoc4456.radarchart.component.dialog.DialogType
@@ -8,6 +11,8 @@ import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.database.MyChart
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ImageUtil
+import com.aoc4456.radarchart.util.PublishLiveData
 import com.aoc4456.radarchart.util.ValidateInputFieldUtil.titleValidate
 import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
@@ -18,8 +23,9 @@ import kotlin.math.roundToInt
 
 @HiltViewModel
 class ChartCreateViewModel @Inject constructor(
+    application: Application,
     private val repository: RadarChartRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val groupData = MutableLiveData<GroupWithLabelAndCharts>()
 
@@ -68,6 +74,17 @@ class ChartCreateViewModel @Inject constructor(
     private val _chartUpdate = MutableLiveData<Boolean>()
     val chartUpdate: LiveData<Boolean> = _chartUpdate
 
+    val launchGallery = PublishLiveData<Boolean>()
+
+    private val _iconImage = MutableLiveData<Bitmap?>()
+    val iconImage: LiveData<Bitmap?> = _iconImage
+
+    private val iconImageByteArray: ByteArray?
+        get() {
+            if (iconImage.value == null) return null
+            return ImageUtil.bitmapToByteArray(iconImage.value!!)
+        }
+
     private val _errorMessage = MutableLiveData<Int>()
     val errorMessage: LiveData<Int> = _errorMessage
 
@@ -93,6 +110,9 @@ class ChartCreateViewModel @Inject constructor(
                 _chartColor.value = chartWithValue.myChart.color
                 _chartIntValues.value = chartWithValue.values.map { it.value.toInt() }
                 _comment.value = chartWithValue.myChart.comment
+                chartWithValue.myChart.iconImage?.let {
+                    _iconImage.value = ImageUtil.byteArrayToBitmap(it)
+                }
             }
         }
         _chartUpdate.value = true
@@ -107,6 +127,11 @@ class ChartCreateViewModel @Inject constructor(
         if (newColor == chartColor.value) return
         _chartColor.value = newColor
         _chartUpdate.value = true
+    }
+
+    fun onClippedIconImage(uri: Uri) {
+        val bitmap = ImageUtil.uriToBitmap(getApplication<Application>().contentResolver, uri)
+        bitmap?.let { _iconImage.value = it }
     }
 
     fun onChangeChartIntValue(index: Int, newValue: Int) {
@@ -141,15 +166,30 @@ class ChartCreateViewModel @Inject constructor(
     }
 
     fun onClickButtonInDialog(dialogType: DialogType, buttonType: DialogButtonType) {
-        when (buttonType) {
-            DialogButtonType.POSITIVE -> {
-                if (chartArgs.value == null) return
-                viewModelScope.launch {
-                    repository.deleteMyChart(chartArgs.value!!.myChart.id)
+        when (dialogType) {
+            // アイコン画像設定ダイアログ
+            DialogType.ICON_IMAGE_SELECT -> {
+                when (buttonType) {
+                    // 画像を設定
+                    DialogButtonType.POSITIVE -> {
+                        launchGallery.value = true
+                    }
+                    else -> {
+                        _iconImage.value = null
+                    }
                 }
-                _dismiss.value = true
             }
-            DialogButtonType.NEGATIVE -> {
+            // チャート削除ダイアログ
+            DialogType.CHART_DELETE -> {
+                if (buttonType == DialogButtonType.POSITIVE) {
+                    if (chartArgs.value == null) return
+                    viewModelScope.launch {
+                        repository.deleteMyChart(chartArgs.value!!.myChart.id)
+                    }
+                    _dismiss.value = true
+                }
+            }
+            else -> {
             }
         }
     }
@@ -176,7 +216,8 @@ class ChartCreateViewModel @Inject constructor(
                 chartGroupId = groupData.value!!.group.id,
                 title = title.value!!,
                 color = chartColor.value!!,
-                comment = comment.value!!
+                comment = comment.value!!,
+                iconImage = iconImageByteArray
             )
         }
 
@@ -185,6 +226,7 @@ class ChartCreateViewModel @Inject constructor(
             it.title = title.value!!
             it.color = chartColor.value!!
             it.comment = comment.value!!
+            it.iconImage = iconImageByteArray
             it.updatedAt = System.currentTimeMillis()
         }
     }

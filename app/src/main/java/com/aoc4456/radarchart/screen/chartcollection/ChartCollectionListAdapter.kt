@@ -9,6 +9,7 @@ import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.databinding.ChartCollectionListItemBinding
 import com.aoc4456.radarchart.datasource.database.MyChartWithValue
 import com.aoc4456.radarchart.util.ChartDataUtil
+import com.aoc4456.radarchart.util.ImageUtil
 
 class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel) :
     ListAdapter<IndexedMyChart, ChartCollectionListAdapter.ViewHolder>(
@@ -28,6 +29,14 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MyChartWithValue, viewModel: ChartCollectionViewModel) {
+            binding.myChart = item.myChart
+
+            item.myChart.iconImage?.let {
+                binding.iconView.setImageBitmap(
+                    ImageUtil.byteArrayToBitmap(it)
+                )
+            }
+
             val radarData = ChartDataUtil.getRadarDataFromValues(
                 item.myChart.color,
                 item.values.map { it.value.toInt() }
@@ -39,8 +48,7 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
                 radarChart.setChartItemLabel(viewModel.groupData.value!!.labelList.map { it.text })
                 radarChart.notifyDataSetChanged()
             }
-            binding.title.text = item.myChart.title
-            binding.comment.text = item.myChart.comment
+
             binding.comment2.let {
                 it.text = ChartCollectionUtil.getTextForListComment2(
                     it.context,
@@ -52,7 +60,6 @@ class ChartCollectionListAdapter(private val viewModel: ChartCollectionViewModel
                 val sum = item.values.map { it.value }.sum().toInt().toString()
                 totalView.text = totalView.resources.getString(R.string.total_with_value, sum)
             }
-
             binding.frameForClick.setOnClickListener {
                 viewModel.onClickCollectionItem(item)
             }

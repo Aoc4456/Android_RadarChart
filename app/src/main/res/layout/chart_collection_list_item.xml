@@ -5,6 +5,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="myChart"
+            type="com.aoc4456.radarchart.datasource.database.MyChart" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -59,15 +64,30 @@
                 android:orientation="vertical"
                 android:paddingTop="8dp">
 
-                <TextView
-                    android:id="@+id/title"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="5"
-                    android:gravity="bottom"
-                    android:textStyle="bold"
-                    app:autoSizeTextType="uniform"
-                    tools:text="タイトル" />
+                    android:layout_height="36dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/iconView"
+                        android:layout_width="36dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="4dp"
+                        android:visibility="@{myChart.iconImage == null ? View.GONE : View.VISIBLE}"
+                        app:shapeAppearanceOverlay="@style/circleImageView" />
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@{myChart.title}"
+                        android:textStyle="bold"
+                        app:autoSizeTextType="uniform"
+                        tools:text="タイトル" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/comment"
@@ -76,6 +96,7 @@
                     android:layout_weight="6"
                     android:gravity="center_vertical"
                     android:maxLines="2"
+                    android:text="@{myChart.comment}"
                     tools:text="コメント" />
 
                 <TextView
