@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="android.view.Gravity" />
+
         <variable
             name="myChart"
             type="com.aoc4456.radarchart.datasource.database.MyChart" />
@@ -38,28 +40,29 @@
                     android:id="@+id/iconView"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintWidth_percent="0.25"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintHorizontal_bias="0.02"
-                    app:layout_constraintVertical_bias="0.02"
                     android:visibility="@{myChart.iconImage == null ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.02"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.02"
+                    app:layout_constraintWidth_percent="0.25"
                     app:shapeAppearanceOverlay="@style/circleImageView" />
 
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:gravity="@{myChart.iconImage == null ? Gravity.CENTER : Gravity.LEFT | Gravity.CENTER_VERTICAL}"
                     android:text="@{myChart.title}"
                     android:textStyle="bold"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toTopOf="@id/radarChart"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iconView"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="spread"
                     app:layout_constraintVertical_weight="1"

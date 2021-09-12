@@ -82,7 +82,7 @@
                         android:id="@+id/title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="bottom"
+                        android:gravity="center_vertical"
                         android:text="@{myChart.title}"
                         android:textStyle="bold"
                         app:autoSizeTextType="uniform"
