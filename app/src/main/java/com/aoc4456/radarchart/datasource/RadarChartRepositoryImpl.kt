@@ -110,6 +110,13 @@ class RadarChartRepositoryImpl(
         radarChartDao.setRates(list)
     }
 
+    override suspend fun swapGroupLabel(
+        oldList: List<ChartGroupLabel>,
+        newList: List<ChartGroupLabel>
+    ) {
+        radarChartDao.swapGroupLabel(oldList, newList)
+    }
+
     /**
      * Delete
      */

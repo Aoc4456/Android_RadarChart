@@ -162,6 +162,21 @@ interface RadarChartDao {
     @Query("UPDATE ChartGroup SET rate = :rate WHERE id = :groupId")
     suspend fun setRate(groupId: String, rate: Int)
 
+    @Transaction
+    suspend fun swapGroupLabel(oldList: List<ChartGroupLabel>, newList: List<ChartGroupLabel>) {
+        // 古いリストと新しいリストを比較して、indexと場所がずれていたらグループのラベルを更新する
+        // 最初はグループのラベルの入れ替えだけ行う
+        for (i in oldList.indices) {
+            val oldLabel = oldList[i]
+            val movedLabel = newList.find { it.id == oldLabel.id }
+            val movePosition = newList.indexOf(movedLabel)
+
+            if (oldLabel.index != movePosition) {
+                updateGroupLabel(oldLabel.apply { this.index = movePosition })
+            }
+        }
+    }
+
     /**
      * Delete
      */

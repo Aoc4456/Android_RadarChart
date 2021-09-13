@@ -1,6 +1,5 @@
 package com.aoc4456.radarchart.datasource
 
-import androidx.lifecycle.LiveData
 import com.aoc4456.radarchart.datasource.database.*
 import com.aoc4456.radarchart.screen.chartcollection.CollectionType
 
@@ -40,6 +39,8 @@ interface RadarChartRepository {
     suspend fun updateSortIndex(groupId: String, sortIndex: Int)
 
     suspend fun setGroupRates(list: List<ChartGroup>)
+
+    suspend fun swapGroupLabel(oldList: List<ChartGroupLabel>, newList: List<ChartGroupLabel>)
 
     /**
      * Delete
