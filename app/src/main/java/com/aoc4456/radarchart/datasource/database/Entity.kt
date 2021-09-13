@@ -28,7 +28,6 @@ data class ChartGroup(
 
 @Parcelize
 @Entity(
-    primaryKeys = ["chartGroupId", "index"],
     foreignKeys = [
         ForeignKey(
             entity = ChartGroup::class,
@@ -39,10 +38,12 @@ data class ChartGroup(
     ]
 )
 data class ChartGroupLabel(
+    @PrimaryKey
+    var id: String = UUID.randomUUID().toString(),
+    @ColumnInfo(index = true)
     var chartGroupId: String = "",
     var index: Int = 0,
-    var text: String = "",
-    var sortingState: SortingState = SortingState.NEUTRAL
+    var text: String = ""
 ) : Parcelable
 
 @Parcelize
@@ -72,7 +73,6 @@ data class MyChart(
 
 @Parcelize
 @Entity(
-    primaryKeys = ["myChartId", "index"],
     foreignKeys = [
         ForeignKey(
             entity = MyChart::class,
@@ -83,10 +83,12 @@ data class MyChart(
     ]
 )
 data class ChartValue(
+    @PrimaryKey
+    var id: String = UUID.randomUUID().toString(),
+    @ColumnInfo(index = true)
     var myChartId: String = "",
     var index: Int = 0,
-    var value: Double = 0.0,
-    var sortingState: SortingState = SortingState.NEUTRAL
+    var value: Double = 0.0
 ) : Parcelable
 
 /**
@@ -129,11 +131,6 @@ class Converters {
 enum class OrderBy {
     ASC,
     DESC
-}
-
-enum class SortingState {
-    NEUTRAL,
-    SORTING
 }
 
 object SortIndex {
