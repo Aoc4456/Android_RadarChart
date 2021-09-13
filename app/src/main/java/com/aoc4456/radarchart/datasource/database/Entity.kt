@@ -41,7 +41,8 @@ data class ChartGroup(
 data class ChartGroupLabel(
     var chartGroupId: String = "",
     var index: Int = 0,
-    var text: String = ""
+    var text: String = "",
+    var sortingState: SortingState = SortingState.NEUTRAL
 ) : Parcelable
 
 @Parcelize
@@ -84,7 +85,8 @@ data class MyChart(
 data class ChartValue(
     var myChartId: String = "",
     var index: Int = 0,
-    var value: Double = 0.0
+    var value: Double = 0.0,
+    var sortingState: SortingState = SortingState.NEUTRAL
 ) : Parcelable
 
 /**
@@ -127,6 +129,11 @@ class Converters {
 enum class OrderBy {
     ASC,
     DESC
+}
+
+enum class SortingState {
+    NEUTRAL,
+    SORTING
 }
 
 object SortIndex {

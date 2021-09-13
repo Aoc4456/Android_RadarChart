@@ -38,16 +38,10 @@ class ItemSortFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.onViewCreated(navArgs)
 
-        binding.toolbarCloseButton.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
-        viewModel.listSetup.observe(viewLifecycleOwner) {
-            binding.recyclerView.adapter = ItemSortAdapter(viewModel, itemTouchHelper)
-            (binding.recyclerView.adapter as ItemSortAdapter).notifyDataSetChanged()
-        }
+        binding.recyclerView.adapter = ItemSortAdapter(viewModel, itemTouchHelper)
+        (binding.recyclerView.adapter as ItemSortAdapter).notifyDataSetChanged()
 
         viewModel.chartUpdate.observe(viewLifecycleOwner) {
             binding.radarChart.let { radarChart ->
@@ -56,6 +50,10 @@ class ItemSortFragment : Fragment() {
                 radarChart.notifyDataSetChanged()
                 radarChart.invalidate()
             }
+        }
+
+        viewModel.dismiss.observe(viewLifecycleOwner) {
+            findNavController().popBackStack()
         }
     }
 }
