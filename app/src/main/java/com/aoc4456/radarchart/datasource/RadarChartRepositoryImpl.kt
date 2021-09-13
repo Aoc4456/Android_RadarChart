@@ -1,6 +1,5 @@
 package com.aoc4456.radarchart.datasource
 
-import androidx.lifecycle.LiveData
 import com.aoc4456.radarchart.datasource.database.*
 import com.aoc4456.radarchart.datasource.sharedpreferences.RadarChartPreferences
 import com.aoc4456.radarchart.screen.chartcollection.CollectionType
@@ -70,12 +69,12 @@ class RadarChartRepositoryImpl(
      * Read
      */
 
-    override fun observeGroupList(): LiveData<List<GroupWithLabelAndCharts>> {
-        return radarChartDao.observeGroupWithLabelAndCharts()
+    override suspend fun getGroupList(): List<GroupWithLabelAndCharts> {
+        return radarChartDao.getGroupListWithDetail()
     }
 
     override suspend fun getGroupById(groupId: String): GroupWithLabelAndCharts {
-        return radarChartDao.getGroupById(groupId)
+        return radarChartDao.getGroupWithLabelAndCharts(groupId)
     }
 
     override suspend fun getSortedChartList(

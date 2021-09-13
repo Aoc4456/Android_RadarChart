@@ -105,7 +105,7 @@ data class GroupWithLabelAndCharts(
         entityColumn = "chartGroupId",
         entity = MyChart::class
     )
-    val chartList: List<MyChartWithValue>
+    val chartList: List<MyChart>
 ) : Parcelable
 
 @Parcelize

@@ -1,6 +1,5 @@
 package com.aoc4456.radarchart.datasource.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -46,14 +45,36 @@ interface RadarChartDao {
      * Read
      */
     @Transaction
-    @Query("SELECT * FROM ChartGroup ORDER BY rate ASC")
-    fun observeGroupWithLabelAndCharts(): LiveData<List<GroupWithLabelAndCharts>>
+    suspend fun getGroupListWithDetail(): List<GroupWithLabelAndCharts> {
+        val list = mutableListOf<GroupWithLabelAndCharts>()
+        val idList = getGroupIdList()
+        idList.forEach {
+            list.add(getGroupWithLabelAndCharts(it))
+        }
+        return list
+    }
+
+    @Query("SELECT id FROM ChartGroup ORDER BY rate ASC")
+    suspend fun getGroupIdList(): List<String>
 
     @Transaction
+    suspend fun getGroupWithLabelAndCharts(groupId: String): GroupWithLabelAndCharts {
+        val group = getGroupById(groupId)
+        val label = getGroupLabel(groupId)
+        val charts = getChartList(groupId)
+        return GroupWithLabelAndCharts(
+            group = group,
+            labelList = label,
+            chartList = charts
+        )
+    }
+
     @Query("SELECT * From ChartGroup WHERE id = :groupId")
-    suspend fun getGroupById(groupId: String): GroupWithLabelAndCharts
+    suspend fun getGroupById(groupId: String): ChartGroup
 
-    @Transaction
+    @Query("SELECT * From ChartGroupLabel WHERE chartGroupId = :groupId ORDER BY `index` ASC")
+    suspend fun getGroupLabel(groupId: String): List<ChartGroupLabel>
+
     @Query("SELECT * FROM MyChart WHERE chartGroupId = :groupId ORDER BY createdAt ASC")
     suspend fun getChartList(groupId: String): List<MyChart>
 
@@ -98,7 +119,7 @@ interface RadarChartDao {
                 for (i in startIndex until last) {
                     insertChartValue(
                         ChartValue(
-                            myChartId = chart.myChart.id,
+                            myChartId = chart.id,
                             index = i,
                             value = group.maximumValue * 0.6
                         )
@@ -111,7 +132,7 @@ interface RadarChartDao {
         // また、ソート条件が項目名の場合、条件を作成日にリセットする
         if (numberOfItemsDiff < 0) {
             oldGroup.chartList.forEach { chart ->
-                deleteChartValueGreaterThanIndex(chart.myChart.id, labels.size)
+                deleteChartValueGreaterThanIndex(chart.id, labels.size)
             }
             if (0 <= group.sortIndex) {
                 resetSortIndex(group.id)
