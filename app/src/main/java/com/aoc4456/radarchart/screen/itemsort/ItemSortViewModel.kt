@@ -55,7 +55,10 @@ class ItemSortViewModel @Inject constructor(
     fun onClickCloseButton() {
         if (isChanged) {
             viewModelScope.launch {
-                // TODO 並び替え処理
+                repository.swapGroupLabel(
+                    group = group,
+                    newList = labelList
+                )
                 _dismiss.value = true
             }
         } else {
