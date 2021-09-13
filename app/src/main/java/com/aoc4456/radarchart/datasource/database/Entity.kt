@@ -85,10 +85,10 @@ data class MyChart(
 data class ChartValue(
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),
-    @ColumnInfo(index = true)
     var myChartId: String = "",
     var index: Int = 0,
-    var value: Double = 0.0
+    var value: Double = 0.0,
+    var sortingState: Int = SortingState.NEUTRAL
 ) : Parcelable
 
 /**
@@ -131,6 +131,11 @@ class Converters {
 enum class OrderBy {
     ASC,
     DESC
+}
+
+object SortingState {
+    const val NEUTRAL = 0
+    const val SORTING = 1
 }
 
 object SortIndex {

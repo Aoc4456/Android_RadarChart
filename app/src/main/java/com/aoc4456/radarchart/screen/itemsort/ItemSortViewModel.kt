@@ -56,7 +56,7 @@ class ItemSortViewModel @Inject constructor(
         if (isChanged) {
             viewModelScope.launch {
                 repository.swapGroupLabel(
-                    oldList = group.labelList,
+                    group = group,
                     newList = labelList
                 )
                 _dismiss.value = true
