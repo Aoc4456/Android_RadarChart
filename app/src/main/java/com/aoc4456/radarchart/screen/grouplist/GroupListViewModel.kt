@@ -31,7 +31,7 @@ class GroupListViewModel @Inject constructor(
         it.size >= 2
     }
 
-    fun onViewCreated(){
+    fun onViewCreated() {
         viewModelScope.launch {
             _groupList.value = repository.getGroupList()
         }

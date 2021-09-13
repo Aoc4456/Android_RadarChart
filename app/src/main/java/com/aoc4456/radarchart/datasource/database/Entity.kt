@@ -85,6 +85,7 @@ data class MyChart(
 data class ChartValue(
     @PrimaryKey
     var id: String = UUID.randomUUID().toString(),
+    @ColumnInfo(index = true)
     var myChartId: String = "",
     var index: Int = 0,
     var value: Double = 0.0,
