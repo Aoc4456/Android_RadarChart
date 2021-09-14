@@ -18,6 +18,7 @@ import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -208,12 +209,16 @@ class GroupCreateViewModel @Inject constructor(
     private fun createChartGroup(): ChartGroup {
         val isNew = groupArgs.value == null
 
+        val seedDate = Date(121, 0, 1)
+        val seedDateLong = seedDate.time
         if (isNew) {
             return ChartGroup(
                 title = title.value!!,
                 color = groupColor.value!!,
                 maximumValue = maximum.value!!.toInt(),
-                iconImage = iconImageByteArray
+                iconImage = iconImageByteArray,
+                createdAt = seedDateLong,
+                updatedAt = seedDateLong
             )
         }
 
@@ -223,7 +228,7 @@ class GroupCreateViewModel @Inject constructor(
             it.color = groupColor.value!!
             it.maximumValue = maximum.value!!.toInt()
             it.iconImage = iconImageByteArray
-            it.updatedAt = System.currentTimeMillis()
+            it.updatedAt = seedDateLong
         }
     }
 }

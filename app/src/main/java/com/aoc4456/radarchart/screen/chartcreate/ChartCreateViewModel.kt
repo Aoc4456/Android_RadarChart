@@ -18,6 +18,7 @@ import com.aoc4456.radarchart.util.ValidateResult
 import com.github.mikephil.charting.data.RadarData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -211,13 +212,17 @@ class ChartCreateViewModel @Inject constructor(
     private fun createMyChart(): MyChart {
         val isNew = chartArgs.value == null
 
+        val seedDate = Date(121, 0, 1)
+        val seedDateLong = seedDate.time
         if (isNew) {
             return MyChart(
                 chartGroupId = groupData.value!!.group.id,
                 title = title.value!!,
                 color = chartColor.value!!,
                 comment = comment.value!!,
-                iconImage = iconImageByteArray
+                iconImage = iconImageByteArray,
+                createdAt = seedDateLong,
+                updatedAt = seedDateLong
             )
         }
 
@@ -227,7 +232,7 @@ class ChartCreateViewModel @Inject constructor(
             it.color = chartColor.value!!
             it.comment = comment.value!!
             it.iconImage = iconImageByteArray
-            it.updatedAt = System.currentTimeMillis()
+            it.updatedAt = seedDateLong
         }
     }
 }
