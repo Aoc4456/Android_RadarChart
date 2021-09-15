@@ -96,6 +96,7 @@
             android:clickable="true"
             android:contentDescription="@null"
             android:focusable="true"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
