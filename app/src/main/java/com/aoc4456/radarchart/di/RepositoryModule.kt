@@ -32,7 +32,7 @@ object DatabaseModule {
             context.applicationContext,
             RadarChartDatabase::class.java,
             "RadarChart.db"
-        ).build()
+        ).createFromAsset("SeedData.db").build()
     }
 
     @Singleton
