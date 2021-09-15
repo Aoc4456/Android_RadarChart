@@ -10,7 +10,7 @@
     <string name="maximum_value_of_the_graph">グラフの最大値</string>
     <string name="item_name">項目名</string>
     <string name="save">保存</string>
-    <string name="choose_a_color">色を選択</string>
+    <string name="select_a_color">色を選択</string>
     <string name="set_group_icon">グループのアイコンを設定しますか？</string>
     <string name="select">選択</string>
     <string name="title_is_empty">タイトルが空です</string>
