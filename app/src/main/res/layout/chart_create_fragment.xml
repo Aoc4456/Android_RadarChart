@@ -130,7 +130,7 @@
                     app:layout_constraintStart_toStartOf="@id/radarChart"
                     app:layout_constraintTop_toTopOf="@id/radarChart"
                     app:layout_constraintVertical_bias="0.02"
-                    app:layout_constraintWidth_percent="0.15"
+                    app:layout_constraintWidth_percent="0.18"
                     app:shapeAppearanceOverlay="@style/circleImageView" />
 
                 <com.aoc4456.radarchart.component.ColorPickerView
