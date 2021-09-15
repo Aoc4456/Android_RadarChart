@@ -103,6 +103,7 @@
 
             <!-- このアプリをレビューする -->
             <LinearLayout
+                android:id="@+id/review_app"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"

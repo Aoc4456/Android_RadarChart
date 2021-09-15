@@ -1,6 +1,7 @@
 package com.aoc4456.radarchart.screen.setting
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,15 @@ class SettingFragment : Fragment() {
 
         binding.license.setOnClickListener {
             startActivity(Intent(requireContext(), OssLicensesMenuActivity::class.java))
+        }
+
+        binding.reviewApp.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("market://details?id=com.aoc4456.radarchart")
+            try {
+                startActivity(intent)
+            } catch (e: Exception) {
+            }
         }
 
         binding.appVersionLabel.let {
