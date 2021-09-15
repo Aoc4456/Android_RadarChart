@@ -51,7 +51,7 @@ class GroupCreateViewModel @Inject constructor(
         }
 
     private var itemTextList =
-        MutableLiveData(GroupCreateUtil.defaultTextList.toMutableList())
+        MutableLiveData(GroupCreateUtil.getDefaultTextList().toMutableList())
 
     val exactlySizedTextList = MediatorLiveData<List<String>>().apply {
         addSource(numberOfItems) {

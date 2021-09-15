@@ -26,7 +26,7 @@ class ColorPickerView(context: Context, attrs: AttributeSet) :
         this.setOnClickListener {
             val colorPicker = ColorPicker(activity)
             colorPicker.disableDefaultButtons(true)
-            colorPicker.setTitle(resources.getString(R.string.choose_a_color))
+            colorPicker.setTitle(resources.getString(R.string.select_a_color))
 
             currentColor?.let {
                 colorPicker.setDefaultColorButton(it)

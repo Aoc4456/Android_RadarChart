@@ -77,7 +77,7 @@ class CustomRadarChart(context: Context, attrs: AttributeSet) :
             }
             ChartType.CHART_COLLECTION_GRID -> {
                 fixedLongestLabel = "1234"
-                xAxis.textSize = 8F
+                xAxis.textSize = 9F
             }
             else -> {
             }

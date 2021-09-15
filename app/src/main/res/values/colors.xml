@@ -24,4 +24,5 @@
     <color name="cardview_background">@color/cardview_light_background</color>
     <color name="toolbar_border">@color/gray_600</color>
     <color name="black_white">@color/black</color>
+    <color name="blue_gray">@color/blue_700</color>
 </resources>

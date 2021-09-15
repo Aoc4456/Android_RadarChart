@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -60,7 +61,8 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@null"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_person_outline_24" />
+                    android:src="@drawable/ic_baseline_person_outline_24"
+                    app:tint="@color/blue_gray" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -68,6 +70,7 @@
                     android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
                     android:text="@string/privacy_policy"
+                    android:textColor="@color/black_white"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -85,7 +88,8 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@null"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_info_24" />
+                    android:src="@drawable/ic_baseline_info_24"
+                    app:tint="@color/blue_gray" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -93,11 +97,13 @@
                     android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
                     android:text="@string/license"
+                    android:textColor="@color/black_white"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <!-- このアプリをレビューする -->
             <LinearLayout
+                android:id="@+id/review_app"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"
@@ -109,7 +115,8 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@null"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_rate_review_24" />
+                    android:src="@drawable/ic_baseline_rate_review_24"
+                    app:tint="@color/blue_light_700" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -117,6 +124,7 @@
                     android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
                     android:text="@string/review_this_app"
+                    android:textColor="@color/black_white"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -126,6 +134,7 @@
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
                 android:gravity="center_vertical|end"
+                android:textColor="@color/black_white"
                 tools:text="アプリのバージョン : 1.0" />
 
         </LinearLayout>
