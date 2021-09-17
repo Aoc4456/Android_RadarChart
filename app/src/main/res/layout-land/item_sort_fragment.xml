@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.aoc4456.radarchart.screen.itemsort.ItemSortViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/collection_background"
+        android:orientation="vertical"
+        tools:context=".screen.itemsort.ItemSortFragment">
+
+        <FrameLayout
+            android:id="@+id/toolbar"
+            style="@style/ToolBar">
+
+            <ImageView
+                android:id="@+id/toolbar_close_button"
+                style="@style/ToolBarImageButton"
+                android:layout_marginStart="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:onClick="@{() -> viewmodel.onClickCloseButton()}"
+                android:src="@drawable/ic_baseline_close_24" />
+
+            <TextView
+                android:id="@+id/toolBarTitle"
+                style="@style/ToolBarTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/sorting_items" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
+                android:id="@+id/radarChart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="3"
+                app:chartType="group_create" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:paddingHorizontal="20dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

@@ -80,28 +80,28 @@
                 android:id="@+id/radarChart"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_margin="30dp"
+                android:layout_weight="3"
                 app:chartType="group_create"
                 app:labels="@{viewmodel.exactlySizedTextList}"
                 app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
-                app:radarData="@{viewmodel.chartData}"
-                android:layout_margin="30dp"/>
+                app:radarData="@{viewmodel.chartData}" />
 
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:background="@color/gray_600"
-                android:layout_marginRight="10dp"/>
+                android:background="@color/gray_600" />
 
             <ScrollView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3">
+                android:layout_weight="5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp">
+                    android:paddingVertical="8dp"
+                    android:paddingHorizontal="20dp">
 
                     <TextView
                         android:id="@+id/titleLabel"
