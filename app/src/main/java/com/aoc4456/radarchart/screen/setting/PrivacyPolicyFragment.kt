@@ -44,6 +44,6 @@ class PrivacyPolicyFragment : Fragment() {
             }
         }
 
-        binding.webviewPrivacyPolicy.loadUrl("https://radarchart-aocm.web.app/")
+        binding.webviewPrivacyPolicy.loadUrl("https://radarchart-aocm-android.web.app/")
     }
 }
