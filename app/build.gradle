@@ -18,6 +18,11 @@ plugins {
     id 'com.google.android.gms.oss-licenses-plugin'
 }
 
+// https://developer.android.com/studio/publish/app-signing#secure_key
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -39,6 +44,12 @@ android {
             keyAlias 'aocm.dev'
             keyPassword 'aoc.debug.0000'
         }
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
     }
 
     buildTypes {
@@ -48,7 +59,8 @@ android {
             debuggable true
         }
         release {
-            minifyEnabled true
+            signingConfig signingConfigs.release
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -71,6 +83,9 @@ android {
                     jvmTarget = '1.8'
                 }
             }
+    lintOptions {
+        disable 'NullSafeMutableLiveData'
+    }
 }
 
 dependencies {

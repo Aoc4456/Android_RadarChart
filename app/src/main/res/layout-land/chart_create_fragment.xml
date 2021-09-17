@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.aoc4456.radarchart.screen.chartcreate.ChartCreateViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbar"
+            style="@style/ToolBar">
+
+            <ImageView
+                android:id="@+id/toolbar_close_button"
+                style="@style/ToolBarImageButton"
+                android:layout_marginStart="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:src="@{viewmodel.chartArgs == null ? @drawable/ic_baseline_close_24 : @drawable/ic_baseline_arrow_back_24}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_baseline_close_24" />
+
+            <TextView
+                style="@style/ToolBarTextButton"
+                android:layout_marginStart="14dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="@{() -> viewmodel.onClickSaveButton()}"
+                android:text="@string/save"
+                android:visibility="@{viewmodel.chartArgs == null ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/toolbar_close_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/toolBarTitle"
+                style="@style/ToolBarTitle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="@{viewmodel.chartArgs == null ? @string/create_new_chart : @string/chart_edit}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="チャート新規作成" />
+
+            <ImageView
+                android:id="@+id/toolbar_trash_button"
+                style="@style/ToolBarImageButton"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_baseline_delete_forever_24"
+                android:visibility="@{viewmodel.chartArgs == null ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="2">
+
+                <com.aoc4456.radarchart.component.chart.radarchart.CustomRadarChart
+                    android:id="@+id/radarChart"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:chartType="chart_create"
+                    app:labels="@{viewmodel.valuedLabel}"
+                    app:layout_constraintBottom_toTopOf="@id/totalAverageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:maximum="@{viewmodel.chartMaximum}"
+                    app:notifyDataSetChanged="@{viewmodel.chartUpdate}"
+                    app:radarData="@{viewmodel.chartData}" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iconView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:iconImageBitmap="@{viewmodel.iconImage}"
+                    app:layout_constraintBottom_toBottomOf="@id/radarChart"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="@id/radarChart"
+                    app:layout_constraintHorizontal_bias="0.02"
+                    app:layout_constraintStart_toStartOf="@id/radarChart"
+                    app:layout_constraintTop_toTopOf="@id/radarChart"
+                    app:layout_constraintVertical_bias="0.02"
+                    app:layout_constraintWidth_percent="0.18"
+                    app:shapeAppearanceOverlay="@style/circleImageView" />
+
+                <com.aoc4456.radarchart.component.ColorPickerView
+                    android:id="@+id/colorView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/shape_rounded_corners"
+                    app:currentColor="@{viewmodel.chartColor.intValue()}"
+                    app:layout_constraintBottom_toBottomOf="@id/radarChart"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="@id/radarChart"
+                    app:layout_constraintHorizontal_bias="0.98"
+                    app:layout_constraintStart_toStartOf="@id/radarChart"
+                    app:layout_constraintTop_toTopOf="@id/radarChart"
+                    app:layout_constraintVertical_bias="0.02"
+                    app:layout_constraintWidth_percent="0.15" />
+
+                <TextView
+                    android:id="@+id/chartMaximum"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:gravity="bottom|end"
+                    android:text="@{@string/maximum_value_of_graph(viewmodel.chartMaximum)}"
+                    app:layout_constraintBottom_toTopOf="@id/totalAverageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="グラフの最大値：10058" />
+
+                <TextView
+                    android:id="@+id/totalAverageView"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/border_radius"
+                    android:gravity="center"
+                    android:text="@{@string/total_and_average(viewmodel.total,viewmodel.average)}"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="合計：30174 平均：60345" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_600" />
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:id="@+id/titleLabel"
+                        style="@style/LabelBlueText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.aoc4456.radarchart.component.BorderEditText
+                        android:id="@+id/titleEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:hint="@string/input_the_title"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:text="@{viewmodel.title}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleLabel"
+                        tools:ignore="LabelFor" />
+
+                    <com.aoc4456.radarchart.component.multiinputrowview.MultiInputRowView
+                        android:id="@+id/multiInputView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/titleEditText"
+                        tools:background="@color/blue_300"
+                        tools:layout_height="200dp" />
+
+                    <TextView
+                        android:id="@+id/noteLabel"
+                        style="@style/LabelBlueText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/comment"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/multiInputView" />
+
+                    <EditText
+                        android:id="@+id/noteEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/border_radius"
+                        android:gravity="top|start"
+                        android:importantForAutofill="no"
+                        android:inputType="textMultiLine"
+                        android:paddingHorizontal="8dp"
+                        android:text="@{viewmodel.comment}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/noteLabel"
+                        tools:ignore="LabelFor" />
+
+                    <Button
+                        android:id="@+id/saveButton"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:onClick="@{() -> viewmodel.onClickSaveButton()}"
+                        android:text="@string/save"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/noteEditText" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
