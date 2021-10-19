@@ -87,6 +87,7 @@
                     android:id="@+id/radarChart"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:layout_marginBottom="10dp"
                     app:chartType="chart_create"
                     app:labels="@{viewmodel.valuedLabel}"
                     app:layout_constraintBottom_toTopOf="@id/totalAverageView"
