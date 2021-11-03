@@ -13,7 +13,7 @@ commands:
           when: always
       - run:
           name: Decode Key Properties
-          command: echo $KEY_PROPERTIES | base64 -d > app/google-services.json
+          command: echo $KEY_PROPERTIES | base64 -d > key.properties
           when: always
 
 jobs:
