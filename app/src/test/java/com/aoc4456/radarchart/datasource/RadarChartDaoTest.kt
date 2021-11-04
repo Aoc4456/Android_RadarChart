@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.aoc4456.radarchart.datasource.database.ChartGroup
+import com.aoc4456.radarchart.datasource.database.ChartGroupLabel
 import com.aoc4456.radarchart.datasource.database.RadarChartDatabase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -56,5 +57,25 @@ class RadarChartDaoTest {
         assertThat(loaded.id, `is`(group.id))
         assertThat(loaded.color, `is`(group.color))
         assertThat(loaded.maximumValue, `is`(200))
+    }
+
+    @Test
+    fun insertGroupAndLabelsAndGetById() = runBlockingTest {
+        // GIVEN - GroupLabelをインサート
+        val group = ChartGroup(title = "test", color = 12345, maximumValue = 200)
+        val labels = mutableListOf<ChartGroupLabel>()
+        for (i in 0..5) {
+            labels.add(ChartGroupLabel(chartGroupId = group.id, index = i, text = "ラベル$i"))
+        }
+        database.radarChartDao().saveGroupAndLabel(group, labels)
+
+        // WHEN GroupLabelをデータベースから取得
+        val loaded = database.radarChartDao().getGroupWithLabelAndCharts(group.id)
+
+        // THEN - 入れた分だけ取得できること
+        assertThat(loaded, notNullValue())
+        assertThat(loaded.group.id, `is`(group.id))
+        assertThat(loaded.labelList.size, `is`(3))
+        assertThat(loaded.chartList.isEmpty(), `is`(true))
     }
 }
