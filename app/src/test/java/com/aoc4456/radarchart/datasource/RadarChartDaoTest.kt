@@ -8,7 +8,7 @@ import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.ChartGroupLabel
 import com.aoc4456.radarchart.datasource.database.RadarChartDatabase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -17,6 +17,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.Executors
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -33,14 +34,15 @@ class RadarChartDaoTest {
         database = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             RadarChartDatabase::class.java
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries()
+            .setQueryExecutor(Executors.newSingleThreadExecutor()).build()
     }
 
     @After
     fun closeDb() = database.close()
 
     @Test
-    fun insertGroupAndGetById() = runBlockingTest {
+    fun insertGroupAndGetById() = runBlocking {
         // GIVEN - Groupをインサート
         val group = ChartGroup(
             title = "test",
@@ -60,14 +62,17 @@ class RadarChartDaoTest {
     }
 
     @Test
-    fun insertGroupAndLabelsAndGetById() = runBlockingTest {
+    fun insertGroupAndLabelsAndGetById() = runBlocking {
         // GIVEN - GroupLabelをインサート
         val group = ChartGroup(title = "test", color = 12345, maximumValue = 200)
         val labels = mutableListOf<ChartGroupLabel>()
         for (i in 0..5) {
             labels.add(ChartGroupLabel(chartGroupId = group.id, index = i, text = "ラベル$i"))
         }
-        database.radarChartDao().saveGroupAndLabel(group, labels)
+        database.radarChartDao().insertGroup(group)
+        labels.forEach {
+            database.radarChartDao().insertGroupLabel(it)
+        }
 
         // WHEN GroupLabelをデータベースから取得
         val loaded = database.radarChartDao().getGroupWithLabelAndCharts(group.id)
@@ -75,7 +80,22 @@ class RadarChartDaoTest {
         // THEN - 入れた分だけ取得できること
         assertThat(loaded, notNullValue())
         assertThat(loaded.group.id, `is`(group.id))
-        assertThat(loaded.labelList.size, `is`(3))
+        assertThat(loaded.labelList.size, `is`(6))
         assertThat(loaded.chartList.isEmpty(), `is`(true))
+    }
+
+    @Test
+    fun insertAndDeleteGroup() = runBlocking {
+        // GIVEN
+        // GIVEN - Groupをインサート
+        val group = ChartGroup(
+            title = "test",
+            color = 12345,
+            maximumValue = 200
+        )
+        database.radarChartDao().insertGroup(group)
+
+        // WHEN
+        database.radarChartDao().deleteGroup(group.id)
     }
 }
