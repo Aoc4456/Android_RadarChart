@@ -1,6 +1,5 @@
 package com.aoc4456.radarchart.datasource.repository
 
-import androidx.test.core.app.ApplicationProvider
 import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.RadarChartRepositoryImpl
 import com.aoc4456.radarchart.datasource.sharedpreferences.RadarChartPreferences
@@ -14,7 +13,7 @@ class RadarChartRepositoryTest {
 
     private lateinit var repository: RadarChartRepository
 
-    private val mockPreferences = mockk<RadarChartPreferences>(){
+    private val mockPreferences = mockk<RadarChartPreferences>() {
         every { loadAppLaunchCount() } returns 1
         every { loadCollectionType() } returns CollectionType.GRID
     }
@@ -28,4 +27,3 @@ class RadarChartRepositoryTest {
         )
     }
 }
-
