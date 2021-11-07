@@ -154,6 +154,7 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.6.1" // テストでcontextが使える
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2" // CoroutineのRunBlockingTestとか
     testImplementation "androidx.arch.core:core-testing:2.1.0" // RoomのInstantTaskExecutorRule()とか
+    testImplementation "io.mockk:mockk:1.9.3"
 
     // androidTest
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
