@@ -2,13 +2,16 @@ package com.aoc4456.radarchart.screen.grouplist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aoc4456.radarchart.MainCoroutineRule
+import com.aoc4456.radarchart.datasource.fake.FakeRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class GroupListViewModelTest {
 
+    // テスト対象クラス
     private lateinit var groupListViewModel: GroupListViewModel
 
     // Set the main coroutines dispatcher for unit testing.
@@ -20,10 +23,16 @@ class GroupListViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    // TODO テスト用のFakeRepositoryが必要
+    @Before
+    fun setupViewModel() {
+        val fakeRepository = FakeRepository() // ViewModelに集中してテストするため偽のRepositoryを使う
+        groupListViewModel = GroupListViewModel(fakeRepository)
+    }
 
     @Test
-    fun onViewCreated() {
+    fun onViewCreatedAndGetGroupList() {
+        // GIVEN
+        groupListViewModel.onViewCreated()
     }
 
     @Test

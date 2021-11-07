@@ -4,7 +4,13 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.*
 import com.aoc4456.radarchart.screen.chartcollection.CollectionType
 
+/**
+ * ViewModelのテストのためのFakeリポジトリ
+ */
 class FakeRepository : RadarChartRepository {
+
+    private val fakeDao = FakeDao()
+
     override suspend fun saveGroup(
         group: ChartGroup,
         labels: List<String>,
