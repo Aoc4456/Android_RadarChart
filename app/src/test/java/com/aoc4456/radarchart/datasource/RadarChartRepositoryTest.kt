@@ -1,13 +1,12 @@
-package com.aoc4456.radarchart.datasource.repository
+package com.aoc4456.radarchart.datasource
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.aoc4456.radarchart.MainCoroutineRule
-import com.aoc4456.radarchart.datasource.RadarChartRepository
-import com.aoc4456.radarchart.datasource.RadarChartRepositoryImpl
 import com.aoc4456.radarchart.datasource.database.ChartGroup
 import com.aoc4456.radarchart.datasource.database.MyChart
 import com.aoc4456.radarchart.datasource.database.OrderBy
 import com.aoc4456.radarchart.datasource.database.SortIndex
+import com.aoc4456.radarchart.datasource.fake.FakeDao
 import com.aoc4456.radarchart.datasource.sharedpreferences.RadarChartPreferences
 import com.aoc4456.radarchart.screen.chartcollection.CollectionType
 import io.mockk.every
