@@ -1,23 +1,31 @@
 package com.aoc4456.radarchart.datasource.fake
 
 import com.aoc4456.radarchart.datasource.RadarChartRepository
-import com.aoc4456.radarchart.datasource.database.ChartGroup
-import com.aoc4456.radarchart.datasource.database.ChartGroupLabel
-import com.aoc4456.radarchart.datasource.database.ChartValue
-import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
-import com.aoc4456.radarchart.datasource.database.MyChart
-import com.aoc4456.radarchart.datasource.database.MyChartWithValue
-import com.aoc4456.radarchart.datasource.database.OrderBy
+import com.aoc4456.radarchart.datasource.database.*
 import com.aoc4456.radarchart.screen.chartcollection.CollectionType
 import com.aoc4456.radarchart.util.MyChartOrder
 
 /**
  * ViewModelのテストのためのFakeリポジトリ
- * // TODO コンストラクタでデータを受け取って、initで保存するよう変更する
  */
 class FakeRepository : RadarChartRepository {
 
     private val fakeDao = FakeDao()
+
+    // For Testing
+    suspend fun setupDefaultData() {
+        val group1 = ChartGroup(title = "Group1", color = 1234, maximumValue = 100)
+        val group2 = ChartGroup(title = "Group2", color = 1234, maximumValue = 100)
+        val groupLabelTextList = listOf("Label1", "Label2", "Label3", "Label4", "Label5")
+        saveGroup(group1, groupLabelTextList, null)
+        saveGroup(group2, groupLabelTextList, null)
+
+        val chart1 = MyChart(chartGroupId = group1.id, title = "Chart1", color = 1234)
+        val chart2 = MyChart(chartGroupId = group1.id, title = "Chart2", color = 5678)
+        val chartValueList = listOf(10, 20, 30, 40, 50)
+        saveChart(chart1, chartValueList)
+        saveChart(chart2, chartValueList)
+    }
 
     /**
      * Create

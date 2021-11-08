@@ -2,12 +2,16 @@ package com.aoc4456.radarchart.screen.grouplist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aoc4456.radarchart.MainCoroutineRule
+import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.fake.FakeRepository
 import com.aoc4456.radarchart.getOrAwaitValue
 import com.aoc4456.radarchart.observeForTesting
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.notNullValue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,27 +32,43 @@ class GroupListViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Before
-    fun setupViewModel() {
+    fun setupViewModel() = runBlocking {
         val fakeRepository = FakeRepository() // ViewModelに集中してテストするため偽のRepositoryを使う
+        fakeRepository.setupDefaultData()
         groupListViewModel = GroupListViewModel(fakeRepository)
     }
 
     @Test
     fun onViewCreatedAndGetGroupList() {
-        // GIVEN
+        // WHEN
         groupListViewModel.onViewCreated()
 
-        // WHEN
+        // THEN
         groupListViewModel.groupList.observeForTesting {
-            assertThat(groupListViewModel.groupList.getOrAwaitValue().size, `is`(1))
+            assertThat(groupListViewModel.groupList.getOrAwaitValue().size, `is`(2))
         }
     }
 
     @Test
-    fun onClickListItem() {
+    fun onClickListItemAndCallNavigateEvent() {
+        // GIVEN
+        val clickedItem = mockk<GroupWithLabelAndCharts>()
+
+        // WHEN
+        groupListViewModel.onClickListItem(clickedItem)
+
+        // THEN
+        groupListViewModel.navigateToChartCollection.observeForTesting {
+            assertThat(
+                groupListViewModel.navigateToChartCollection.getOrAwaitValue(),
+                `is`(notNullValue())
+            )
+        }
     }
 
     @Test
     fun onSelectedContextMenu() {
+        // GIVEN
+        val groupItem = mockk<GroupWithLabelAndCharts>()
     }
 }
