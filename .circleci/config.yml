@@ -11,6 +11,10 @@ commands:
           name: Decode Google Services Json
           command: echo $GOOGLE_SERVICES_JSON | base64 -d > app/google-services.json
           when: always
+      - run:
+          name: Decode Key Properties
+          command: echo $KEY_PROPERTIES | base64 -d > key.properties
+          when: always
 
 jobs:
   unit-test:
