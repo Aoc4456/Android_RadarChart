@@ -2,6 +2,7 @@ package com.aoc4456.radarchart.screen.grouplist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aoc4456.radarchart.MainCoroutineRule
+import com.aoc4456.radarchart.R
 import com.aoc4456.radarchart.datasource.database.GroupWithLabelAndCharts
 import com.aoc4456.radarchart.datasource.fake.FakeRepository
 import com.aoc4456.radarchart.getOrAwaitValue
@@ -11,7 +12,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.notNullValue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -61,14 +61,38 @@ class GroupListViewModelTest {
         groupListViewModel.navigateToChartCollection.observeForTesting {
             assertThat(
                 groupListViewModel.navigateToChartCollection.getOrAwaitValue(),
-                `is`(notNullValue())
+                `is`(clickedItem)
             )
         }
     }
 
     @Test
-    fun onSelectedContextMenu() {
+    fun onSelectedContextMenu_GroupEdit() {
         // GIVEN
         val groupItem = mockk<GroupWithLabelAndCharts>()
+        val itemId = R.id.group_edit
+
+        // WHEN
+        groupListViewModel.onSelectedContextMenu(groupItem, itemId)
+
+        // THEN
+        groupListViewModel.navigateToGroupEdit.observeForTesting {
+            assertThat(groupListViewModel.navigateToGroupEdit.getOrAwaitValue(), `is`(groupItem))
+        }
+    }
+
+    @Test
+    fun onSelectedContextMenu_ItemSort() {
+        // GIVEN
+        val groupItem = mockk<GroupWithLabelAndCharts>()
+        val itemId = R.id.sorting_items
+
+        // WHEN
+        groupListViewModel.onSelectedContextMenu(groupItem, itemId)
+
+        // THEN
+        groupListViewModel.navigateToItemSort.observeForTesting {
+            assertThat(groupListViewModel.navigateToItemSort.getOrAwaitValue(), `is`(groupItem))
+        }
     }
 }
