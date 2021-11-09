@@ -5,7 +5,10 @@ import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.aoc4456.radarchart.MainActivity
+import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -14,17 +17,18 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class GroupListFragmentTest {
 
-//    @get:Rule
-//    var hiltRule = HiltAndroidRule(this)
-//
-//    @Before
-//    fun init() {
-//        // Populate @Inject fields in test class
-//        hiltRule.inject()
-//    }
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @Before
+    fun init() {
+        // Populate @Inject fields in test class
+        hiltRule.inject()
+    }
 
     @Test
     fun onCreateView() {
+        launchActivity()
     }
 
     @Test
