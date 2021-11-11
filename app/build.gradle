@@ -75,7 +75,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    testOptions.unitTests.includeAndroidResources = true
 
     // ビルド時にLintCheckする
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach
@@ -87,6 +86,20 @@ android {
             }
     lintOptions {
         disable 'NullSafeMutableLiveData'
+    }
+
+    // Unit Test でRobolectricを使うために必要
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+    // testとandroidTestの両方で使用するファイルを配置するsharedTestディレクトリ
+    sourceSets {
+        androidTest {
+            java.srcDirs += file('src/sharedTest/java')
+        }
+        test {
+            java.srcDirs += file('src/sharedTest/java')
+        }
     }
 }
 
