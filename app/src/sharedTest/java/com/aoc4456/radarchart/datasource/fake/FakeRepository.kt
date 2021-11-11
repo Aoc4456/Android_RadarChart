@@ -4,11 +4,12 @@ import com.aoc4456.radarchart.datasource.RadarChartRepository
 import com.aoc4456.radarchart.datasource.database.*
 import com.aoc4456.radarchart.screen.chartcollection.CollectionType
 import com.aoc4456.radarchart.util.MyChartOrder
+import javax.inject.Inject
 
 /**
  * ViewModelのテストのためのFakeリポジトリ
  */
-class FakeRepository : RadarChartRepository {
+class FakeRepository @Inject constructor() : RadarChartRepository {
 
     private val fakeDao = FakeDao()
 
