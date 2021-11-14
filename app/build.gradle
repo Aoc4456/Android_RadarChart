@@ -34,7 +34,8 @@ android {
         versionCode 2
         versionName "1.1"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // InstrumentationTest で Hiltを扱うためのTestRunner
+        testInstrumentationRunner "com.aoc4456.radarchart.CustomTestRunner"
     }
 
     signingConfigs {
@@ -64,8 +65,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled true
+    buildFeatures {
+        dataBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -86,6 +87,20 @@ android {
     lintOptions {
         disable 'NullSafeMutableLiveData'
     }
+
+    // Unit Test でRobolectricを使うために必要
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+    // testとandroidTestの両方で使用するファイルを配置するsharedTestディレクトリ
+    sourceSets {
+        androidTest {
+            java.srcDirs += file('src/sharedTest/java')
+        }
+        test {
+            java.srcDirs += file('src/sharedTest/java')
+        }
+    }
 }
 
 dependencies {
@@ -97,9 +112,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // ログ出力
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -147,5 +159,24 @@ dependencies {
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
     // Local Unit Test
+    testImplementation 'junit:junit:4.+'
     testImplementation "org.hamcrest:hamcrest-all:1.3"
+    testImplementation "io.mockk:mockk:1.9.3"
+    // AndroidX Testing Library
+    testImplementation "androidx.test.ext:junit-ktx:1.1.3"
+    testImplementation "androidx.test:core-ktx:1.4.0"
+    testImplementation "org.robolectric:robolectric:4.6.1" // テストでcontextが使える
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2" // CoroutineのRunBlockingTestとか
+    testImplementation "androidx.arch.core:core-testing:2.1.0" // RoomのInstantTaskExecutorRule()とか
+
+    // androidTest
+    androidTestImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // Once https://issuetracker.google.com/127986458 is fixed this can be testImplementation
+    // https://developer.android.com/codelabs/advanced-android-kotlin-training-testing-test-doubles#7
+    debugImplementation "androidx.fragment:fragment-testing:1.3.6"
+    // Hilt for instrumented tests.
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 }

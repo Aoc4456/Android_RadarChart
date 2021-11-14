@@ -11,6 +11,10 @@ commands:
           name: Decode Google Services Json
           command: echo $GOOGLE_SERVICES_JSON | base64 -d > app/google-services.json
           when: always
+      - run:
+          name: Decode Key Properties
+          command: echo $KEY_PROPERTIES | base64 -d > key.properties
+          when: always
 
 jobs:
   unit-test:
@@ -39,7 +43,7 @@ jobs:
     parameters:
       system-image:
         type: string
-        default: system-images;android-30;google_apis;x86
+        default: system-images;android-29;google_apis;x86
     executor:
       name: android/android-machine
       resource-class: xlarge
@@ -101,7 +105,6 @@ workflows:
             alias: android-test-all
             parameters:
               system-image:
-                - system-images;android-30;google_apis;x86
                 - system-images;android-29;google_apis;x86
                 - system-images;android-28;google_apis;x86
                 - system-images;android-27;google_apis;x86
