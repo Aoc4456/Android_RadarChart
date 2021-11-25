@@ -6,6 +6,7 @@ plugins {
     // Firebase
     id 'com.google.gms.google-services'
     id 'com.google.firebase.appdistribution'
+    id 'com.google.firebase.crashlytics'
     // kotlin-annotation-processing tools
     id 'kotlin-kapt'
     // DI (Dagger Hilt)
@@ -123,6 +124,7 @@ dependencies {
     // Firebase Android BoM を使用すると、アプリで常に互換性のある Firebase ライブラリ バージョンが使用されるようになります。
     implementation platform('com.google.firebase:firebase-bom:28.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics'
 
     // DI (Dagger Hilt)
     implementation "com.google.dagger:hilt-android:$hilt_version"
@@ -164,8 +166,8 @@ dependencies {
     testImplementation "io.mockk:mockk:1.9.3"
     // AndroidX Testing Library
     testImplementation "androidx.test.ext:junit-ktx:1.1.3"
-    testImplementation "androidx.test:core-ktx:1.4.0"
-    testImplementation "org.robolectric:robolectric:4.6.1" // テストでcontextが使える
+    testImplementation "androidx.test:core-ktx:1.4.0" // テストでcontextが使える、ActivityScenario等
+    testImplementation "org.robolectric:robolectric:4.6.1" // ローカルテストでAndroid環境をシミュレート
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2" // CoroutineのRunBlockingTestとか
     testImplementation "androidx.arch.core:core-testing:2.1.0" // RoomのInstantTaskExecutorRule()とか
 

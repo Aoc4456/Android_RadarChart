@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/chart_collection_grid_item.xml" value="0.11917326297273527" />
         <entry key="app/src/main/res/layout/chart_create_fragment.xml" value="0.11666666666666667" />
       </map>
     </option>
