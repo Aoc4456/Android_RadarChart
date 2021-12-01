@@ -32,8 +32,10 @@ android {
         applicationId "com.aoc4456.radarchart"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
+
+        archivesBaseName = "rc_v${versionName}(${versionCode})"
 
         // InstrumentationTest で Hiltを扱うためのTestRunner
         testInstrumentationRunner "com.aoc4456.radarchart.CustomTestRunner"
